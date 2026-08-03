@@ -24,6 +24,23 @@ const KEY = 'numen.journey.v1';
 
 const empty = (): JourneyState => ({ visited: [], choices: {}, eggs: [] });
 
+/** Puntuación estilo aventura clásica («PTS 040/120»). */
+export const SCORING = { phase: 10, choice: 15, egg: 25 } as const;
+
+export function scoreOf(state: Pick<JourneyState, 'visited' | 'choices' | 'eggs'>): number {
+  return (
+    state.visited.length * SCORING.phase +
+    Object.keys(state.choices).length * SCORING.choice +
+    state.eggs.length * SCORING.egg
+  );
+}
+
+export function maxScoreOf(totals: { phases: number; choices: number; eggs: number }): number {
+  return (
+    totals.phases * SCORING.phase + totals.choices * SCORING.choice + totals.eggs * SCORING.egg
+  );
+}
+
 export function createJourney(storage: StorageLike, phaseIds: readonly string[]) {
   let state = load();
 

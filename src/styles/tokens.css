@@ -26,7 +26,17 @@
   /* ---- Tipografía ----------------------------------------- */
   --stack-display: 'Archivo Variable', system-ui, sans-serif;
   --stack-body: 'Archivo Variable', system-ui, sans-serif;
-  --stack-serif: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --stack-pixel: 'Press Start 2P', 'Courier New', monospace; /* HUD, títulos */
+  --stack-dialog: 'VT323', 'Courier New', monospace; /* diálogos mecanografiados */
+  /* La antigua voz serif ahora habla en la máquina de escribir. */
+  --stack-serif: var(--stack-dialog);
+
+  /* Escala de la capa aventura */
+  --text-dialog: clamp(1.3rem, 1.15rem + 0.6vw, 1.7rem);
+  --text-pixel-lg: clamp(1.05rem, 0.85rem + 1.4vw, 1.9rem);
+  --text-pixel-sm: clamp(0.62rem, 0.58rem + 0.2vw, 0.72rem);
+  --px-notch: 6px; /* esquina recortada 8-bit */
+  --px-shadow: 5px 5px 0 rgb(0 0 0 / 0.45);
 
   /* Escala fluida (mín. móvil → máx. escritorio) */
   --text-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);

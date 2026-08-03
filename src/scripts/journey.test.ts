@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createJourney, type StorageLike } from './journey';
+import { createJourney, maxScoreOf, scoreOf, type StorageLike } from './journey';
 
 function memoryStorage(): StorageLike {
   const map = new Map<string, string>();
@@ -55,5 +55,16 @@ describe('journey (motor Nivel B)', () => {
     storage.setItem('numen.journey.v1', '{esto no es json');
     const j = createJourney(storage, PHASES);
     expect(j.progress()).toBe(0);
+  });
+});
+
+describe('puntuación estilo aventura', () => {
+  it('suma fases, elecciones y huevos con los pesos de SCORING', () => {
+    expect(scoreOf({ visited: ['a', 'b', 'c'], choices: { x: 1, y: 0 }, eggs: ['sigil'] })).toBe(
+      3 * 10 + 2 * 15 + 25,
+    );
+  });
+  it('calcula el máximo alcanzable del recorrido', () => {
+    expect(maxScoreOf({ phases: 7, choices: 1, eggs: 1 })).toBe(70 + 15 + 25);
   });
 });

@@ -44,7 +44,13 @@ const enterHref = `#${sections[0]?.slug ?? 'acto-2'}`;
 
   {
     sections.map((s) => (
-      <PhaseSection entry={s.entry} slug={s.slug} actLabel={s.actLabel} actAnchor={s.actAnchor}>
+      <PhaseSection
+        {lang}
+        entry={s.entry}
+        slug={s.slug}
+        actLabel={s.actLabel}
+        actAnchor={s.actAnchor}
+      >
         {s.entry.data.phase === 3 && (
           <div class="caminos">
             {caminos.map((c) => (

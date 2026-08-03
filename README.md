@@ -4,7 +4,7 @@ Reconstrucción desde cero de la web de **Numen Games**: una experiencia narrati
 (viaje del héroe) con gamificación Nivel B, doble capa (home iniciática + páginas operativas),
 i18n ES/EN y accesibilidad WCAG 2.2 AA como pilar.
 
-**Versión:** `0.1.0` (visible en el pie de página, leída de `package.json`).
+**Versión:** `0.2.0` (visible en el pie de página, leída de `package.json`).
 
 ## Stack
 
@@ -13,9 +13,8 @@ i18n ES/EN y accesibilidad WCAG 2.2 AA como pilar.
 - Vanilla TS + Web Components para las islas interactivas (sin frameworks de cliente)
 - Content Collections + Zod para la historia
 - pnpm · ESLint (astro + jsx-a11y strict) · Prettier · Vitest · Playwright + axe · Lighthouse CI
-- Fuentes self-hosted vía Fontsource: **Archivo Variable** (display/cuerpo, eje de anchura para
-  el tono geométrico del wordmark) y **Fraunces Variable** (serif editorial para beats,
-  invocación y manifiesto)
+- Fuentes self-hosted vía Fontsource: **Archivo Variable** (cuerpo/capa operativa),
+  **Press Start 2P** (HUD y títulos de escena) y **VT323** (diálogo mecanografiado)
 
 ## Comandos
 
@@ -56,6 +55,18 @@ orden y tipo (`fase`, `camino`, `portal`); el cuerpo es Markdown (admite HTML pu
 `class="beat"` para golpes serif, `class="invocation-name"` para el nombre grande,
 `data-glitch` para el efecto de grieta). **Cambiar la historia no requiere tocar componentes.**
 Cuando llegue el `.md` definitivo, se sustituyen estos ficheros 1:1.
+
+### Capa de aventura gráfica (v0.2.0)
+
+La home se comporta como un point-and-click clásico usando solo convenciones del
+género (nada de IP ajena): cada fase es una **escena** con sprite pixelado original,
+etiqueta de personaje («El Oráculo») y caja de diálogo que se **mecanografía**
+(`<type-writer>`, clic o «▼» para saltar; texto íntegro para lectores de pantalla y
+sin animación bajo `prefers-reduced-motion` o sin JS). El HUD muestra **PTS
+000/130** (+10 escena, +15 elección, +25 hallazgo) y un **inventario de actos** cuyos
+huecos se rellenan con objetos pixelados al cruzar cada acto. Los CTA llevan verbo
+(usar / hablar / mirar). `pnpm run` + `node scripts/preview-standalone.mjs` genera
+una preview de un solo archivo.
 
 ### Gamificación (Nivel B)
 

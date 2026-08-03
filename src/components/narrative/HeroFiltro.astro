@@ -30,7 +30,9 @@ const t = useTranslations(lang);
       <p data-seq style="--seq: 3.4">{t('hero.p3')}</p>
     </div>
     <p class="cta" data-seq style="--seq: 4">
-      <a class="btn btn-solid" href={enterHref} data-enter>{t('hero.cta')}</a>
+      <a class="btn btn-solid" href={enterHref} data-enter
+        ><span aria-hidden="true">▶&nbsp;</span>{t('hero.cta')}</a
+      >
     </p>
   </div>
 </section>

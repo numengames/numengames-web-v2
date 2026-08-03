@@ -16,9 +16,9 @@ const choice = entry.data.choice;
 
 <article class="camino" data-reveal aria-labelledby={`${slug}-title`}>
   <h3 class="camino-title" id={`${slug}-title`}>{entry.data.title}</h3>
-  <div class="camino-body">
+  <type-writer class="camino-body" data-skip-label={t('tw.skip')}>
     <Content />
-  </div>
+  </type-writer>
 
   {
     choice && (

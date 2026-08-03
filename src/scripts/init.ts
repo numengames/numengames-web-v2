@@ -2,7 +2,14 @@
  * Progressive enhancement del sitio. Sin este script todo sigue siendo
  * legible y navegable; con él, el viaje se mide, elige y recuerda.
  */
-import { createJourney, type Journey, type JourneySnapshot, type StorageLike } from './journey';
+import {
+  createJourney,
+  maxScoreOf,
+  scoreOf,
+  type Journey,
+  type JourneySnapshot,
+  type StorageLike,
+} from './journey';
 
 const motionOK = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
 
@@ -33,6 +40,39 @@ function announce(text: string) {
   requestAnimationFrame(() => {
     region.textContent = text;
   });
+}
+
+/* ---------------- máquina de escribir (utilidades) -------------------- */
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const PUNCT = /[.,;:!?…»]/;
+
+async function typeText(el: HTMLElement, text: string, isCancelled: () => boolean) {
+  el.setAttribute('data-tw-typing', '');
+  el.textContent = '';
+  for (const ch of text) {
+    if (isCancelled()) return;
+    el.textContent += ch;
+    await sleep(PUNCT.test(ch) ? 130 : 15);
+  }
+}
+
+/** Mecanografía un elemento corto conservando su HTML final (accesible). */
+async function typeRich(el: HTMLElement) {
+  if (!motionOK) return;
+  const original = el.innerHTML;
+  const text = el.textContent ?? '';
+  const sr = document.createElement('span');
+  sr.className = 'visually-hidden';
+  sr.textContent = text;
+  el.before(sr);
+  el.setAttribute('aria-hidden', 'true');
+  let cancelled = false;
+  el.addEventListener('click', () => (cancelled = true), { once: true });
+  await typeText(el, text, () => cancelled);
+  el.removeAttribute('data-tw-typing');
+  el.innerHTML = original;
+  el.removeAttribute('aria-hidden');
+  sr.remove();
 }
 
 /* ------------------------- viaje (estado) ---------------------------- */
@@ -81,14 +121,126 @@ if (motionOK) {
   document.querySelectorAll('[data-reveal]').forEach((el) => ro.observe(el));
 }
 
+/* -------------------------- <type-writer> ---------------------------- */
+class TypeWriter extends HTMLElement {
+  #blocks: HTMLElement[] = [];
+  #originals: string[] = [];
+  #sr?: HTMLElement;
+  #skipBtn?: HTMLButtonElement;
+  #idx = 0;
+  #started = false;
+  #done = false;
+  #cancel = false;
+
+  connectedCallback() {
+    if (!motionOK) return;
+    this.#blocks = Array.from(this.children).filter(
+      (c): c is HTMLElement => c instanceof HTMLElement,
+    );
+    if (this.#blocks.length === 0) return;
+    this.#originals = this.#blocks.map((b) => b.innerHTML);
+
+    // Copia íntegra para lectores de pantalla mientras dura la animación.
+    const sr = document.createElement('div');
+    sr.className = 'visually-hidden';
+    sr.innerHTML = this.innerHTML;
+    this.before(sr);
+    this.#sr = sr;
+    this.setAttribute('aria-hidden', 'true');
+    this.#blocks.forEach((b) => (b.style.visibility = 'hidden'));
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          io.disconnect();
+          void this.#run();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    io.observe(this);
+  }
+
+  async #run() {
+    if (this.#started) return;
+    this.#started = true;
+    const dialog = (this.closest('.dialog') as HTMLElement | null) ?? this;
+    dialog.setAttribute('data-tw-active', '');
+    const skip = document.createElement('button');
+    skip.type = 'button';
+    skip.className = 'tw-skip';
+    skip.textContent = '▼';
+    skip.setAttribute('aria-label', this.dataset.skipLabel ?? 'Skip');
+    skip.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.finish();
+    });
+    dialog.append(skip);
+    this.#skipBtn = skip;
+    dialog.addEventListener('click', () => this.finish());
+
+    for (; this.#idx < this.#blocks.length; this.#idx++) {
+      if (this.#cancel) return;
+      const b = this.#blocks[this.#idx];
+      b.style.visibility = '';
+      await typeText(b, b.textContent ?? '', () => this.#cancel);
+      if (this.#cancel) return;
+      b.removeAttribute('data-tw-typing');
+      b.innerHTML = this.#originals[this.#idx];
+      await sleep(140);
+    }
+    this.finish();
+  }
+
+  finish() {
+    if (this.#done) return;
+    this.#done = true;
+    this.#cancel = true;
+    this.#blocks.forEach((b, i) => {
+      b.removeAttribute('data-tw-typing');
+      b.style.visibility = '';
+      b.innerHTML = this.#originals[i];
+    });
+    this.removeAttribute('aria-hidden');
+    this.#sr?.remove();
+    this.#skipBtn?.remove();
+    const dialog = (this.closest('.dialog') as HTMLElement | null) ?? this;
+    dialog.removeAttribute('data-tw-active');
+    this.querySelectorAll('[data-glitch]').forEach((g) => g.classList.add('auto'));
+  }
+}
+customElements.define('type-writer', TypeWriter);
+
 /* ----------------------- <journey-progress> -------------------------- */
 class JourneyProgress extends HTMLElement {
+  #last = -1;
   connectedCallback() {
     const update = (snap: JourneySnapshot) => {
       const pct = Math.round(snap.progress * 100);
       this.style.setProperty('--journey-progress', String(snap.progress));
       const bar = this.querySelector('[role="progressbar"]');
       bar?.setAttribute('aria-valuenow', String(pct));
+
+      const score = scoreOf(snap);
+      const max = maxScoreOf({
+        phases: phaseIds.length,
+        choices: document.querySelectorAll('journey-choice').length,
+        eggs: 1,
+      });
+      const pad = (n: number) => String(n).padStart(3, '0');
+      const sEl = this.querySelector('[data-score]');
+      const mEl = this.querySelector('[data-max]');
+      if (sEl) sEl.textContent = pad(score);
+      if (mEl) mEl.textContent = pad(max);
+      bar?.setAttribute('aria-valuetext', `${pct}% · ${pad(score)}/${pad(max)}`);
+      if (motionOK && this.#last >= 0 && score > this.#last) {
+        const f = document.createElement('span');
+        f.className = 'pts-float';
+        f.textContent = `+${score - this.#last}`;
+        this.append(f);
+        setTimeout(() => f.remove(), 950);
+      }
+      this.#last = score;
       this.querySelectorAll<HTMLElement>('.journey-act').forEach((a) => {
         const actPhases = (a.dataset.phases ?? '').split(',').filter(Boolean);
         const lit = actPhases.some((p) => snap.visited.includes(p));
@@ -118,6 +270,8 @@ class JourneyChoice extends HTMLElement {
       if (chosen && focus) {
         chosen.setAttribute('tabindex', '-1');
         chosen.focus({ preventScroll: true });
+        const line = chosen.querySelector<HTMLElement>('p:not(.outcome-label)');
+        if (line) void typeRich(line);
       }
     };
     buttons.forEach((btn) => {

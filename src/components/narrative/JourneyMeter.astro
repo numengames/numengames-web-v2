@@ -8,9 +8,9 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const acts = [
-  { n: 'I', anchor: '#acto-1', phases: 'fase-0,fase-1' },
-  { n: 'II', anchor: '#acto-2', phases: 'fase-2,fase-3' },
-  { n: 'III', anchor: '#acto-3', phases: 'fase-4,fase-5,fase-6' },
+  { n: 'I', anchor: '#acto-1', phases: 'fase-0,fase-1', item: t('slot.1') },
+  { n: 'II', anchor: '#acto-2', phases: 'fase-2,fase-3', item: t('slot.2') },
+  { n: 'III', anchor: '#acto-3', phases: 'fase-4,fase-5,fase-6', item: t('slot.3') },
 ];
 ---
 
@@ -25,16 +25,71 @@ const acts = [
   >
     <div class="journey-fill"></div>
   </div>
-  <nav class="journey-acts" aria-label={t('journey.label')}>
+
+  <p class="hud-score">
+    <span class="visually-hidden">{t('hud.scoreLabel')}: </span><span aria-hidden="true"
+      >{t('hud.score')}&nbsp;</span
+    ><b data-score>000</b><span aria-hidden="true">/</span><span class="visually-hidden">
+      /
+    </span><span data-max>000</span>
+  </p>
+
+  <nav class="journey-acts" aria-label={t('journey.slots')}>
     {
-      acts.map((a) => (
+      acts.map((a, i) => (
         <a
           class="journey-act"
           href={a.anchor}
           data-phases={a.phases}
-          aria-label={`${t('journey.goto')} ${a.n}`}
+          aria-label={`${t('journey.goto')} ${a.n} · ${a.item}`}
         >
-          {a.n}
+          <span class="slot-n" aria-hidden="true">
+            {a.n}
+          </span>
+          {i === 0 && (
+            <svg
+              class="slot-item"
+              viewBox="0 0 8 8"
+              shape-rendering="crispEdges"
+              aria-hidden="true"
+              fill="currentColor"
+            >
+              <rect x="3" y="0" width="2" height="2" />
+              <rect x="2" y="2" width="2" height="2" />
+              <rect x="4" y="3" width="2" height="2" />
+              <rect x="3" y="5" width="2" height="3" />
+            </svg>
+          )}
+          {i === 1 && (
+            <svg
+              class="slot-item"
+              viewBox="0 0 8 8"
+              shape-rendering="crispEdges"
+              aria-hidden="true"
+              fill="currentColor"
+            >
+              <rect x="2" y="0" width="4" height="1" />
+              <rect x="0" y="2" width="1" height="4" />
+              <rect x="7" y="2" width="1" height="4" />
+              <rect x="2" y="7" width="4" height="1" />
+              <rect x="3" y="1" width="2" height="3" />
+              <rect x="3" y="4" width="2" height="2" />
+            </svg>
+          )}
+          {i === 2 && (
+            <svg
+              class="slot-item"
+              viewBox="0 0 8 8"
+              shape-rendering="crispEdges"
+              aria-hidden="true"
+              fill="currentColor"
+            >
+              <rect x="0" y="1" width="3" height="3" />
+              <rect x="3" y="2" width="4" height="1" />
+              <rect x="4" y="3" width="1" height="2" />
+              <rect x="6" y="3" width="1" height="2" />
+            </svg>
+          )}
         </a>
       ))
     }

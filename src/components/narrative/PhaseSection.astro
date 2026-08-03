@@ -1,17 +1,31 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
+import PixelIcon from './PixelIcon.astro';
+import { useTranslations, type Lang } from '../../i18n/ui';
 
 interface Props {
+  lang: Lang;
   entry: CollectionEntry<'story'>;
   slug: string;
   actLabel: string;
   /** id extra para las anclas de acto (#acto-2, #acto-3). */
   actAnchor?: string;
 }
-const { entry, slug, actLabel, actAnchor } = Astro.props;
+const { lang, entry, slug, actLabel, actAnchor } = Astro.props;
+const t = useTranslations(lang);
 const { Content } = await render(entry);
 const headingId = `${slug}-title`;
+
+const icons = {
+  1: 'grieta',
+  2: 'portal',
+  3: 'brujula',
+  4: 'puertas',
+  5: 'pergamino',
+  6: 'salida',
+} as const;
+const icon = icons[entry.data.phase as keyof typeof icons] ?? 'brujula';
 ---
 
 <section
@@ -33,9 +47,17 @@ const headingId = `${slug}-title`;
         </p>
       )
     }
-    <div class="prose-n" data-reveal>
-      <Content />
+
+    <div class="scene" data-reveal>
+      <div class="scene-icon"><PixelIcon name={icon} /></div>
+      <div class="dialog px">
+        <p class="speaker">{t('speaker.oraculo')}</p>
+        <type-writer class="prose-n" data-skip-label={t('tw.skip')}>
+          <Content />
+        </type-writer>
+      </div>
     </div>
+
     <slot />
   </div>
 </section>
