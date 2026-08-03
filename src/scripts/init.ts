@@ -101,9 +101,6 @@ if (phaseEls.length > 0) {
           lastAct = act;
           announce(actLabel);
         }
-        if (el.querySelector('[data-glitch]') && motionOK) {
-          el.querySelectorAll('[data-glitch]').forEach((g) => g.classList.add('auto'));
-        }
       }
     },
     { threshold: 0.35 },
@@ -212,7 +209,6 @@ class TypeWriter extends HTMLElement {
     this.#skipBtn?.remove();
     const dialog = (this.closest('.dialog') as HTMLElement | null) ?? this;
     dialog.removeAttribute('data-tw-active');
-    this.querySelectorAll('[data-glitch]').forEach((g) => g.classList.add('auto'));
   }
 }
 customElements.define('type-writer', TypeWriter);

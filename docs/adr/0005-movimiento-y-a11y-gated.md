@@ -2,8 +2,12 @@
 
 **Estado:** aceptada · 2026-08-03
 
-Revelados, glitch e hilo de scroll solo se activan con JS presente (clase
+Revelados, secuencias e hilo de scroll solo se activan con JS presente (clase
 `.js`) **y** `prefers-reduced-motion: no-preference`; el hilo usa
 `animation-timeline: scroll()` tras `@supports`. Sin JS la narrativa completa
 es legible (incluidos ambos desenlaces de cada elección, etiquetados). La
 gamificación nunca oculta contenido: ilumina, no bloquea.
+
+**Actualización 2026-08-03 (canon Khepri):** parallax y efectos glitch quedan
+prohibidos por el Design System; el cupo de animación es cerrado (ver
+`CLAUDE.md`).

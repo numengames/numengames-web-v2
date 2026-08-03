@@ -36,8 +36,7 @@ choice: # solo caminos con decisión
 ```
 
 HTML permitido en el cuerpo: `class="beat"` (golpe en la voz mecanografiada,
-Geist Mono), `class="invocation-name"` (nombre grande), `<span data-glitch>`
-(grieta animada). Nada más sin pasar por diseño. Canon §4.2: la máquina habla
+Geist Mono), `class="invocation-name"` (nombre grande). Nada más sin pasar por diseño. Canon §4.2: la máquina habla
 en mono; prohibidas las tipografías de fantasía.
 
 ## Reglas duras

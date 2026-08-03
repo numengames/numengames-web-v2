@@ -53,7 +53,7 @@ src/
 Cada fase vive en `src/content/story/<lang>/NN-nombre.md`. El frontmatter define acto, fase,
 orden y tipo (`fase`, `camino`, `portal`); el cuerpo es Markdown (admite HTML puntual:
 `class="beat"` para golpes serif, `class="invocation-name"` para el nombre grande,
-`data-glitch` para el efecto de grieta). **Cambiar la historia no requiere tocar componentes.**
+**Cambiar la historia no requiere tocar componentes.**
 Cuando llegue el `.md` definitivo, se sustituyen estos ficheros 1:1.
 
 ### Capa de aventura gráfica (v0.2.0)
@@ -94,7 +94,7 @@ lectura vertical, y sin JS el texto completo sigue ahí.
 ### Accesibilidad y movimiento
 
 Skip link, landmarks, jerarquía de encabezados, foco visible, contraste AA en ambos temas,
-región `aria-live` para elecciones y cambios de acto. Todo el movimiento (revelados, glitch,
+región `aria-live` para elecciones y cambios de acto. Todo el movimiento (revelados,
 hilo de scroll con `animation-timeline`) está tras `prefers-reduced-motion` y la clase `.js`.
 
 ### Temas

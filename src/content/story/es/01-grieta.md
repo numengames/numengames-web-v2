@@ -17,4 +17,4 @@ Pero algo cambió. Los eventos empezaron a funcionar mejor… y a significar men
 
 No es falta de talento. No es falta de tecnología. Es falta de algo más antiguo. Algo que no se enseña: se vive.
 
-<p class="beat">No es un problema de tecnología. Es un problema de <span data-glitch>experiencia</span>.</p>
+<p class="beat">No es un problema de tecnología. Es un problema de experiencia.</p>

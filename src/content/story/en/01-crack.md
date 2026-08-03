@@ -17,4 +17,4 @@ But something changed. Events started working better… and meaning less. People
 
 It is not a lack of talent. It is not a lack of technology. It is the lack of something older. Something that is not taught: it is lived.
 
-<p class="beat">It is not a technology problem. It is an <span data-glitch>experience</span> problem.</p>
+<p class="beat">It is not a technology problem. It is an experience problem.</p>

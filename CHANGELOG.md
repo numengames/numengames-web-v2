@@ -4,6 +4,22 @@ Todas las novedades relevantes de numen.games. Formato basado en
 [Keep a Changelog](https://keepachangelog.com/es/) y versionado
 [SemVer](https://semver.org/lang/es/).
 
+## [1.1.1] — 2026-08-03
+
+### Añadido
+
+- `CLAUDE.md` en la raíz: contexto operativo permanente para agentes
+  (proyecto, stack, canon, comandos, reglas duras y convenciones).
+- Presupuesto de página de 1 MB forzado en CI
+  (`resource-summary:total:size` en Lighthouse).
+
+### Corregido
+
+- Purgados los restos del efecto glitch, prohibido por el canon: spans en la
+  historia (ES/EN), handlers en `init.ts`, regla y `@keyframes` en CSS y
+  menciones en README/ADRs/guía de contenido. Quedan **8 animaciones** del
+  cupo de nueve; la plaza vacante se documenta en `CLAUDE.md`.
+
 ## [1.1.0] — 2026-08-03
 
 Capa de gobernanza para publicar el repositorio con estándares de compañía,

@@ -609,29 +609,6 @@
     }
   }
 
-  /* Glitch puntual: la grieta en la palabra «experiencia». */
-  .js [data-glitch].auto {
-    animation: glitch 850ms steps(2, end) 1;
-  }
-  @keyframes glitch {
-    15% {
-      transform: translate(1px, -1px);
-      text-shadow: -2px 0 var(--ink-faint);
-    }
-    35% {
-      transform: translate(-1px, 1px);
-      text-shadow: 2px 0 var(--ink-faint);
-    }
-    55% {
-      clip-path: inset(18% 0 32% 0);
-    }
-    75% {
-      transform: none;
-      clip-path: none;
-      text-shadow: none;
-    }
-  }
-
   /* Hilo de scroll bajo la cabecera (CSS scroll-driven, con @supports). */
   @supports (animation-timeline: scroll()) {
     .scroll-thread {

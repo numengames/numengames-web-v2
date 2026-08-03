@@ -1,9 +1,9 @@
 {
   "name": "numen-web",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "type": "module",
-  "description": "Web narrativa de Numen Games — numen.games",
+  "description": "Web narrativa de Numen Games \u2014 numen.games",
   "engines": {
     "node": ">=20.3.0"
   },
