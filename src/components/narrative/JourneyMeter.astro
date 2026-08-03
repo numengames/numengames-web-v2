@@ -1,0 +1,42 @@
+---
+import { useTranslations, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const acts = [
+  { n: 'I', anchor: '#acto-1', phases: 'fase-0,fase-1' },
+  { n: 'II', anchor: '#acto-2', phases: 'fase-2,fase-3' },
+  { n: 'III', anchor: '#acto-3', phases: 'fase-4,fase-5,fase-6' },
+];
+---
+
+<journey-progress class="journey-meter" style="--journey-progress: 0">
+  <div
+    class="journey-track"
+    role="progressbar"
+    aria-label={t('journey.label')}
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+  >
+    <div class="journey-fill"></div>
+  </div>
+  <nav class="journey-acts" aria-label={t('journey.label')}>
+    {
+      acts.map((a) => (
+        <a
+          class="journey-act"
+          href={a.anchor}
+          data-phases={a.phases}
+          aria-label={`${t('journey.goto')} ${a.n}`}
+        >
+          {a.n}
+        </a>
+      ))
+    }
+  </nav>
+</journey-progress>

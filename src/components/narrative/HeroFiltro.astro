@@ -1,0 +1,46 @@
+---
+import { useTranslations, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Ancla de la primera sección narrativa (p. ej. "#grieta"). */
+  enterHref: string;
+  actLabel: string;
+}
+const { lang, enterHref, actLabel } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section
+  id="acto-1"
+  class="hero bg-grid grid-fade"
+  data-phase="fase-0"
+  data-act="1"
+  data-act-label={actLabel}
+  aria-labelledby="hero-title"
+>
+  <div class="container-n inner">
+    <h1 class="hero-title" id="hero-title">
+      <span class="hero-line" data-seq style="--seq: 0">{t('hero.l1')}</span>
+      <span class="hero-line hero-alt" data-seq style="--seq: 1">{t('hero.l2')}</span>
+    </h1>
+    <div class="hero-body">
+      <p data-seq style="--seq: 2">{t('hero.p1')}</p>
+      <p data-seq style="--seq: 3">{t('hero.p2')}</p>
+      <p data-seq style="--seq: 3.4">{t('hero.p3')}</p>
+    </div>
+    <p class="cta" data-seq style="--seq: 4">
+      <a class="btn btn-solid" href={enterHref} data-enter>{t('hero.cta')}</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .inner {
+    position: relative;
+    z-index: 1;
+  }
+  .cta {
+    margin-top: 2.6rem;
+  }
+</style>

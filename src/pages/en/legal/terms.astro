@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import type { Lang } from '../../../i18n/ui';
+const lang: Lang = 'en';
+---
+
+<BaseLayout {lang} pageKey="terminos" title="Terms of use">
+  <div class="page-head container-n">
+    <p class="eyebrow">Legal</p>
+    <h1>Terms of use</h1>
+    <p class="legal-note">Working draft v0.1.0 — pending legal review before publishing.</p>
+    <div class="prose-legal">
+      <h2>Use of the site</h2>
+      <p>
+        The contents of numen.games are informational. The narrative universe, texts and visual
+        identity belong to Numen Games and may not be reused without permission.
+      </p>
+      <h2>Liability</h2>
+      <p>
+        We work to keep information accurate, but it may contain errors or omissions. External links
+        are the responsibility of their owners.
+      </p>
+      <h2>Applicable law</h2>
+      <p>Spanish law. <span class="todo">[TO BE DEFINED: jurisdiction]</span></p>
+    </div>
+  </div>
+</BaseLayout>

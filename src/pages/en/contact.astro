@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { Lang } from '../../i18n/ui';
+
+const lang: Lang = 'en';
+---
+
+<BaseLayout
+  {lang}
+  pageKey="contacto"
+  title="Contact"
+  description="Ask us for an adventure: tell us about your event and we will design the game structure it needs."
+>
+  <header class="page-head container-n">
+    <p class="eyebrow">Contact</p>
+    <h1>Ask us for an adventure</h1>
+    <p class="lead">
+      Want your event to generate connections that close business? Tell us what you need to happen
+      and we will design the structure that makes it happen.
+    </p>
+    <p class="lead">
+      <span class="todo">[TO BE DEFINED]</span> Final contact channel (team email, form or calendar).
+      For now, write to
+      <a href="mailto:hola@numen.games">hola@numen.games</a>
+      <span class="todo">placeholder</span>
+    </p>
+  </header>
+
+  <section class="page-section" id="oraculo" aria-labelledby="oracle-title">
+    <div class="container-n">
+      <p class="eyebrow">Consultation</p>
+      <h2 id="oracle-title">Talk to an Oracle</h2>
+      <p class="claim">
+        Thirty minutes to align scope, dynamics and fit with your event. No commitment, no smoke.
+      </p>
+      <p style="margin-top:1.2rem">
+        <a class="btn" href="mailto:hola@numen.games?subject=Talk%20to%20an%20Oracle">
+          Book a conversation
+        </a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

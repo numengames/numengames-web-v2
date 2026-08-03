@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { localePath, type Lang } from '../../i18n/ui';
+
+const lang: Lang = 'en';
+---
+
+<BaseLayout
+  {lang}
+  pageKey="experiencias"
+  title="Experiences"
+  description="Game structures and narrative systems applied to events: intentional networking, qualified lead generation and meaningful orientation."
+>
+  <header class="page-head container-n">
+    <p class="eyebrow">Routes</p>
+    <h1>Experiences</h1>
+    <p class="lead">
+      When an event gathers hundreds of people, filling their time is not enough. We design game
+      structures and narrative systems that make the right things happen: connections, opportunities
+      and journeys with meaning.
+    </p>
+  </header>
+
+  <section class="page-section" id="networking" aria-labelledby="networking-title">
+    <div class="container-n">
+      <p class="eyebrow">Portal 1</p>
+      <h2 id="networking-title">Find the people who matter</h2>
+      <p class="claim">
+        When many people share a space, gathering them is not enough. You need a structure that
+        produces relevant connections, not coincidences.
+      </p>
+      <ul class="op-list">
+        <li>Encounter dynamics driven by affinity and intent, not chance.</li>
+        <li>Missions and roles that give every attendee a reason to talk to the right person.</li>
+        <li>Connections that are recorded and actionable after the event.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="page-section" id="leads" aria-labelledby="leads-title">
+    <div class="container-n">
+      <p class="eyebrow">Portal 2</p>
+      <h2 id="leads-title">Turn the encounter into opportunity</h2>
+      <p class="claim">
+        A conversation without continuity is lost. We turn interaction into useful information:
+        leads qualified by behaviour, not by badge scanning.
+      </p>
+      <ul class="op-list">
+        <li>Mechanics that qualify each contact's real interest during the game itself.</li>
+        <li>An intelligence report for sponsors and sales teams.</li>
+        <li>Follow-up designed from the first contact, not improvised the day after.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="page-section" id="orientacion" aria-labelledby="orientacion-title">
+    <div class="container-n">
+      <p class="eyebrow">Portal 3</p>
+      <h2 id="orientacion-title">Walk the event with meaning</h2>
+      <p class="claim">
+        Some events do not need more entertainment: they need a narrative structure that orients
+        people and activates what must happen in each space.
+      </p>
+      <ul class="op-list">
+        <li>A narrative layer that turns the programme into a journey, not an agenda.</li>
+        <li>Physical and digital activation points that guide without aggressive signage.</li>
+        <li>Designed rhythm: moments of intensity, pause and revelation.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="method-title">
+    <div class="container-n">
+      <p class="eyebrow">Method</p>
+      <h2 id="method-title">How we do it</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>Research</h3>
+          <p>We understand the event, its audiences and what success means for its organisers.</p>
+        </div>
+        <div class="step">
+          <h3>Mapping</h3>
+          <p>We define which behaviours matter and where they must happen.</p>
+        </div>
+        <div class="step">
+          <h3>Architecture</h3>
+          <p>We design the game structure and the narrative that sustains it.</p>
+        </div>
+        <div class="step">
+          <h3>Metrics</h3>
+          <p>We measure what happened and turn it into decisions for the next edition.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-cta">
+    <div class="container-n">
+      <a class="btn btn-solid" href={localePath(lang, 'contacto')}>Ask us for an adventure</a>
+    </div>
+  </section>
+</BaseLayout>

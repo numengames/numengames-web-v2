@@ -1,0 +1,22 @@
+# build
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# logs & env
+npm-debug.log*
+pnpm-debug.log*
+.env
+.env.production
+
+# tooling
+.vscode/*
+!.vscode/extensions.json
+playwright-report/
+test-results/
+.lighthouseci/
+
+# os
+.DS_Store

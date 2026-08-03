@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { localePath, type Lang } from '../../i18n/ui';
+
+const lang: Lang = 'es';
+---
+
+<BaseLayout
+  {lang}
+  pageKey="experiencias"
+  title="Experiencias"
+  description="Estructuras de juego y sistemas narrativos aplicados a eventos: networking con intención, generación de leads cualificados y orientación con sentido."
+>
+  <header class="page-head container-n">
+    <p class="eyebrow">Rutas</p>
+    <h1>Experiencias</h1>
+    <p class="lead">
+      Cuando un evento reúne a cientos de personas, no basta con ocupar su tiempo. Diseñamos
+      estructuras de juego y sistemas narrativos que hacen que ocurra lo que tiene que ocurrir:
+      conexiones, oportunidades y recorridos con sentido.
+    </p>
+  </header>
+
+  <section class="page-section" id="networking" aria-labelledby="networking-title">
+    <div class="container-n">
+      <p class="eyebrow">Portal 1</p>
+      <h2 id="networking-title">Encontrar a quien importa</h2>
+      <p class="claim">
+        Cuando muchas personas comparten un espacio, reunirlas no es suficiente. Hace falta una
+        estructura que produzca conexiones relevantes, no coincidencias.
+      </p>
+      <ul class="op-list">
+        <li>Dinámicas de encuentro dirigidas por afinidad e intención, no por azar.</li>
+        <li>
+          Misiones y roles que dan a cada asistente un motivo para hablar con la persona adecuada.
+        </li>
+        <li>Conexiones registradas y accionables después del evento.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="page-section" id="leads" aria-labelledby="leads-title">
+    <div class="container-n">
+      <p class="eyebrow">Portal 2</p>
+      <h2 id="leads-title">Convertir el encuentro en oportunidad</h2>
+      <p class="claim">
+        Una conversación que no encuentra continuidad se pierde. Convertimos la interacción en
+        información útil: leads cualificados por comportamiento, no por escaneo de acreditación.
+      </p>
+      <ul class="op-list">
+        <li>Mecánicas que cualifican el interés real de cada contacto durante el propio juego.</li>
+        <li>Un informe de inteligencia para patrocinadores y equipos comerciales.</li>
+        <li>Seguimiento diseñado desde el primer contacto, no improvisado al día siguiente.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="page-section" id="orientacion" aria-labelledby="orientacion-title">
+    <div class="container-n">
+      <p class="eyebrow">Portal 3</p>
+      <h2 id="orientacion-title">Recorrer el evento con sentido</h2>
+      <p class="claim">
+        Algunos eventos no necesitan más entretenimiento: necesitan una estructura narrativa que
+        oriente a las personas y active lo que debe ocurrir en cada espacio.
+      </p>
+      <ul class="op-list">
+        <li>Una capa narrativa que convierte el programa en un recorrido, no en una agenda.</li>
+        <li>Puntos de activación físicos y digitales que guían sin señalética agresiva.</li>
+        <li>Ritmo diseñado: momentos de intensidad, pausa y revelación.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="metodo-title">
+    <div class="container-n">
+      <p class="eyebrow">Método</p>
+      <h2 id="metodo-title">Cómo lo hacemos</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>Investigación</h3>
+          <p>Entendemos el evento, sus públicos y qué significa el éxito para quien lo organiza.</p>
+        </div>
+        <div class="step">
+          <h3>Mapeado</h3>
+          <p>Definimos qué comportamientos importan y dónde deben ocurrir.</p>
+        </div>
+        <div class="step">
+          <h3>Arquitectura</h3>
+          <p>Diseñamos la estructura de juego y la narrativa que la sostiene.</p>
+        </div>
+        <div class="step">
+          <h3>Métricas</h3>
+          <p>Medimos lo que ocurrió y lo convertimos en decisiones para la próxima edición.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-cta">
+    <div class="container-n">
+      <a class="btn btn-solid" href={localePath(lang, 'contacto')}>Pídenos una aventura</a>
+    </div>
+  </section>
+</BaseLayout>

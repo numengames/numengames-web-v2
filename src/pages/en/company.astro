@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { localePath, type Lang } from '../../i18n/ui';
+
+const lang: Lang = 'en';
+---
+
+<BaseLayout
+  {lang}
+  pageKey="compania"
+  title="Company"
+  description="Numen Games: designers of game structures and narrative systems applied to business."
+>
+  <header class="page-head container-n">
+    <p class="eyebrow">Company</p>
+    <h1>Who we are</h1>
+    <p class="lead">
+      We design game structures and narrative systems applied to business. Gamification, for us, is
+      human-focused design: behaviour, motivation and memory.
+    </p>
+  </header>
+
+  <section class="page-section" aria-labelledby="somos-title">
+    <div class="container-n">
+      <h2 id="somos-title">We are not · We are</h2>
+      <p class="claim">
+        <span class="todo">[TO BE DEFINED]</span> Port the literal "No somos / Sí somos" copy from the
+        2026 identity deck.
+      </p>
+      <ul class="op-list">
+        <li><strong>We are not</strong> filler entertainment or one more photocall vendor.</li>
+        <li>
+          <strong>We are</strong> architects of systems that produce connections, data and memory.
+        </li>
+        <li>
+          <strong>We are</strong> a team that measures what happens and leaves it better than it was.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="team-title">
+    <div class="container-n">
+      <h2 id="team-title">The team</h2>
+      <p class="claim">Three people leading every expedition.</p>
+      <div class="people">
+        <div class="person">
+          <h3><span class="todo">[TO BE DEFINED]</span> Name 1</h3>
+          <p>Role · email pending confirmation from the deck.</p>
+        </div>
+        <div class="person">
+          <h3><span class="todo">[TO BE DEFINED]</span> Name 2</h3>
+          <p>Role · email pending confirmation from the deck.</p>
+        </div>
+        <div class="person">
+          <h3><span class="todo">[TO BE DEFINED]</span> Name 3</h3>
+          <p>Role · email pending confirmation from the deck.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-cta">
+    <div class="container-n">
+      <a class="btn btn-solid" href={localePath(lang, 'contacto')}>Ask us for an adventure</a>
+    </div>
+  </section>
+</BaseLayout>

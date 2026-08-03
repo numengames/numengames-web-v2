@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import type { Lang } from '../../../i18n/ui';
+const lang: Lang = 'en';
+---
+
+<BaseLayout {lang} pageKey="privacidad" title="Privacy policy">
+  <div class="page-head container-n">
+    <p class="eyebrow">Legal</p>
+    <h1>Privacy policy</h1>
+    <p class="legal-note">Working draft v0.1.0 — pending legal review before publishing.</p>
+    <div class="prose-legal">
+      <h2>Controller</h2>
+      <p>
+        Numen Games (<span class="todo">[TO BE DEFINED: legal name, tax ID and address]</span>),
+        contact: <a href="mailto:hola@numen.games">hola@numen.games</a>.
+      </p>
+      <h2>What data we process</h2>
+      <p>
+        This site has no forms or user accounts and sends no personal data to our servers. If you
+        email us, we process your address and message only to reply.
+      </p>
+      <h2>Analytics</h2>
+      <p>
+        We use no tracking cookies or advertising profiles. If we enable analytics it will be a
+        cookieless, aggregated tool (Plausible or Umami) and this page will be updated.
+      </p>
+      <h2>Your rights</h2>
+      <p>You can exercise access, rectification, erasure and objection rights by email.</p>
+    </div>
+  </div>
+</BaseLayout>

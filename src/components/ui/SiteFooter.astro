@@ -1,0 +1,90 @@
+---
+import pkg from '../../../package.json';
+import { localePath, useTranslations, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container-n">
+    <p class="motto">{t('footer.motto')}</p>
+
+    <div class="cols">
+      <nav aria-label={t('footer.legal')}>
+        <ul>
+          <li><a href={localePath(lang, 'privacidad')}>Privacidad · Privacy</a></li>
+          <li><a href={localePath(lang, 'terminos')}>Términos · Terms</a></li>
+          <li><a href={localePath(lang, 'cookies')}>Cookies</a></li>
+        </ul>
+      </nav>
+
+      <journey-reset data-done={t('journey.resetDone')}>
+        <button type="button" class="btn btn-quiet">{t('journey.reset')}</button>
+      </journey-reset>
+    </div>
+
+    <p class="fine">
+      © {year}
+      {t('site.name')} · {t('footer.version')}
+      <span class="ver">v{pkg.version}</span>
+    </p>
+    <p id="numinia-sigil" class="sigil">{t('footer.sigil')}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--section-pad);
+    border-top: 1px solid var(--line);
+    padding-block: 3rem 5.5rem; /* deja aire a la carta de travesía */
+    background: var(--surface-sunken);
+  }
+  .motto {
+    font-family: var(--stack-serif);
+    font-style: italic;
+    font-size: var(--text-lg);
+    color: var(--ink-muted);
+  }
+  .cols {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+  }
+  a:hover {
+    color: var(--ink);
+  }
+  .fine {
+    margin-top: 1.6rem;
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+  }
+  .ver {
+    font-family: var(--stack-display);
+    color: var(--accent);
+  }
+  .sigil {
+    margin-top: 0.6rem;
+    font-size: var(--text-sm);
+  }
+</style>

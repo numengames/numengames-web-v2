@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import type { Lang } from '../../../i18n/ui';
+const lang: Lang = 'en';
+---
+
+<BaseLayout {lang} pageKey="cookies" title="Cookies & storage">
+  <div class="page-head container-n">
+    <p class="eyebrow">Legal</p>
+    <h1>Cookies and local storage</h1>
+    <p class="legal-note">Working draft v0.1.0 — pending legal review before publishing.</p>
+    <div class="prose-legal">
+      <h2>No tracking cookies</h2>
+      <p>
+        This site sets no third-party or advertising cookies. We only use your browser's local
+        storage for essential features of the experience:
+      </p>
+      <ul class="op-list">
+        <li><code>numen.journey.v1</code> — your journey progress, choices and findings.</li>
+        <li><code>numen.theme</code> — your light or dark theme preference.</li>
+        <li><code>numen.cookies.ack</code> — that you have seen this notice.</li>
+      </ul>
+      <h2>How to clear it</h2>
+      <p>
+        Use "Reset the journey" in the footer to clear your progress, or clear site data from your
+        browser to remove everything.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

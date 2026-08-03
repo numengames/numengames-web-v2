@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import type { Lang } from '../../../i18n/ui';
+const lang: Lang = 'es';
+---
+
+<BaseLayout {lang} pageKey="terminos" title="Términos de uso">
+  <div class="page-head container-n">
+    <p class="eyebrow">Legal</p>
+    <h1>Términos de uso</h1>
+    <p class="legal-note">
+      Borrador funcional v0.1.0 — pendiente de revisión legal antes de publicar.
+    </p>
+    <div class="prose-legal">
+      <h2>Uso del sitio</h2>
+      <p>
+        Los contenidos de numen.games son informativos. El universo narrativo, los textos y la
+        identidad visual pertenecen a Numen Games y no pueden reutilizarse sin permiso.
+      </p>
+      <h2>Responsabilidad</h2>
+      <p>
+        Trabajamos para que la información sea correcta, pero puede contener errores u omisiones.
+        Los enlaces externos son responsabilidad de sus titulares.
+      </p>
+      <h2>Ley aplicable</h2>
+      <p>Legislación española. <span class="todo">[POR DEFINIR: fuero]</span></p>
+    </div>
+  </div>
+</BaseLayout>

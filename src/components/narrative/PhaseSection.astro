@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'story'>;
+  slug: string;
+  actLabel: string;
+  /** id extra para las anclas de acto (#acto-2, #acto-3). */
+  actAnchor?: string;
+}
+const { entry, slug, actLabel, actAnchor } = Astro.props;
+const { Content } = await render(entry);
+const headingId = `${slug}-title`;
+---
+
+<section
+  id={actAnchor ?? slug}
+  class="phase"
+  data-phase={`fase-${entry.data.phase}`}
+  data-act={String(entry.data.act)}
+  data-act-label={actLabel}
+  aria-labelledby={headingId}
+>
+  <div class="container-n">
+    {actAnchor && <span id={slug} />}
+    <p class="eyebrow" data-reveal>{actLabel}</p>
+    <h2 class="phase-title" id={headingId} data-reveal>{entry.data.title}</h2>
+    {
+      entry.data.subtitle && (
+        <p class="phase-sub" data-reveal>
+          {entry.data.subtitle}
+        </p>
+      )
+    }
+    <div class="prose-n" data-reveal>
+      <Content />
+    </div>
+    <slot />
+  </div>
+</section>

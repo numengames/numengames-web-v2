@@ -1,0 +1,91 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/fraunces/opsz.css';
+import '../styles/global.css';
+
+import { languages, localePath, useTranslations, type Lang, type PageKey } from '../i18n/ui';
+import SkipLink from '../components/a11y/SkipLink.astro';
+import SiteHeader from '../components/ui/SiteHeader.astro';
+import SiteFooter from '../components/ui/SiteFooter.astro';
+import CookieNotice from '../components/ui/CookieNotice.astro';
+
+interface Props {
+  lang: Lang;
+  pageKey: PageKey;
+  title?: string;
+  description?: string;
+}
+
+const { lang, pageKey, title, description } = Astro.props;
+const t = useTranslations(lang);
+
+const pageTitle = title
+  ? `${title} — ${t('site.name')}`
+  : `${t('site.name')} — ${t('site.tagline')}`;
+const pageDescription = description ?? t('site.description');
+const site = Astro.site ?? new URL('https://numen.games');
+const canonical = new URL(localePath(lang, pageKey), site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical.href} />
+    {
+      (Object.keys(languages) as Lang[]).map((l) => (
+        <link rel="alternate" hreflang={l} href={new URL(localePath(l, pageKey), site).href} />
+      ))
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(localePath('es', pageKey), site).href}
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical.href} />
+
+    <!-- Tema sin FOUC + marca de JS disponible. -->
+    <script is:inline>
+      (function () {
+        const d = document.documentElement;
+        d.classList.add('js');
+        let t = null;
+        try {
+          t = localStorage.getItem('numen.theme');
+        } catch {
+          /* noop */
+        }
+        if (t !== 'light' && t !== 'dark') {
+          try {
+            t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          } catch {
+            t = 'dark';
+          }
+        }
+        d.dataset.theme = t;
+      })();
+    </script>
+  </head>
+  <body>
+    <SkipLink {lang} />
+    <div class="scroll-thread" aria-hidden="true"></div>
+    <SiteHeader {lang} {pageKey} />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter {lang} />
+    <CookieNotice {lang} />
+    <div id="sr-announcer" class="visually-hidden" aria-live="polite"></div>
+    <script>
+      import '../scripts/init.ts';
+    </script>
+  </body>
+</html>

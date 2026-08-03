@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import type { Lang } from '../../../i18n/ui';
+const lang: Lang = 'es';
+---
+
+<BaseLayout {lang} pageKey="cookies" title="Cookies y almacenamiento">
+  <div class="page-head container-n">
+    <p class="eyebrow">Legal</p>
+    <h1>Cookies y almacenamiento local</h1>
+    <p class="legal-note">
+      Borrador funcional v0.1.0 — pendiente de revisión legal antes de publicar.
+    </p>
+    <div class="prose-legal">
+      <h2>Sin cookies de rastreo</h2>
+      <p>
+        Esta web no instala cookies de terceros ni de publicidad. Usamos únicamente el
+        almacenamiento local de tu navegador (localStorage) para funciones esenciales de la
+        experiencia:
+      </p>
+      <ul class="op-list">
+        <li><code>numen.journey.v1</code> — tu progreso, elecciones y hallazgos del viaje.</li>
+        <li><code>numen.theme</code> — tu preferencia de tema claro u oscuro.</li>
+        <li><code>numen.cookies.ack</code> — que ya has visto este aviso.</li>
+      </ul>
+      <h2>Cómo borrarlo</h2>
+      <p>
+        Usa «Reiniciar el viaje» en el pie de página para borrar tu progreso, o limpia los datos del
+        sitio desde tu navegador para eliminarlo todo.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

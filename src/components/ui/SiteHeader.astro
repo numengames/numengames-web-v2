@@ -1,0 +1,123 @@
+---
+import { localePath, useTranslations, type Lang, type PageKey } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  pageKey: PageKey;
+}
+const { lang, pageKey } = Astro.props;
+const t = useTranslations(lang);
+const otherLang: Lang = lang === 'es' ? 'en' : 'es';
+---
+
+<header class="site-header">
+  <div class="container-n bar">
+    <a class="wordmark" href={localePath(lang, 'home')} data-wordmark>
+      <span>numen</span>
+      <span>games</span>
+    </a>
+
+    <nav aria-label={t('nav.label')}>
+      <ul>
+        <li><a href={localePath(lang, 'experiencias')}>{t('nav.experiencias')}</a></li>
+        <li><a href={localePath(lang, 'compania')}>{t('nav.compania')}</a></li>
+        <li><a href={localePath(lang, 'contacto')}>{t('nav.contacto')}</a></li>
+      </ul>
+    </nav>
+
+    <div class="tools">
+      <a class="lang" href={localePath(otherLang, pageKey)} aria-label={t('nav.langSwitch')}>
+        {otherLang.toUpperCase()}
+      </a>
+      <theme-toggle data-dark-on={t('theme.dark')} data-light-on={t('theme.light')}>
+        <button type="button" aria-label={t('theme.toggle')}>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none">
+            <circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.5"></circle>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5Z" fill="currentColor"></path>
+          </svg>
+        </button>
+      </theme-toggle>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3.6rem;
+  }
+  .wordmark {
+    display: grid;
+    line-height: 0.92;
+    font-family: var(--stack-display);
+    font-weight: 800;
+    font-stretch: 125%;
+    font-size: 0.98rem;
+    letter-spacing: 0.03em;
+    text-transform: lowercase;
+    text-decoration: none;
+    user-select: none;
+  }
+  nav ul {
+    display: flex;
+    gap: clamp(0.9rem, 2.5vw, 1.8rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav a,
+  .lang {
+    font-family: var(--stack-display);
+    font-size: var(--text-xs);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-muted);
+    padding-block: 0.4rem;
+  }
+  nav a:hover,
+  .lang:hover {
+    color: var(--ink);
+  }
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+  theme-toggle button {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink-muted);
+    cursor: pointer;
+  }
+  theme-toggle button:hover {
+    color: var(--ink);
+    border-color: var(--ink-muted);
+  }
+
+  @media (max-width: 40rem) {
+    nav ul {
+      gap: 0.8rem;
+    }
+    nav a,
+    .lang {
+      letter-spacing: 0.1em;
+    }
+  }
+</style>

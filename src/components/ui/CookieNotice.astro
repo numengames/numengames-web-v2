@@ -1,0 +1,18 @@
+---
+import { localePath, useTranslations, type Lang } from '../../i18n/ui';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<cookie-notice class="notice" role="region" aria-label="Cookies">
+  <div class="notice-inner">
+    <p>
+      {t('cookies.text')}
+      <a href={localePath(lang, 'cookies')}>{t('cookies.more')}</a>
+    </p>
+    <button type="button" class="btn">{t('cookies.ok')}</button>
+  </div>
+</cookie-notice>

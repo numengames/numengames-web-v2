@@ -1,0 +1,25 @@
+---
+import { localePath, useTranslations, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="ctas" data-reveal>
+  <a class="btn btn-solid" href={localePath(lang, 'contacto')}>{t('umbral.cta.evento')}</a>
+  <a class="btn" href={localePath(lang, 'contacto', '#oraculo')}>{t('umbral.cta.oraculo')}</a>
+  <a class="btn btn-quiet" href={localePath(lang, 'experiencias')}>{t('umbral.cta.explorar')}</a>
+</div>
+
+<style>
+  .ctas {
+    margin-top: 2.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+  }
+</style>

@@ -1,0 +1,94 @@
+/* ============================================================
+   NUMEN GAMES — Design tokens
+   Fuente única de verdad. Valores extraídos de los decks 2026
+   (carbón, oro/crema, retícula, wordmark blanco).
+   TODO: validar contra la guía de marca oficial cuando exista.
+   ============================================================ */
+
+:root {
+  /* ---- Marca: crudos -------------------------------------- */
+  --carbon-950: #131316;
+  --carbon-900: #1b1b1f;
+  --carbon-800: #232329;
+  --carbon-700: #2d2d35;
+
+  --paper-50: #f7f4ec;
+  --paper-100: #efeadd;
+
+  --bone-100: #f2efe7; /* texto sobre carbón */
+  --bone-400: #a4a4ae;
+
+  --gold-300: #efdcaa; /* crema de los decks */
+  --gold-400: #e6cb85; /* oro principal (fondo oscuro) */
+  --gold-700: #8a6c29; /* oro legible sobre papel */
+  --gold-800: #6e5518;
+
+  /* ---- Tipografía ----------------------------------------- */
+  --stack-display: 'Archivo Variable', system-ui, sans-serif;
+  --stack-body: 'Archivo Variable', system-ui, sans-serif;
+  --stack-serif: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+
+  /* Escala fluida (mín. móvil → máx. escritorio) */
+  --text-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+  --text-sm: clamp(0.85rem, 0.82rem + 0.15vw, 0.95rem);
+  --text-base: clamp(1rem, 0.96rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
+  --text-xl: clamp(1.45rem, 1.2rem + 1.1vw, 2rem);
+  --text-2xl: clamp(1.9rem, 1.4rem + 2.2vw, 3rem);
+  --text-3xl: clamp(2.4rem, 1.6rem + 3.6vw, 4.2rem);
+
+  --leading-tight: 1.08;
+  --leading-normal: 1.6;
+  --measure: 62ch;
+
+  /* ---- Espaciado / forma ---------------------------------- */
+  --section-pad: clamp(4.5rem, 12vh, 8.5rem);
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --radius-1: 4px;
+  --radius-2: 10px;
+  --grid-size: 76px;
+
+  /* ---- Movimiento ----------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.28, 1);
+  --dur-1: 180ms;
+  --dur-2: 480ms;
+  --dur-3: 950ms;
+
+  /* ---- Capas ---------------------------------------------- */
+  --z-header: 50;
+  --z-meter: 60;
+  --z-notice: 70;
+}
+
+/* ---- Tema oscuro (por defecto de marca) -------------------- */
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --surface: var(--carbon-900);
+  --surface-raised: var(--carbon-800);
+  --surface-sunken: var(--carbon-950);
+  --ink: var(--bone-100);
+  --ink-muted: var(--bone-400);
+  --accent: var(--gold-400);
+  --accent-soft: var(--gold-300);
+  --accent-contrast: var(--carbon-950); /* texto sobre acento */
+  --line: color-mix(in srgb, var(--bone-100) 16%, transparent);
+  --grid-line: color-mix(in srgb, var(--bone-100) 7%, transparent);
+  --focus-ring: var(--gold-300);
+}
+
+/* ---- Tema claro ------------------------------------------- */
+[data-theme='light'] {
+  color-scheme: light;
+  --surface: var(--paper-50);
+  --surface-raised: #ffffff;
+  --surface-sunken: var(--paper-100);
+  --ink: var(--carbon-900);
+  --ink-muted: #565660;
+  --accent: var(--gold-700);
+  --accent-soft: var(--gold-800);
+  --accent-contrast: var(--paper-50);
+  --line: color-mix(in srgb, var(--carbon-900) 18%, transparent);
+  --grid-line: color-mix(in srgb, var(--carbon-900) 9%, transparent);
+  --focus-ring: var(--carbon-900);
+}

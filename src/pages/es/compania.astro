@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { localePath, type Lang } from '../../i18n/ui';
+
+const lang: Lang = 'es';
+---
+
+<BaseLayout
+  {lang}
+  pageKey="compania"
+  title="Compañía"
+  description="Numen Games: diseñadores de estructuras de juego y sistemas narrativos aplicados a la empresa."
+>
+  <header class="page-head container-n">
+    <p class="eyebrow">Compañía</p>
+    <h1>Quiénes somos</h1>
+    <p class="lead">
+      Diseñamos estructuras de juego y sistemas narrativos aplicados a la empresa. La gamificación,
+      para nosotros, es diseño centrado en lo humano: comportamiento, motivación y memoria.
+    </p>
+  </header>
+
+  <section class="page-section" aria-labelledby="somos-title">
+    <div class="container-n">
+      <h2 id="somos-title">No somos · Sí somos</h2>
+      <p class="claim">
+        <span class="todo">[POR DEFINIR]</span> Trasladar aquí el texto literal «No somos / Sí somos»
+        del deck de identidad 2026.
+      </p>
+      <ul class="op-list">
+        <li><strong>No somos</strong> animación de relleno ni un proveedor más de photocall.</li>
+        <li>
+          <strong>Sí somos</strong> arquitectos de sistemas que producen conexiones, datos y memoria.
+        </li>
+        <li>
+          <strong>Sí somos</strong> un equipo que mide lo que ocurre y lo deja mejor de lo que estaba.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="equipo-title">
+    <div class="container-n">
+      <h2 id="equipo-title">El equipo</h2>
+      <p class="claim">Tres personas al frente de cada expedición.</p>
+      <div class="people">
+        <div class="person">
+          <h3><span class="todo">[POR DEFINIR]</span> Nombre 1</h3>
+          <p>Rol · correo pendiente de confirmar del deck.</p>
+        </div>
+        <div class="person">
+          <h3><span class="todo">[POR DEFINIR]</span> Nombre 2</h3>
+          <p>Rol · correo pendiente de confirmar del deck.</p>
+        </div>
+        <div class="person">
+          <h3><span class="todo">[POR DEFINIR]</span> Nombre 3</h3>
+          <p>Rol · correo pendiente de confirmar del deck.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-cta">
+    <div class="container-n">
+      <a class="btn btn-solid" href={localePath(lang, 'contacto')}>Pídenos una aventura</a>
+    </div>
+  </section>
+</BaseLayout>
