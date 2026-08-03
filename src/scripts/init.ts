@@ -2,9 +2,28 @@
  * Progressive enhancement del sitio. Sin este script todo sigue siendo
  * legible y navegable; con él, el viaje se mide, elige y recuerda.
  */
-import { createJourney, type Journey, type JourneySnapshot } from './journey';
+import { createJourney, type Journey, type JourneySnapshot, type StorageLike } from './journey';
 
 const motionOK = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+
+/* Almacenamiento seguro: si localStorage está bloqueado (sandbox, privacidad
+   estricta), degradamos a memoria y la sesión sigue funcionando. */
+const storage: StorageLike = (() => {
+  try {
+    const s = window.localStorage;
+    const probe = '__numen.probe';
+    s.setItem(probe, '1');
+    s.removeItem(probe);
+    return s;
+  } catch {
+    const mem = new Map<string, string>();
+    return {
+      getItem: (k) => mem.get(k) ?? null,
+      setItem: (k, v) => void mem.set(k, v),
+      removeItem: (k) => void mem.delete(k),
+    };
+  }
+})();
 
 /* ---------- región viva para anuncios de lector de pantalla ---------- */
 function announce(text: string) {
@@ -19,7 +38,7 @@ function announce(text: string) {
 /* ------------------------- viaje (estado) ---------------------------- */
 const phaseEls = Array.from(document.querySelectorAll<HTMLElement>('[data-phase]'));
 const phaseIds = phaseEls.map((el) => el.dataset.phase as string);
-const journey: Journey = createJourney(window.localStorage, phaseIds);
+const journey: Journey = createJourney(storage, phaseIds);
 
 /* Marca fases vistas al entrar en viewport y anuncia cambios de acto. */
 if (phaseEls.length > 0) {
@@ -142,7 +161,7 @@ class ThemeToggle extends HTMLElement {
       const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
       document.documentElement.dataset.theme = next;
       try {
-        localStorage.setItem('numen.theme', next);
+        storage.setItem('numen.theme', next);
       } catch {
         /* noop */
       }
@@ -157,14 +176,14 @@ class CookieNotice extends HTMLElement {
   connectedCallback() {
     let ack = null;
     try {
-      ack = localStorage.getItem('numen.cookies.ack');
+      ack = storage.getItem('numen.cookies.ack');
     } catch {
       /* noop */
     }
     if (!ack) this.classList.add('is-open');
     this.querySelector('button')?.addEventListener('click', () => {
       try {
-        localStorage.setItem('numen.cookies.ack', '1');
+        storage.setItem('numen.cookies.ack', '1');
       } catch {
         /* noop */
       }
