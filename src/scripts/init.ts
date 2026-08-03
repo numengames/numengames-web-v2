@@ -10,6 +10,7 @@ import {
   type JourneySnapshot,
   type StorageLike,
 } from './journey';
+import { audio } from './audio';
 
 const motionOK = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
 
@@ -52,6 +53,7 @@ async function typeText(el: HTMLElement, text: string, isCancelled: () => boolea
   for (const ch of text) {
     if (isCancelled()) return;
     el.textContent += ch;
+    if (ch !== ' ' && ch !== '\n') audio.blip();
     await sleep(PUNCT.test(ch) ? 130 : 15);
   }
 }
@@ -79,6 +81,10 @@ async function typeRich(el: HTMLElement) {
 const phaseEls = Array.from(document.querySelectorAll<HTMLElement>('[data-phase]'));
 const phaseIds = phaseEls.map((el) => el.dataset.phase as string);
 const journey: Journey = createJourney(storage, phaseIds);
+
+/* Preferencia de sonido + desbloqueo con el primer gesto. */
+audio.setEnabled(storage.getItem('numen.audio') !== 'off');
+document.addEventListener('pointerdown', () => audio.unlockOnly(), { once: true });
 
 /* Marca fases vistas al entrar en viewport y anuncia cambios de acto. */
 if (phaseEls.length > 0) {
@@ -214,6 +220,7 @@ customElements.define('type-writer', TypeWriter);
 /* ----------------------- <journey-progress> -------------------------- */
 class JourneyProgress extends HTMLElement {
   #last = -1;
+  #lit = new Set<string>();
   connectedCallback() {
     const update = (snap: JourneySnapshot) => {
       const pct = Math.round(snap.progress * 100);
@@ -233,6 +240,8 @@ class JourneyProgress extends HTMLElement {
       if (sEl) sEl.textContent = pad(score);
       if (mEl) mEl.textContent = pad(max);
       bar?.setAttribute('aria-valuetext', `${pct}% · ${pad(score)}/${pad(max)}`);
+      const isFirst = this.#last < 0;
+      if (!isFirst && score - this.#last === 10) audio.coin();
       if (motionOK && this.#last >= 0 && score > this.#last) {
         const f = document.createElement('span');
         f.className = 'pts-float';
@@ -242,10 +251,19 @@ class JourneyProgress extends HTMLElement {
       }
       this.#last = score;
       this.querySelectorAll<HTMLElement>('.journey-act').forEach((a) => {
-        const actPhases = (a.dataset.phases ?? '').split(',').filter(Boolean);
+        const key = a.dataset.phases ?? '';
+        const actPhases = key.split(',').filter(Boolean);
         const lit = actPhases.some((p) => snap.visited.includes(p));
-        if (lit) a.setAttribute('data-lit', '');
-        else a.removeAttribute('data-lit');
+        if (lit) {
+          a.setAttribute('data-lit', '');
+          if (!this.#lit.has(key)) {
+            this.#lit.add(key);
+            if (!isFirst) audio.chime();
+          }
+        } else {
+          a.removeAttribute('data-lit');
+          this.#lit.delete(key);
+        }
       });
     };
     update(journey.snapshot());
@@ -279,6 +297,7 @@ class JourneyChoice extends HTMLElement {
       btn.addEventListener('click', () => {
         const idx = Number(btn.dataset.option);
         journey.choose(id, idx);
+        audio.confirm();
         open(idx, true);
         announce(`${this.dataset.announce ?? ''} ${btn.textContent?.trim() ?? ''}`.trim());
       });
@@ -361,6 +380,7 @@ customElements.define('cookie-notice', CookieNotice);
     timer = window.setTimeout(() => (taps = 0), 1500);
     if (taps >= 5 && !journey.hasEgg('sigil')) {
       journey.unlockEgg('sigil');
+      audio.secret();
       reveal();
       announce(sigil?.textContent ?? '');
     }
@@ -370,4 +390,77 @@ customElements.define('cookie-notice', CookieNotice);
 /* --------- «Entrar»: registra el cruce del umbral (fase 0) ------------ */
 document.querySelector('[data-enter]')?.addEventListener('click', () => {
   journey.markVisited('fase-0');
+  audio.userGesture();
 });
+
+/* -------------------------- <audio-toggle> --------------------------- */
+class AudioToggle extends HTMLElement {
+  connectedCallback() {
+    const btn = this.querySelector('button');
+    const apply = (on: boolean) => btn?.setAttribute('aria-pressed', String(on));
+    apply(audio.enabled);
+    btn?.addEventListener('click', () => {
+      const next = !audio.enabled;
+      audio.setEnabled(next);
+      storage.setItem('numen.audio', next ? 'on' : 'off');
+      apply(next);
+      announce(next ? (this.dataset.on ?? '') : (this.dataset.off ?? ''));
+    });
+  }
+}
+customElements.define('audio-toggle', AudioToggle);
+
+/* --------- Panorámica: anclas por panel y paseo del Nómada ------------ */
+const horizontalMQ = window.matchMedia(
+  '(prefers-reduced-motion: no-preference) and (min-width: 48rem)',
+);
+const horizontalOn = () => horizontalMQ.matches && CSS.supports('animation-timeline: view()');
+
+const journeyWrap = document.querySelector<HTMLElement>('.journey-h');
+const panels = Array.from(document.querySelectorAll<HTMLElement>('.journey-track > .panel'));
+
+function scrollToPanel(target: HTMLElement, smooth: boolean): boolean {
+  if (!journeyWrap) return false;
+  const idx = panels.findIndex((p) => p === target || p.contains(target));
+  if (idx < 0) return false;
+  const top = journeyWrap.offsetTop + idx * window.innerHeight;
+  window.scrollTo({ top, behavior: smooth ? 'smooth' : 'auto' });
+  return true;
+}
+
+if (journeyWrap && panels.length > 0) {
+  document.addEventListener('click', (e) => {
+    if (!horizontalOn()) return;
+    const a = (e.target as HTMLElement).closest?.('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute('href')?.slice(1);
+    const target = id ? document.getElementById(id) : null;
+    if (target && journeyWrap.contains(target) && scrollToPanel(target, motionOK)) {
+      e.preventDefault();
+    }
+  });
+
+  if (location.hash) {
+    const target = document.getElementById(location.hash.slice(1));
+    if (target && journeyWrap.contains(target)) {
+      requestAnimationFrame(() => {
+        if (horizontalOn()) scrollToPanel(target, false);
+      });
+    }
+  }
+
+  const walker = document.querySelector('.nomada-walker');
+  if (walker) {
+    let idleTimer: number | undefined;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!horizontalOn()) return;
+        walker.classList.add('is-walking');
+        window.clearTimeout(idleTimer);
+        idleTimer = window.setTimeout(() => walker.classList.remove('is-walking'), 170);
+      },
+      { passive: true },
+    );
+  }
+}

@@ -1067,3 +1067,164 @@
     }
   }
 }
+
+/* ================================================================
+   PANORÁMICA IZQUIERDA → DERECHA (v0.3.0)
+   El scroll vertical nativo desliza el mundo en horizontal
+   (CSS scroll-driven animations). Fallback automático: en móvil,
+   con prefers-reduced-motion o sin soporte, la home vuelve a la
+   lectura vertical de siempre. El Nómada camina cuando tú avanzas.
+   ================================================================ */
+@layer components {
+  .scene-char {
+    margin-top: 0.4rem;
+    color: var(--ink);
+  }
+  .scene-char .character {
+    width: clamp(64px, 9vw, 104px);
+    height: auto;
+    image-rendering: pixelated;
+  }
+  .speaker {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  .speaker-icon svg {
+    width: 20px;
+    height: 20px;
+    image-rendering: pixelated;
+    display: block;
+    color: var(--ink-muted);
+  }
+  .hero-nomada {
+    margin-top: 2.2rem;
+    display: flex;
+    justify-content: center;
+    color: var(--ink);
+  }
+  .hero-nomada .character {
+    width: 72px;
+    image-rendering: pixelated;
+  }
+  .nomada-walker {
+    display: none;
+  }
+  .nomada .f-b {
+    opacity: 0;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 48rem) {
+    @layer components {
+      .journey-h {
+        height: calc(var(--panels, 1) * 100vh);
+        view-timeline: --journey block;
+      }
+      .journey-sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: hidden;
+      }
+      /* Suelo pixelado sobre el que camina el Nómada. */
+      .journey-sticky::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 44px;
+        border-top: 3px solid var(--ink);
+        background:
+          repeating-linear-gradient(90deg, var(--accent) 0 3px, transparent 3px 56px) 0 8px / 100%
+            3px no-repeat,
+          repeating-linear-gradient(90deg, var(--line) 0 2px, transparent 2px 10px),
+          var(--surface-sunken);
+        z-index: 4;
+      }
+      .journey-track {
+        display: flex;
+        height: 100%;
+        animation: panorama linear both;
+        animation-timeline: --journey;
+        animation-range: contain 0% contain 100%;
+        will-change: transform;
+      }
+      .journey-track > .panel {
+        flex: 0 0 100vw;
+        width: 100vw;
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        padding: calc(3.6rem + 1.5rem) clamp(1.5rem, 4vw, 4rem) 78px;
+        border-top: 0;
+      }
+      .journey-track > .panel + .panel {
+        border-left: 1px solid var(--line);
+      }
+      .journey-track > .panel .container-n {
+        width: min(100%, 62rem);
+      }
+      .hero.panel {
+        min-height: 0;
+      }
+      .hero-nomada {
+        display: none; /* en la panorámica ya camina abajo */
+      }
+      .portal-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.9rem;
+      }
+      .portal {
+        min-height: 10.5rem;
+        padding: 1.1rem;
+      }
+      .nomada-walker {
+        display: block;
+        position: absolute;
+        left: clamp(0.8rem, 5vw, 3.5rem);
+        bottom: 36px;
+        z-index: 5;
+        color: var(--ink);
+      }
+      .nomada-walker .character {
+        width: clamp(56px, 6vw, 76px);
+        image-rendering: pixelated;
+      }
+      .nomada-walker.is-walking .f-a {
+        animation: stride-a 0.34s steps(1) infinite;
+      }
+      .nomada-walker.is-walking .f-b {
+        animation: stride-b 0.34s steps(1) infinite;
+      }
+    }
+    @keyframes panorama {
+      to {
+        transform: translateX(calc((1 - var(--panels, 1)) * 100vw));
+      }
+    }
+    @keyframes stride-a {
+      0%,
+      49% {
+        opacity: 1;
+      }
+      50%,
+      100% {
+        opacity: 0;
+      }
+    }
+    @keyframes stride-b {
+      0%,
+      49% {
+        opacity: 0;
+      }
+      50%,
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+}

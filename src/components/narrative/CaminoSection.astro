@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import CharacterSprite from './CharacterSprite.astro';
+import { useTranslations, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  entry: CollectionEntry<'story'>;
+  slug: string;
+  actLabel: string;
+}
+const { lang, entry, slug, actLabel } = Astro.props;
+const t = useTranslations(lang);
+const { Content } = await render(entry);
+const headingId = `${slug}-title`;
+const choice = entry.data.choice;
+---
+
+<section class="phase panel camino-panel" aria-labelledby={headingId}>
+  <div class="container-n">
+    <p class="eyebrow" data-reveal>{actLabel}</p>
+    <h2 class="phase-title" id={headingId} data-reveal>{entry.data.title}</h2>
+
+    <div class="scene" data-reveal>
+      <div class="scene-char"><CharacterSprite name="senet" /></div>
+      <div class="dialog px">
+        <p class="speaker"><span>{t('speaker.senet')}</span></p>
+        <type-writer class="prose-n" data-skip-label={t('tw.skip')}>
+          <Content />
+        </type-writer>
+
+        {
+          choice && (
+            <journey-choice data-id={`choice-${slug}`} data-announce={t('a11y.choiceMade')}>
+              <p class="choice-q">{choice.question}</p>
+              <div class="choice-opts" role="group" aria-label={choice.question}>
+                {choice.options.map((opt, i) => (
+                  <button type="button" class="btn" data-option={i}>
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+              {choice.options.map((opt, i) => (
+                <div class="choice-outcome" data-outcome={i}>
+                  <p class="outcome-label">
+                    {t('choice.if')} «{opt.label}»
+                  </p>
+                  <p>{opt.outcome}</p>
+                </div>
+              ))}
+            </journey-choice>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

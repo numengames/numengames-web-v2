@@ -29,6 +29,33 @@ const otherLang: Lang = lang === 'es' ? 'en' : 'es';
       <a class="lang" href={localePath(otherLang, pageKey)} aria-label={t('nav.langSwitch')}>
         {otherLang.toUpperCase()}
       </a>
+      <audio-toggle data-on={t('audio.on')} data-off={t('audio.off')}>
+        <button type="button" aria-pressed="true" aria-label={t('audio.toggle')}>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+            fill="currentColor"
+            shape-rendering="crispEdges"
+          >
+            <rect x="2" y="6" width="3" height="4"></rect>
+            <rect x="5" y="4" width="2" height="8"></rect>
+            <rect x="7" y="2" width="2" height="12"></rect>
+            <g class="snd-on">
+              <rect x="11" y="5" width="1" height="6"></rect>
+              <rect x="13" y="3" width="1" height="10"></rect>
+            </g>
+            <g class="snd-off">
+              <rect x="11" y="5" width="1" height="1"></rect>
+              <rect x="13" y="5" width="1" height="1"></rect>
+              <rect x="12" y="7" width="1" height="1"></rect>
+              <rect x="11" y="9" width="1" height="1"></rect>
+              <rect x="13" y="9" width="1" height="1"></rect>
+            </g>
+          </svg>
+        </button>
+      </audio-toggle>
       <theme-toggle data-dark-on={t('theme.dark')} data-light-on={t('theme.light')}>
         <button type="button" aria-label={t('theme.toggle')}>
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none">
@@ -95,6 +122,7 @@ const otherLang: Lang = lang === 'es' ? 'en' : 'es';
     align-items: center;
     gap: 0.9rem;
   }
+  audio-toggle button,
   theme-toggle button {
     display: grid;
     place-items: center;
@@ -106,6 +134,7 @@ const otherLang: Lang = lang === 'es' ? 'en' : 'es';
     color: var(--ink-muted);
     cursor: pointer;
   }
+  audio-toggle button:hover,
   theme-toggle button:hover {
     color: var(--ink);
     border-color: var(--ink-muted);
@@ -119,5 +148,15 @@ const otherLang: Lang = lang === 'es' ? 'en' : 'es';
     .lang {
       letter-spacing: 0.1em;
     }
+  }
+  audio-toggle .snd-off,
+  audio-toggle [aria-pressed='false'] .snd-on {
+    display: none;
+  }
+  audio-toggle [aria-pressed='false'] .snd-off {
+    display: block;
+  }
+  audio-toggle [aria-pressed='false'] {
+    color: var(--accent);
   }
 </style>

@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
 import PixelIcon from './PixelIcon.astro';
+import CharacterSprite from './CharacterSprite.astro';
 import { useTranslations, type Lang } from '../../i18n/ui';
 
 interface Props {
@@ -30,7 +31,7 @@ const icon = icons[entry.data.phase as keyof typeof icons] ?? 'brujula';
 
 <section
   id={actAnchor ?? slug}
-  class="phase"
+  class="phase panel"
   data-phase={`fase-${entry.data.phase}`}
   data-act={String(entry.data.act)}
   data-act-label={actLabel}
@@ -49,9 +50,12 @@ const icon = icons[entry.data.phase as keyof typeof icons] ?? 'brujula';
     }
 
     <div class="scene" data-reveal>
-      <div class="scene-icon"><PixelIcon name={icon} /></div>
+      <div class="scene-char"><CharacterSprite name="senet" /></div>
       <div class="dialog px">
-        <p class="speaker">{t('speaker.oraculo')}</p>
+        <p class="speaker">
+          <span class="speaker-icon"><PixelIcon name={icon} /></span>
+          <span>{t('speaker.senet')}</span>
+        </p>
         <type-writer class="prose-n" data-skip-label={t('tw.skip')}>
           <Content />
         </type-writer>

@@ -4,7 +4,7 @@ Reconstrucción desde cero de la web de **Numen Games**: una experiencia narrati
 (viaje del héroe) con gamificación Nivel B, doble capa (home iniciática + páginas operativas),
 i18n ES/EN y accesibilidad WCAG 2.2 AA como pilar.
 
-**Versión:** `0.2.0` (visible en el pie de página, leída de `package.json`).
+**Versión:** `0.3.0` (visible en el pie de página, leída de `package.json`).
 
 ## Stack
 
@@ -67,6 +67,17 @@ sin animación bajo `prefers-reduced-motion` o sin JS). El HUD muestra **PTS
 huecos se rellenan con objetos pixelados al cruzar cada acto. Los CTA llevan verbo
 (usar / hablar / mirar). `pnpm run` + `node scripts/preview-standalone.mjs` genera
 una preview de un solo archivo.
+
+### Panorámica, personajes y sonido (v0.3.0)
+
+En pantallas ≥48rem con `animation-timeline` y sin `prefers-reduced-motion`, la home
+se convierte en un **side-scroller**: el scroll vertical desliza los paneles de
+izquierda a derecha sobre un suelo pixelado; **el Nómada** (avatar del jugador)
+camina cuando avanzas y **Senet** (director de juego) narra cada escena. El audio
+8-bit se sintetiza con WebAudio (melodía original + SFX), arranca con «▶ Empezar» y
+se controla con el botón de sonido de la cabecera (preferencia en
+`localStorage.numen.audio`). Todo degrada: móvil y reduced-motion vuelven a la
+lectura vertical, y sin JS el texto completo sigue ahí.
 
 ### Gamificación (Nivel B)
 

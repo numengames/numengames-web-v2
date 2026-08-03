@@ -3,10 +3,11 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroFiltro from '../../components/narrative/HeroFiltro.astro';
 import PhaseSection from '../../components/narrative/PhaseSection.astro';
-import CaminoCard from '../../components/narrative/CaminoCard.astro';
+import CaminoSection from '../../components/narrative/CaminoSection.astro';
 import PortalCard from '../../components/narrative/PortalCard.astro';
 import UmbralCtas from '../../components/narrative/UmbralCtas.astro';
 import JourneyMeter from '../../components/narrative/JourneyMeter.astro';
+import CharacterSprite from '../../components/narrative/CharacterSprite.astro';
 import { useTranslations, type Lang } from '../../i18n/ui';
 
 const lang: Lang = 'en';
@@ -15,8 +16,7 @@ const t = useTranslations(lang);
 const entries = (await getCollection('story', ({ data }) => data.lang === lang)).sort(
   (a, b) => a.data.order - b.data.order,
 );
-const fases = entries.filter((e) => e.data.kind === 'fase');
-const caminos = entries.filter((e) => e.data.kind === 'camino');
+const flow = entries.filter((e) => e.data.kind !== 'portal');
 const portales = entries.filter((e) => e.data.kind === 'portal');
 
 const slugOf = (id: string) =>
@@ -27,63 +27,66 @@ const slugOf = (id: string) =>
 const actLabel = (act: number) => t(`acts.${act}` as 'acts.1');
 
 const seenActs = new Set<number>([1]);
-const sections = fases.map((entry) => {
+const sections = flow.map((entry) => {
   let actAnchor: string | undefined;
-  if (!seenActs.has(entry.data.act)) {
+  if (entry.data.kind === 'fase' && !seenActs.has(entry.data.act)) {
     seenActs.add(entry.data.act);
     actAnchor = `acto-${entry.data.act}`;
   }
   return { entry, slug: slugOf(entry.id), actAnchor, actLabel: actLabel(entry.data.act) };
 });
 
-const enterHref = `#${sections[0]?.slug ?? 'acto-2'}`;
+const firstFase = sections.find((s) => s.entry.data.kind === 'fase');
+const enterHref = `#${firstFase?.slug ?? 'acto-2'}`;
+
+/* Paneles de la panorámica: héroe + fases + caminos. */
+const panelCount = 1 + sections.length;
 ---
 
 <BaseLayout {lang} pageKey="home">
-  <HeroFiltro {lang} {enterHref} actLabel={actLabel(1)} />
+  <div class="journey-h" style={`--panels: ${panelCount}`}>
+    <div class="journey-sticky">
+      <div class="journey-track">
+        <HeroFiltro {lang} {enterHref} actLabel={actLabel(1)} />
 
-  {
-    sections.map((s) => (
-      <PhaseSection
-        {lang}
-        entry={s.entry}
-        slug={s.slug}
-        actLabel={s.actLabel}
-        actAnchor={s.actAnchor}
-      >
-        {s.entry.data.phase === 3 && (
-          <div class="caminos">
-            {caminos.map((c) => (
-              <CaminoCard {lang} entry={c} slug={slugOf(c.id)} />
-            ))}
-          </div>
-        )}
-        {s.entry.data.phase === 4 && (
-          <div class="portal-grid">
-            {portales.map((p) => (
-              <PortalCard {lang} entry={p} />
-            ))}
-          </div>
-        )}
-        {s.entry.data.phase === 5 && (
-          <div class="manifesto-mark" aria-hidden="true">
-            ✦
-          </div>
-        )}
-        {s.entry.data.phase === 6 && <UmbralCtas {lang} />}
-      </PhaseSection>
-    ))
-  }
+        {
+          sections.map((s) =>
+            s.entry.data.kind === 'camino' ? (
+              <CaminoSection {lang} entry={s.entry} slug={s.slug} actLabel={s.actLabel} />
+            ) : (
+              <PhaseSection
+                {lang}
+                entry={s.entry}
+                slug={s.slug}
+                actLabel={s.actLabel}
+                actAnchor={s.actAnchor}
+              >
+                {s.entry.data.phase === 4 && (
+                  <div class="portal-grid">
+                    {portales.map((p) => (
+                      <PortalCard {lang} entry={p} />
+                    ))}
+                  </div>
+                )}
+                {s.entry.data.phase === 5 && (
+                  <div class="manifesto-mark" aria-hidden="true">
+                    ✦
+                  </div>
+                )}
+                {s.entry.data.phase === 6 && <UmbralCtas {lang} />}
+              </PhaseSection>
+            ),
+          )
+        }
+      </div>
+      <div class="nomada-walker" aria-hidden="true"><CharacterSprite name="nomada" /></div>
+    </div>
+  </div>
 
   <JourneyMeter {lang} />
 </BaseLayout>
 
 <style>
-  .caminos {
-    margin-top: 2.6rem;
-    display: grid;
-    gap: 1.1rem;
-  }
   .manifesto-mark {
     margin-top: 2rem;
     color: var(--accent);
