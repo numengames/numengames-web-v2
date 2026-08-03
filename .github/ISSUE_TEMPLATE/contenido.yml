@@ -1,0 +1,24 @@
+name: ✍️ Cambio de contenido
+description: Editar la historia, microcopy o traducciones
+labels: [content]
+body:
+  - type: input
+    id: archivo
+    attributes:
+      label: Archivo afectado
+      placeholder: src/content/story/es/02-invocacion.md
+    validations:
+      required: true
+  - type: textarea
+    id: texto
+    attributes:
+      label: Texto propuesto
+    validations:
+      required: true
+  - type: checkboxes
+    id: idiomas
+    attributes:
+      label: Idiomas
+      options:
+        - label: Incluye versión ES
+        - label: Incluye versión EN (o se pide traducción)

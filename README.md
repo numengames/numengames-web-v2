@@ -110,12 +110,15 @@ o `prefers-color-scheme` antes del primer render (sin FOUC).
    para refinarla juntos sin tocar código.
 3. **Numinia en segundo plano**: aparece contenida en La Invocación y como huevo de pascua.
 4. **Filtro radical** («Esto no es para ti») tal cual; se recalibrará en próximas versiones.
-5. Tokens de marca extraídos de los decks 2026 (carbón `#1b1b1f`, oro `#e6cb85`,
-   crema `#efdcaa`, retícula) — pendientes de validar contra guía oficial.
+5. Paleta y marca según **Design System «Khepri» v3.0.0** (kit oficial del
+   cliente): Noche `#14110f`, Basalto `#1e1a17`, Arena `#f9ebdc`, Turquesa
+   interactivo y Ámbar `#efa517` para énfasis y logro. Activos en
+   `public/brand/` y `src/assets/pixel/`.
 
 ## [POR DEFINIR]
 
-- [ ] Logo/wordmark oficial en SVG (ahora: wordmark tipográfico + favicon placeholder).
+- [ ] Incorporar la guía del Design System Khepri v3.0.0 al repo (`docs/brand/`)
+      para que las citas «§…» del código sean consultables.
 - [ ] CTA de conversión definitivo (correo real, formulario o agenda) — `hola@numen.games`
       es placeholder en Contacto y legales.
 - [ ] Copy literal «No somos / Sí somos» y datos del equipo (Compañía) desde el deck.
@@ -123,6 +126,14 @@ o `prefers-color-scheme` antes del primer render (sin FOUC).
 - [ ] Revisión nativa de la traducción EN.
 - [ ] Revisión legal de privacidad/términos/cookies y datos fiscales del responsable.
 - [ ] Analítica sin cookies (Plausible/Umami) si se decide activarla.
+
+## Gobernanza y documentación
+
+`CONTRIBUTING.md` (flujo, Conventional Commits, Definition of Done) ·
+`docs/adr/` (decisiones) · `docs/GAMIFICATION.md` · `docs/CONTENT_GUIDE.md` ·
+`docs/LEGAL_CHECKLIST.md` · `docs/BACKLOG.md` (P0 antes de publicar) ·
+`docs/RELEASE_CHECKLIST.md` · `docs/DEPLOY.md` · `docs/AUDIT_2026-08-03.md`.
+Hooks de calidad en commit (husky + lint-staged + commitlint).
 
 ## CI
 

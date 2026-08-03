@@ -1,0 +1,4 @@
+Contact: mailto:security@numen.games
+Expires: 2027-08-03T00:00:00.000Z
+Preferred-Languages: es, en
+# [POR DEFINIR] Confirmar buzon real antes de publicar.

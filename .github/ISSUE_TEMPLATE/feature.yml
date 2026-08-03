@@ -1,0 +1,22 @@
+name: ✨ Propuesta
+description: Nueva funcionalidad o mejora
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Problema u oportunidad
+    validations:
+      required: true
+  - type: textarea
+    id: solucion
+    attributes:
+      label: Solución propuesta
+  - type: checkboxes
+    id: principios
+    attributes:
+      label: Principios
+      options:
+        - label: No bloquea contenido a quien no juega
+        - label: Degrada sin JS y respeta reduced-motion
+        - label: Disponible en ES y EN

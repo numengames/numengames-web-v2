@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { Lang } from '../../i18n/ui';
+const lang: Lang = 'en';
+---
+
+<BaseLayout {lang} pageKey="accesibilidad" title="Accessibility statement">
+  <div class="page-head container-n">
+    <p class="eyebrow">Accessibility</p>
+    <h1>Accessibility statement</h1>
+    <p class="lead">
+      The crossing should be open to everyone. This site is designed and verified against WCAG 2.2
+      level AA.
+    </p>
+    <div class="prose-legal">
+      <h2>Conformance status</h2>
+      <p>
+        Partially conformant with WCAG 2.2 AA: automated checks (axe in CI and Lighthouse) pass with
+        zero violations on the main routes; a manual screen-reader audit is pending and tracked in
+        our backlog.
+      </p>
+      <h2>Active measures</h2>
+      <ul class="op-list">
+        <li>Full keyboard navigation, visible focus and a skip link.</li>
+        <li>The narrative and its choices work without JavaScript.</li>
+        <li>All motion honours <code>prefers-reduced-motion</code>.</li>
+        <li>Light and dark themes with AA contrast; status announcements via live region.</li>
+      </ul>
+      <h2>Preparation and contact</h2>
+      <p>
+        Statement prepared on 3 August 2026. If you hit a barrier, write to
+        <a href="mailto:hola@numen.games">hola@numen.games</a> and we will fix it.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

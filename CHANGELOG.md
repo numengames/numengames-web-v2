@@ -4,6 +4,37 @@ Todas las novedades relevantes de numen.games. Formato basado en
 [Keep a Changelog](https://keepachangelog.com/es/) y versionado
 [SemVer](https://semver.org/lang/es/).
 
+## [1.1.0] — 2026-08-03
+
+Capa de gobernanza para publicar el repositorio con estándares de compañía,
+consolidada **sobre** el canon Khepri v1.0.0 tras auditoría multi-rol
+(`docs/AUDIT_2026-08-03.md`).
+
+### Añadido
+
+- Gobernanza: LICENSE propietaria, NOTICE (Geist OFL + activos del kit),
+  SECURITY, CONTRIBUTING (Conventional Commits, DoD, firma), código de
+  conducta, CODEOWNERS, plantillas de PR e issues, Dependabot y hooks de
+  commit (husky + lint-staged + commitlint).
+- Documentación de equipo en `docs/`: ADRs 0001–0005, guía de gamificación
+  (actualizada al canon), guía de contenido y voz, checklist legal, backlog
+  priorizado, checklist de release, guía de despliegue y auditoría
+  2026-08-03 con forense de procedencia.
+- Declaración de accesibilidad (`/es/accesibilidad` · `/en/accessibility`)
+  enlazada en el pie.
+- Cabeceras de seguridad (`public/_headers`), `.well-known/security.txt`,
+  OG image sobre paleta canon y metadatos sociales (Open Graph + Twitter).
+- CI endurecido: permisos mínimos, cancelación por concurrencia.
+
+### Cambiado
+
+- Retiradas las dependencias Fontsource (Archivo/Fraunces): el canon usa
+  Geist/Geist Mono del kit. Limpieza del alias tipográfico legacy.
+
+### Corregido
+
+- CHANGELOG reordenado: las entradas de gobernanza salen de 0.1.0.
+
 ## [1.0.0] — 2026-08-03
 
 Refundación visual sobre el **Design System oficial «Khepri» v3.0.0** (canon) y
@@ -123,3 +154,4 @@ swap`). La voz mecanografiada del juego pasa a Geist Mono: el mono «es la
   (borradores marcados para revisión).
 - Aviso de cookies (solo almacenamiento esencial) y versión semántica visible en el pie.
 - CI: tipos, lint (incl. reglas a11y), tests unitarios, build, axe/Playwright y Lighthouse.
+- Endurecimiento: almacenamiento seguro con fallback en memoria.

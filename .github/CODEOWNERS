@@ -1,0 +1,7 @@
+# Sustituir por usuarios/equipos reales de la organización. [POR DEFINIR]
+*                       @POR-DEFINIR/web-core
+/src/content/           @POR-DEFINIR/creativo
+/src/i18n/              @POR-DEFINIR/creativo
+/src/scripts/           @POR-DEFINIR/ingenieria
+/src/pages/*/legal/     @POR-DEFINIR/legal
+/docs/GAMIFICATION.md   @POR-DEFINIR/gamificacion
