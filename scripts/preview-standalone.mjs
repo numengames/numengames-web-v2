@@ -17,13 +17,16 @@ const cssMatch = html.match(/<link rel="stylesheet" href="(\/_astro\/[^"]+\.css)
 if (!cssMatch) throw new Error('No se encontró la hoja de estilos en dist/es/index.html');
 let css = readFileSync(join(dist, cssMatch[1]), 'utf8');
 
-// Fuentes: solo subconjuntos «latin» (no latin-ext); el resto queda sin
-// resolver y nunca se pide gracias a unicode-range.
-for (const m of css.matchAll(/\/_astro\/([^)]*-latin-[^)]*\.woff2)/g)) {
+// Fuentes autoalojadas (Geist variable) y activos de /brand/ → data URI.
+for (const m of css.matchAll(/\/fonts\/([^)'"]+\.woff2)/g)) {
   const file = m[1];
-  if (file.includes('latin-ext')) continue;
-  const b64 = readFileSync(join(dist, '_astro', file)).toString('base64');
-  css = css.replaceAll(`/_astro/${file}`, `data:font/woff2;base64,${b64}`);
+  const b64 = readFileSync(join('public', 'fonts', file)).toString('base64');
+  css = css.replaceAll(`/fonts/${file}`, `data:font/woff2;base64,${b64}`);
+}
+for (const m of css.matchAll(/\/brand\/([^)'"]+\.webp)/g)) {
+  const file = m[1];
+  const b64 = readFileSync(join('public', 'brand', file)).toString('base64');
+  css = css.replaceAll(`/brand/${file}`, `data:image/webp;base64,${b64}`);
 }
 html = html.replace(cssMatch[0], `<style>${css}</style>`);
 
@@ -55,7 +58,7 @@ document.addEventListener('click', function (e) {
     n.setAttribute('role', 'status');
     n.style.cssText =
       'position:fixed;left:50%;bottom:4.6rem;transform:translateX(-50%);z-index:99;' +
-      'background:var(--surface-raised);color:var(--ink);border:3px solid var(--accent);' +
+      'background:var(--surface-raised);color:var(--ink);border:1px solid var(--line-strong);' +
       'padding:.6rem 1rem;font-family:var(--stack-dialog);font-size:1.1rem;max-width:92vw;text-align:center';
     document.body.appendChild(n);
   }

@@ -1,5 +1,8 @@
 ---
 import pkg from '../../../package.json';
+import BrandMark from './BrandMark.astro';
+import PixelArt from '../narrative/PixelArt.astro';
+import BinarySeparator from '../narrative/BinarySeparator.astro';
 import { localePath, useTranslations, type Lang } from '../../i18n/ui';
 
 interface Props {
@@ -12,6 +15,7 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="container-n">
+    <BinarySeparator />
     <p class="motto">{t('footer.motto')}</p>
 
     <div class="cols">
@@ -33,7 +37,14 @@ const year = new Date().getFullYear();
       {t('site.name')} · {t('footer.version')}
       <span class="ver">v{pkg.version}</span>
     </p>
-    <p id="numinia-sigil" class="sigil">{t('footer.sigil')}</p>
+    <div class="cierre">
+      <BrandMark name="khepri" class="khepri-close" label="Khepri" />
+      <span id="numinia-sigil" class="sigil rarity-legendario">
+        <PixelArt name="khepri-px" class="sigil-px" />
+        <BrandMark name="numinia" class="sigil-word" label="Numinia" />
+        <span class="sigil-line">{t('footer.sigil')}</span>
+      </span>
+    </div>
   </div>
 </footer>
 
@@ -83,8 +94,35 @@ const year = new Date().getFullYear();
     font-family: var(--stack-display);
     color: var(--accent);
   }
+  .cierre {
+    margin-top: 2.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+  }
+  .cierre :global(.khepri-close) {
+    width: 30px;
+    color: var(--ink);
+  }
   .sigil {
-    margin-top: 0.6rem;
-    font-size: var(--text-sm);
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid;
+    border-radius: var(--radius-ctrl);
+    font-family: var(--stack-mono);
+    font-size: var(--text-etiqueta);
+    letter-spacing: 0.08em;
+  }
+  .sigil.is-found {
+    display: inline-flex;
+  }
+  .sigil :global(.sigil-px) {
+    width: 26px;
+  }
+  .sigil :global(.sigil-word) {
+    width: 96px;
+    color: var(--ink);
   }
 </style>

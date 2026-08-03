@@ -4,6 +4,52 @@ Todas las novedades relevantes de numen.games. Formato basado en
 [Keep a Changelog](https://keepachangelog.com/es/) y versionado
 [SemVer](https://semver.org/lang/es/).
 
+## [1.0.0] — 2026-08-03
+
+Refundación visual sobre el **Design System oficial «Khepri» v3.0.0** (canon) y
+los recursos del Khepri Kit entregados por el cliente. Cambio de dirección ⇒
+versión mayor (§15 del sistema).
+
+### Añadido
+
+- **Paleta canónica** Nocturno/Diurno (Noche `#14110F`, Basalto, Arena…) con
+  semántica del sistema: **Turquesa** `#018EA1` para todo lo interactivo,
+  **Ámbar** `#EFA517` solo para énfasis y logro (puntos, eyebrows, hallazgos).
+- **Geist + Geist Mono autoalojadas** (woff2 variables del kit, `font-display:
+swap`). La voz mecanografiada del juego pasa a Geist Mono: el mono «es la
+  máquina» (§4.2) y sustituye a las fuentes de fantasía, prohibidas por canon.
+- **Sprites del cliente** (9 PNG pixel art) convertidos a SVG tematizable por
+  `scripts/pixel-svg.mjs` (rejilla fija, 3 tonos → `currentColor`/`--pa-2`/
+  `--pa-3`, RLE): portal, Nómada, máscara de Senet, libro-quest «!», d20, token,
+  sello, Khepri píxel. El wordmark píxel (129) se genera pero **se retira** de la
+  entrega (checklist §17.4: «se ha retirado un elemento»).
+- **Secuencia de aparición**: al pulsar «▶ Empezar» el portal late y el Nómada
+  cruza (steps, `motion.largo`), después la vista avanza; con
+  `prefers-reduced-motion` o en visitas posteriores, entrada directa. El estado
+  persiste (`has-spawned`).
+- **Inventario con escala de rareza** (§3.7): Sello de la Grieta _poco común_,
+  de la Travesía _raro_, del Regreso _épico_ — borde progresivo + nombre escrito;
+  el hallazgo oculto es **Khepri legendario**, único halo permitido del sistema.
+- **Marca oficial**: wordmark horizontal en cabecera, **isotipo Khepri como
+  cierre** del pie (path canónico §8.3), favicon Khepri con `prefers-color-scheme`,
+  huevo Numinia con `Numinia_Word.svg` (pieza del mundo, §2.3).
+- **Materia**: textura de relieve de circuito (webp 14 KB) como fondo del héroe
+  solo en Nocturno, `cover`, ≤6 %; **separador binario** `10100…→xxx` en Geist
+  Mono antes del pie; recap final con puntuación y sellos.
+
+### Cambiado
+
+- Forma canon: cantos rectos y hairlines `1px` en superficies, radio `6px` solo
+  en controles, **sin sombras en Nocturno**; fuera scanlines, muescas y
+  drop-shadows píxel. Foco `2px` Turquesa offset `2px` en todo.
+- Movimiento con tokens del sistema (120/200/320/560 ms, `cubic-bezier(0.2,0,0,1)`).
+- Suelo y glitch en neutros; HUD plano con barra turquesa y token de puntos.
+
+### Retirado
+
+- Dependencias `@fontsource` (Archivo, Press Start 2P, VT323) y los iconos de
+  fase propios (los conceptos de mundo usan ahora los sprites del kit).
+
 ## [0.3.0] — 2026-08-03
 
 ### Añadido

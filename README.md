@@ -4,7 +4,7 @@ Reconstrucción desde cero de la web de **Numen Games**: una experiencia narrati
 (viaje del héroe) con gamificación Nivel B, doble capa (home iniciática + páginas operativas),
 i18n ES/EN y accesibilidad WCAG 2.2 AA como pilar.
 
-**Versión:** `0.3.0` (visible en el pie de página, leída de `package.json`).
+**Versión:** `1.0.0` (visible en el pie de página, leída de `package.json`).
 
 ## Stack
 

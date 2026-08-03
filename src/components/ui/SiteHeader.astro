@@ -1,4 +1,5 @@
 ---
+import BrandMark from './BrandMark.astro';
 import { localePath, useTranslations, type Lang, type PageKey } from '../../i18n/ui';
 
 interface Props {
@@ -12,9 +13,8 @@ const otherLang: Lang = lang === 'es' ? 'en' : 'es';
 
 <header class="site-header">
   <div class="container-n bar">
-    <a class="wordmark" href={localePath(lang, 'home')} data-wordmark>
-      <span>numen</span>
-      <span>games</span>
+    <a class="wordmark" href={localePath(lang, 'home')} data-wordmark aria-label={t('site.name')}>
+      <BrandMark name="horizontal" />
     </a>
 
     <nav aria-label={t('nav.label')}>
@@ -85,15 +85,9 @@ const otherLang: Lang = lang === 'es' ? 'en' : 'es';
     min-height: 3.6rem;
   }
   .wordmark {
-    display: grid;
-    line-height: 0.92;
-    font-family: var(--stack-display);
-    font-weight: 800;
-    font-stretch: 125%;
-    font-size: 0.98rem;
-    letter-spacing: 0.03em;
-    text-transform: lowercase;
-    text-decoration: none;
+    display: inline-flex;
+    width: clamp(138px, 16vw, 190px);
+    color: var(--ink);
     user-select: none;
   }
   nav ul {

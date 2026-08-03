@@ -46,8 +46,7 @@
 
   :focus-visible {
     outline: 2px solid var(--focus-ring);
-    outline-offset: 3px;
-    border-radius: 2px;
+    outline-offset: 2px;
   }
 
   a {
@@ -152,19 +151,7 @@
       background var(--dur-1) var(--ease-out),
       color var(--dur-1) var(--ease-out);
   }
-  .btn:hover {
-    background: var(--accent);
-    color: var(--accent-contrast);
-  }
-  .btn-solid {
-    background: var(--accent);
-    color: var(--accent-contrast);
-  }
-  .btn-solid:hover {
-    background: var(--accent-soft);
-    border-color: var(--accent-soft);
-    color: var(--accent-contrast);
-  }
+
   .btn-quiet {
     border-color: transparent;
     color: var(--ink-muted);
@@ -305,8 +292,9 @@
   }
 
   [aria-pressed='true'].btn {
-    background: var(--accent);
-    color: var(--accent-contrast);
+    background: var(--interactive);
+    border-color: var(--interactive);
+    color: var(--interactive-ink);
   }
 
   /* Portales */
@@ -628,11 +616,11 @@
   @keyframes glitch {
     15% {
       transform: translate(1px, -1px);
-      text-shadow: -2px 0 var(--accent);
+      text-shadow: -2px 0 var(--ink-faint);
     }
     35% {
       transform: translate(-1px, 1px);
-      text-shadow: 2px 0 var(--accent);
+      text-shadow: 2px 0 var(--ink-faint);
     }
     55% {
       clip-path: inset(18% 0 32% 0);
@@ -684,127 +672,73 @@
    verbos en los botones. La historia (.md) no cambia.
    ================================================================ */
 @layer components {
-  /* --- Textura CRT muy ligera (se retira con prefers-contrast) --- */
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 40;
-    pointer-events: none;
-    background: repeating-linear-gradient(0deg, var(--scanline) 0 1px, transparent 1px 3px);
-  }
-  :root,
-  [data-theme='dark'] {
-    --scanline: rgb(0 0 0 / 0.16);
-  }
-  [data-theme='light'] {
-    --scanline: rgb(27 27 31 / 0.05);
-  }
-  @media (prefers-contrast: more) {
-    body::after {
-      display: none;
-    }
-  }
-
   /* --- Marco pixelado reutilizable ------------------------------- */
   .px {
-    border: 3px solid var(--ink);
-    border-radius: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-0);
     background: var(--surface-raised);
-    clip-path: polygon(
-      var(--px-notch) 0,
-      calc(100% - var(--px-notch)) 0,
-      100% var(--px-notch),
-      100% calc(100% - var(--px-notch)),
-      calc(100% - var(--px-notch)) 100%,
-      var(--px-notch) 100%,
-      0 calc(100% - var(--px-notch)),
-      0 var(--px-notch)
-    );
-    filter: drop-shadow(4px 4px 0 rgb(0 0 0 / 0.4));
-  }
-  .px:focus-visible {
-    outline: none;
-    box-shadow: inset 0 0 0 3px var(--focus-ring);
   }
 
   /* --- Botones = acciones de juego ------------------------------- */
   .btn {
-    font-family: var(--stack-pixel);
-    font-size: var(--text-pixel-sm);
-    font-weight: 400;
-    letter-spacing: 0.06em;
-    padding: 0.85rem 1.15rem;
-    border: 3px solid var(--accent);
-    border-radius: 0;
+    font-family: var(--stack-mono);
+    font-size: var(--text-etiqueta);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    padding: 0.8rem 1.15rem;
+    border: 1px solid var(--interactive);
+    border-radius: var(--radius-ctrl);
     background: var(--surface-raised);
-    clip-path: polygon(
-      var(--px-notch) 0,
-      calc(100% - var(--px-notch)) 0,
-      100% var(--px-notch),
-      100% calc(100% - var(--px-notch)),
-      calc(100% - var(--px-notch)) 100%,
-      var(--px-notch) 100%,
-      0 calc(100% - var(--px-notch)),
-      0 var(--px-notch)
-    );
-    filter: drop-shadow(4px 4px 0 rgb(0 0 0 / 0.4));
+    color: var(--interactive);
     transition:
       background var(--dur-1) var(--ease-out),
       color var(--dur-1) var(--ease-out),
-      translate 60ms linear,
-      filter 60ms linear;
+      border-color var(--dur-1) var(--ease-out);
   }
-  .btn:active {
-    translate: 2px 2px;
-    filter: drop-shadow(2px 2px 0 rgb(0 0 0 / 0.4));
+  .btn:hover {
+    background: var(--interactive);
+    color: var(--interactive-ink);
   }
-  .btn:focus-visible {
-    outline: none;
-    box-shadow: inset 0 0 0 3px var(--focus-ring);
+  .btn-solid {
+    background: var(--interactive);
+    border-color: var(--interactive);
+    color: var(--interactive-ink);
+  }
+  .btn-solid:hover {
+    filter: brightness(1.08);
   }
   .btn-quiet {
     border-color: transparent;
     background: transparent;
-    clip-path: none;
-    filter: none;
-  }
-  .btn-quiet:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 3px;
-    box-shadow: none;
   }
   .btn .verb {
-    font-size: 0.58em;
-    letter-spacing: 0.14em;
+    font-size: 0.85em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--accent);
-    margin-right: 0.55rem;
-  }
-  .btn:hover .verb,
-  .btn-solid .verb,
-  [aria-pressed='true'].btn .verb {
-    color: inherit;
+    opacity: 0.75;
+    margin-right: 0.5rem;
   }
 
   /* --- Cabeceras de escena --------------------------------------- */
   .eyebrow {
-    font-family: var(--stack-pixel);
-    font-size: var(--text-pixel-sm);
-    letter-spacing: 0.12em;
+    font-family: var(--stack-mono);
+    font-weight: 500;
+    font-size: var(--text-etiqueta);
+    letter-spacing: 0.1em;
   }
   .phase-title {
-    font-family: var(--stack-pixel);
-    font-weight: 400;
+    font-family: var(--stack-display);
+    font-weight: 600;
     font-stretch: normal;
-    font-size: var(--text-pixel-lg);
-    line-height: 1.5;
-    letter-spacing: 0.02em;
+    font-size: var(--text-2xl);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
   }
   .phase-sub {
-    font-family: var(--stack-dialog);
+    font-family: var(--stack-body);
     font-style: normal;
-    font-size: var(--text-dialog);
+    font-size: var(--text-lg);
+    color: var(--ink-muted);
   }
 
   /* --- Escena: sprite + diálogo ---------------------------------- */
@@ -884,7 +818,7 @@
   [data-tw-typing]::after {
     content: '▮';
     margin-left: 3px;
-    color: var(--accent);
+    color: var(--ink-faint);
   }
   .dialog[data-tw-active] {
     cursor: pointer;
@@ -898,23 +832,23 @@
     padding: 0.3rem 0.45rem;
     font-size: 0.85rem;
     line-height: 1;
-    color: var(--accent);
+    color: var(--interactive);
     cursor: pointer;
   }
 
   /* --- Héroe como pantalla de título ----------------------------- */
   .hero-title {
-    font-family: var(--stack-pixel);
-    font-weight: 400;
+    font-family: var(--stack-display);
+    font-weight: 500;
     font-stretch: normal;
-    font-size: clamp(1.1rem, 0.7rem + 3.2vw, 2.15rem);
-    line-height: 1.7;
-    letter-spacing: 0.02em;
+    font-size: var(--text-3xl);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.03em;
   }
   .hero-body p {
-    font-family: var(--stack-dialog);
+    font-family: var(--stack-mono);
     font-size: var(--text-dialog);
-    max-width: 42ch;
+    max-width: 46ch;
   }
 
   /* --- Elecciones con sabor a verbo ------------------------------ */
@@ -924,6 +858,7 @@
   }
   .choice-opts .btn::before {
     content: '▸ ';
+    opacity: 0.8;
   }
   .choice-outcome p:not(.outcome-label) {
     font-family: var(--stack-dialog);
@@ -933,35 +868,22 @@
   /* --- Tarjetas con marco de juego ------------------------------- */
   .camino,
   .portal {
-    border: 3px solid var(--ink);
-    border-radius: 0;
-    clip-path: polygon(
-      var(--px-notch) 0,
-      calc(100% - var(--px-notch)) 0,
-      100% var(--px-notch),
-      100% calc(100% - var(--px-notch)),
-      calc(100% - var(--px-notch)) 100%,
-      var(--px-notch) 100%,
-      0 calc(100% - var(--px-notch)),
-      0 var(--px-notch)
-    );
-    filter: drop-shadow(4px 4px 0 rgb(0 0 0 / 0.35));
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-0);
   }
   .portal:hover {
-    border-color: var(--accent);
-  }
-  .portal:focus-visible {
-    outline: none;
-    box-shadow: inset 0 0 0 3px var(--focus-ring);
+    border-color: var(--interactive);
   }
   .portal h3 {
-    font-family: var(--stack-dialog);
-    font-weight: 400;
-    font-size: calc(var(--text-dialog) * 1.15);
+    font-family: var(--stack-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-size: var(--text-xl);
   }
   .portal .go {
-    font-family: var(--stack-pixel);
-    font-size: var(--text-pixel-sm);
+    font-family: var(--stack-mono);
+    font-size: var(--text-etiqueta);
+    color: var(--interactive);
   }
   .step,
   .person {
@@ -971,63 +893,85 @@
 
   /* --- HUD: puntos + progreso + inventario de actos --------------- */
   .journey-meter {
-    border: 3px solid var(--ink);
-    border-radius: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-ctrl);
     background: var(--surface-raised);
     backdrop-filter: none;
     padding: 0.55rem 0.85rem;
     gap: 0.85rem;
-    filter: drop-shadow(4px 4px 0 rgb(0 0 0 / 0.4));
   }
   .journey-track {
     width: clamp(4.6rem, 15vw, 8.5rem);
-    height: 12px;
-    border: 2px solid var(--ink);
-    border-radius: 0;
-    background: var(--surface-sunken);
+    height: 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--surface-elevated);
   }
   .journey-fill {
-    border-radius: 0;
-    background: repeating-linear-gradient(90deg, var(--accent) 0 7px, var(--accent-soft) 7px 9px);
+    border-radius: 999px;
+    background: var(--interactive);
   }
   .hud-score {
-    font-family: var(--stack-pixel);
-    font-size: var(--text-pixel-sm);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--stack-mono);
+    font-size: var(--text-etiqueta);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.06em;
     white-space: nowrap;
     color: var(--ink-muted);
   }
+  .hud-score .hud-token {
+    display: inline-flex;
+    width: 15px;
+    color: var(--accent);
+  }
   .hud-score b {
-    font-weight: 400;
+    font-weight: 500;
     color: var(--accent);
   }
   .journey-acts {
     gap: 0.45rem;
   }
   .journey-act {
-    width: 1.9rem;
-    height: 1.9rem;
-    border: 2px solid var(--line);
-    border-radius: 0;
-    background: var(--surface-sunken);
-    font-family: var(--stack-pixel);
-    font-size: 0.55rem;
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-ctrl);
+    background: var(--surface-elevated);
+    font-family: var(--stack-mono);
+    font-size: 0.62rem;
+    color: var(--ink-faint);
   }
   .journey-act .slot-item {
     display: none;
-    width: 18px;
-    height: 18px;
-    image-rendering: pixelated;
-  }
-  .journey-act[data-lit] {
-    border-color: var(--accent);
-    background: var(--surface-raised);
-    color: var(--accent);
+    width: 16px;
   }
   .journey-act[data-lit] .slot-n {
     display: none;
   }
   .journey-act[data-lit] .slot-item {
     display: block;
+  }
+  /* Rareza: borde progresivo además del color (canon §3.7). */
+  .journey-act[data-rarity='poco-comun'][data-lit] {
+    color: var(--rareza-poco-comun);
+    border-color: color-mix(in srgb, var(--rareza-poco-comun) 40%, transparent);
+  }
+  .journey-act[data-rarity='raro'][data-lit] {
+    color: var(--rareza-raro);
+    border-color: color-mix(in srgb, var(--rareza-raro) 40%, transparent);
+  }
+  .journey-act[data-rarity='epico'][data-lit] {
+    color: var(--rareza-epico);
+    border-color: var(--rareza-epico);
+  }
+  .rarity-legendario {
+    color: var(--rareza-legendario);
+    border-color: var(--rareza-legendario) !important;
+    box-shadow: var(--halo-legendario);
   }
   .pts-float {
     position: absolute;
@@ -1088,14 +1032,25 @@
   .speaker {
     display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.6rem;
+    font-family: var(--stack-mono);
+    font-weight: 500;
+    letter-spacing: 0.1em;
   }
-  .speaker-icon svg {
-    width: 20px;
-    height: 20px;
-    image-rendering: pixelated;
+  .speaker-portrait {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-ctrl);
+    background: var(--surface-elevated);
+    color: var(--ink);
+  }
+  .speaker-portrait svg {
+    width: 1.7rem;
+    height: auto;
     display: block;
-    color: var(--ink-muted);
   }
   .hero-nomada {
     margin-top: 2.2rem;
@@ -1109,9 +1064,6 @@
   }
   .nomada-walker {
     display: none;
-  }
-  .nomada .f-b {
-    opacity: 0;
   }
 }
 
@@ -1134,12 +1086,10 @@
         position: absolute;
         inset: auto 0 0 0;
         height: 44px;
-        border-top: 3px solid var(--ink);
+        border-top: 1px solid var(--line-strong);
         background:
-          repeating-linear-gradient(90deg, var(--accent) 0 3px, transparent 3px 56px) 0 8px / 100%
-            3px no-repeat,
-          repeating-linear-gradient(90deg, var(--line) 0 2px, transparent 2px 10px),
-          var(--surface-sunken);
+          repeating-linear-gradient(90deg, var(--line-strong) 0 2px, transparent 2px 14px),
+          var(--surface-raised);
         z-index: 4;
       }
       .journey-track {
@@ -1194,11 +1144,8 @@
         width: clamp(56px, 6vw, 76px);
         image-rendering: pixelated;
       }
-      .nomada-walker.is-walking .f-a {
-        animation: stride-a 0.34s steps(1) infinite;
-      }
-      .nomada-walker.is-walking .f-b {
-        animation: stride-b 0.34s steps(1) infinite;
+      .nomada-walker.is-walking {
+        animation: hop 0.34s steps(1) infinite;
       }
     }
     @keyframes panorama {
@@ -1206,25 +1153,182 @@
         transform: translateX(calc((1 - var(--panels, 1)) * 100vw));
       }
     }
-    @keyframes stride-a {
+    @keyframes hop {
       0%,
       49% {
-        opacity: 1;
+        translate: 0 0;
       }
       50%,
       100% {
-        opacity: 0;
+        translate: 0 -3px;
       }
     }
-    @keyframes stride-b {
-      0%,
-      49% {
-        opacity: 0;
-      }
-      50%,
-      100% {
-        opacity: 1;
-      }
+  }
+}
+
+/* ================================================================
+   KHEPRI v1.0.0 — materia, portal y cierre
+   ================================================================ */
+@layer components {
+  /* Materia de circuito: solo fondo Nocturno, cover, ≤6 % (§6.2). */
+  [data-theme='dark'] .hero {
+    background-color: var(--surface);
+    background-image: url('/brand/textura-relieve-nocturno-768.webp');
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Separador de sección: la señal que se vuelve sedimento (§6.1). */
+  .bin-sep {
+    font-family: var(--stack-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.15em;
+    color: var(--line-strong);
+    white-space: nowrap;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  /* Escenario del héroe: el portal espera sobre el suelo. */
+  .hero-stage {
+    position: relative;
+    margin-top: 2.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1.4rem;
+    min-height: 7.5rem;
+  }
+  .portal-gate {
+    color: var(--ink);
+    width: clamp(56px, 7vw, 84px);
+  }
+  .portal-gate svg,
+  .hero-nomada svg,
+  .nomada-walker svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .hero-nomada {
+    width: clamp(48px, 6vw, 68px);
+    color: var(--ink);
+    opacity: 0;
+  }
+  .has-spawned .hero-nomada {
+    opacity: 1;
+  }
+  .nomada-walker {
+    width: clamp(48px, 5.5vw, 64px);
+  }
+  html:not(.has-spawned) .nomada-walker {
+    opacity: 0;
+  }
+
+  /* Recuadro final: puntuación y sellos reunidos. */
+  .recap {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--line-strong);
+    background: var(--surface-raised);
+  }
+  .recap .hud-score {
+    font-size: var(--text-sm);
+  }
+  .recap-items {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .recap-items li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--stack-mono);
+    font-size: var(--text-etiqueta);
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+  .recap-items li svg {
+    width: 14px;
+  }
+  .recap-items li[data-got] {
+    color: var(--rarity, var(--ink));
+  }
+  .recap-khepri {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--rareza-legendario);
+    border-radius: var(--radius-ctrl);
+    box-shadow: var(--halo-legendario);
+    color: var(--rareza-legendario);
+    font-family: var(--stack-mono);
+    font-size: var(--text-etiqueta);
+    letter-spacing: 0.08em;
+  }
+  .recap-khepri svg {
+    width: 22px;
+  }
+  .recap-khepri.is-found {
+    display: inline-flex;
+  }
+
+  /* Afinado operativo al canon */
+  .step,
+  .person {
+    border-width: 1px;
+    border-color: var(--line-strong);
+  }
+  .step h3 {
+    color: var(--ink);
+    font-family: var(--stack-mono);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+  .todo {
+    border-color: var(--coral);
+    color: var(--coral);
+  }
+  [data-theme='light'] .todo {
+    border-color: var(--grana-texto-claro);
+    color: var(--grana-texto-claro);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .is-spawning .portal-gate {
+    animation: portal-pulse var(--dur-3) steps(3) 2;
+  }
+  .is-spawning .hero-nomada {
+    animation: spawn-out calc(var(--dur-3) * 2) steps(6) forwards;
+  }
+  @keyframes portal-pulse {
+    50% {
+      scale: 1.12 0.94;
+    }
+  }
+  @keyframes spawn-out {
+    0% {
+      opacity: 0;
+      translate: -2.2rem 0;
+      scale: 0.6;
+    }
+    35% {
+      opacity: 1;
+      scale: 1;
+    }
+    100% {
+      opacity: 1;
+      translate: 0 0;
     }
   }
 }

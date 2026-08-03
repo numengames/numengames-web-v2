@@ -1,0 +1,55 @@
+---
+import PixelArt from './PixelArt.astro';
+import { useTranslations, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const items = [
+  {
+    phases: 'fase-0,fase-1',
+    name: t('item.1'),
+    rarity: t('rarity.pocoComun'),
+    color: 'var(--rareza-poco-comun)',
+  },
+  {
+    phases: 'fase-2,fase-3',
+    name: t('item.2'),
+    rarity: t('rarity.raro'),
+    color: 'var(--rareza-raro)',
+  },
+  {
+    phases: 'fase-4,fase-5,fase-6',
+    name: t('item.3'),
+    rarity: t('rarity.epico'),
+    color: 'var(--rareza-epico)',
+  },
+];
+---
+
+<div class="recap" data-reveal>
+  <p class="hud-score">
+    <span class="hud-token"><PixelArt name="token" /></span>
+    <span class="visually-hidden">{t('hud.scoreLabel')}: </span>
+    <b data-recap-score>000</b>
+  </p>
+  <ul class="recap-items" aria-label={t('recap.items')}>
+    {
+      items.map((it) => (
+        <li data-phases={it.phases} style={`--rarity: ${it.color}`}>
+          <PixelArt name="sello" />
+          <span>
+            {it.name} · {it.rarity}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+  <span class="recap-khepri" id="recap-khepri">
+    <PixelArt name="khepri-px" />
+    <span>Khepri · {t('rarity.legendario')}</span>
+  </span>
+</div>

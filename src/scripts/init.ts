@@ -250,6 +250,16 @@ class JourneyProgress extends HTMLElement {
         setTimeout(() => f.remove(), 950);
       }
       this.#last = score;
+      const recapScore = document.querySelector('[data-recap-score]');
+      if (recapScore) recapScore.textContent = pad(score);
+      document.querySelectorAll<HTMLElement>('.recap-items li[data-phases]').forEach((li) => {
+        const ph = (li.dataset.phases ?? '').split(',').filter(Boolean);
+        if (ph.some((p) => snap.visited.includes(p))) li.setAttribute('data-got', '');
+        else li.removeAttribute('data-got');
+      });
+      document
+        .getElementById('recap-khepri')
+        ?.classList.toggle('is-found', snap.eggs.includes('sigil'));
       this.querySelectorAll<HTMLElement>('.journey-act').forEach((a) => {
         const key = a.dataset.phases ?? '';
         const actPhases = key.split(',').filter(Boolean);
@@ -388,10 +398,37 @@ customElements.define('cookie-notice', CookieNotice);
 }
 
 /* --------- «Entrar»: registra el cruce del umbral (fase 0) ------------ */
-document.querySelector('[data-enter]')?.addEventListener('click', () => {
-  journey.markVisited('fase-0');
-  audio.userGesture();
-});
+/* «Empezar»: el Nómada cruza el portal y después avanzamos. */
+{
+  if (journey.hasVisited('fase-0')) document.documentElement.classList.add('has-spawned');
+  const enter = document.querySelector<HTMLAnchorElement>('[data-enter]');
+  enter?.addEventListener('click', (e) => {
+    e.preventDefault();
+    journey.markVisited('fase-0');
+    audio.userGesture();
+    const id = enter.getAttribute('href')?.slice(1);
+    const target = id ? document.getElementById(id) : null;
+    const go = () => {
+      if (!target) return;
+      if (!scrollToPanelIfHorizontal(target)) {
+        target.scrollIntoView({ behavior: motionOK ? 'smooth' : 'auto' });
+      }
+    };
+    const spawned = document.documentElement.classList.contains('has-spawned');
+    if (!spawned && motionOK) {
+      document.body.classList.add('is-spawning');
+      audio.chime();
+      window.setTimeout(() => {
+        document.documentElement.classList.add('has-spawned');
+        document.body.classList.remove('is-spawning');
+        go();
+      }, 1180);
+    } else {
+      document.documentElement.classList.add('has-spawned');
+      go();
+    }
+  });
+}
 
 /* -------------------------- <audio-toggle> --------------------------- */
 class AudioToggle extends HTMLElement {
@@ -418,6 +455,11 @@ const horizontalOn = () => horizontalMQ.matches && CSS.supports('animation-timel
 
 const journeyWrap = document.querySelector<HTMLElement>('.journey-h');
 const panels = Array.from(document.querySelectorAll<HTMLElement>('.journey-track > .panel'));
+
+function scrollToPanelIfHorizontal(target: HTMLElement): boolean {
+  if (!horizontalOn()) return false;
+  return scrollToPanel(target, motionOK);
+}
 
 function scrollToPanel(target: HTMLElement, smooth: boolean): boolean {
   if (!journeyWrap) return false;

@@ -1,8 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
-import PixelIcon from './PixelIcon.astro';
-import CharacterSprite from './CharacterSprite.astro';
+import PixelArt from './PixelArt.astro';
 import { useTranslations, type Lang } from '../../i18n/ui';
 
 interface Props {
@@ -17,16 +16,6 @@ const { lang, entry, slug, actLabel, actAnchor } = Astro.props;
 const t = useTranslations(lang);
 const { Content } = await render(entry);
 const headingId = `${slug}-title`;
-
-const icons = {
-  1: 'grieta',
-  2: 'portal',
-  3: 'brujula',
-  4: 'puertas',
-  5: 'pergamino',
-  6: 'salida',
-} as const;
-const icon = icons[entry.data.phase as keyof typeof icons] ?? 'brujula';
 ---
 
 <section
@@ -49,17 +38,14 @@ const icon = icons[entry.data.phase as keyof typeof icons] ?? 'brujula';
       )
     }
 
-    <div class="scene" data-reveal>
-      <div class="scene-char"><CharacterSprite name="senet" /></div>
-      <div class="dialog px">
-        <p class="speaker">
-          <span class="speaker-icon"><PixelIcon name={icon} /></span>
-          <span>{t('speaker.senet')}</span>
-        </p>
-        <type-writer class="prose-n" data-skip-label={t('tw.skip')}>
-          <Content />
-        </type-writer>
-      </div>
+    <div class="dialog px" data-reveal>
+      <p class="speaker">
+        <span class="speaker-portrait"><PixelArt name="senet" /></span>
+        <span>{t('speaker.senet')}</span>
+      </p>
+      <type-writer class="prose-n" data-skip-label={t('tw.skip')}>
+        <Content />
+      </type-writer>
     </div>
 
     <slot />

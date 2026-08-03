@@ -7,7 +7,8 @@ import CaminoSection from '../../components/narrative/CaminoSection.astro';
 import PortalCard from '../../components/narrative/PortalCard.astro';
 import UmbralCtas from '../../components/narrative/UmbralCtas.astro';
 import JourneyMeter from '../../components/narrative/JourneyMeter.astro';
-import CharacterSprite from '../../components/narrative/CharacterSprite.astro';
+import PixelArt from '../../components/narrative/PixelArt.astro';
+import Recap from '../../components/narrative/Recap.astro';
 import { useTranslations, type Lang } from '../../i18n/ui';
 
 const lang: Lang = 'en';
@@ -73,13 +74,18 @@ const panelCount = 1 + sections.length;
                     ✦
                   </div>
                 )}
-                {s.entry.data.phase === 6 && <UmbralCtas {lang} />}
+                {s.entry.data.phase === 6 && (
+                  <>
+                    <Recap {lang} />
+                    <UmbralCtas {lang} />
+                  </>
+                )}
               </PhaseSection>
             ),
           )
         }
       </div>
-      <div class="nomada-walker" aria-hidden="true"><CharacterSprite name="nomada" /></div>
+      <div class="nomada-walker" aria-hidden="true"><PixelArt name="nomada" /></div>
     </div>
   </div>
 

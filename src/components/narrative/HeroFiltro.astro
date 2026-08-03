@@ -1,5 +1,5 @@
 ---
-import CharacterSprite from './CharacterSprite.astro';
+import PixelArt from './PixelArt.astro';
 import { useTranslations, type Lang } from '../../i18n/ui';
 
 interface Props {
@@ -14,7 +14,7 @@ const t = useTranslations(lang);
 
 <section
   id="acto-1"
-  class="hero panel bg-grid grid-fade"
+  class="hero panel"
   data-phase="fase-0"
   data-act="1"
   data-act-label={actLabel}
@@ -30,9 +30,12 @@ const t = useTranslations(lang);
       <p data-seq style="--seq: 3">{t('hero.p2')}</p>
       <p data-seq style="--seq: 3.4">{t('hero.p3')}</p>
     </div>
-    <div class="hero-nomada" data-seq style="--seq: 3.8" aria-hidden="true">
-      <CharacterSprite name="nomada" />
+
+    <div class="hero-stage" data-seq style="--seq: 3.8">
+      <span class="portal-gate"><PixelArt name="portal" /></span>
+      <span class="hero-nomada" aria-hidden="true"><PixelArt name="nomada" /></span>
     </div>
+
     <p class="cta" data-seq style="--seq: 4">
       <a class="btn btn-solid" href={enterHref} data-enter
         ><span aria-hidden="true">▶&nbsp;</span>{t('hero.cta')}</a
@@ -47,6 +50,6 @@ const t = useTranslations(lang);
     z-index: 1;
   }
   .cta {
-    margin-top: 2.6rem;
+    margin-top: 1.8rem;
   }
 </style>

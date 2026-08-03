@@ -1,104 +1,136 @@
 /* ============================================================
    NUMEN GAMES — Design tokens
-   Fuente única de verdad. Valores extraídos de los decks 2026
-   (carbón, oro/crema, retícula, wordmark blanco).
-   TODO: validar contra la guía de marca oficial cuando exista.
+   Fuente: Design System «Khepri» v3.0.0 (canon, 2026-08-03).
+   Un valor que no esté en §17.3 del sistema no se inventa aquí.
    ============================================================ */
 
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 :root {
-  /* ---- Marca: crudos -------------------------------------- */
-  --carbon-950: #131316;
-  --carbon-900: #1b1b1f;
-  --carbon-800: #232329;
-  --carbon-700: #2d2d35;
+  /* ---- Paleta canónica [CANON] ------------------------------ */
+  --verdemar: #a6dad5;
+  --turquesa: #018ea1;
+  --ambar: #efa517;
+  --arena: #f9ebdc;
+  --coral: #f35059;
+  --grana: #d33440;
 
-  --paper-50: #f7f4ec;
-  --paper-100: #efeadd;
+  /* Variantes de texto sobre claro [DERIVADO] */
+  --turquesa-texto-claro: #016e7d;
+  --ambar-texto-claro: #7a5100;
+  --grana-texto-claro: #b02330;
 
-  --bone-100: #f2efe7; /* texto sobre carbón */
-  --bone-400: #a4a4ae;
+  /* ---- Rareza (solo juego/producto) [CANON] ----------------- */
+  --rareza-pobre: #f9ebdc;
+  --rareza-comun: #8a7d72;
+  --rareza-poco-comun: #8fc46b;
+  --rareza-raro: #5d9bd6;
+  --rareza-epico: #a98be0;
+  --rareza-legendario: #efa517;
+  --halo-legendario: 0 0 12px rgba(239, 165, 23, 0.25); /* único glow permitido */
 
-  --gold-300: #efdcaa; /* crema de los decks */
-  --gold-400: #e6cb85; /* oro principal (fondo oscuro) */
-  --gold-700: #8a6c29; /* oro legible sobre papel */
-  --gold-800: #6e5518;
+  /* ---- Tipografía [CANON: Geist] ---------------------------- */
+  --stack-display: 'Geist', 'Inter', 'Aptos', 'Segoe UI', Arial, sans-serif;
+  --stack-body: var(--stack-display);
+  --stack-mono: 'Geist Mono', 'Consolas', 'Courier New', monospace;
+  /* La voz mecanografiada del juego y las etiquetas viven en Mono. */
+  --stack-dialog: var(--stack-mono);
+  --stack-pixel: var(--stack-mono);
+  --stack-serif: var(--stack-mono);
 
-  /* ---- Tipografía ----------------------------------------- */
-  --stack-display: 'Archivo Variable', system-ui, sans-serif;
-  --stack-body: 'Archivo Variable', system-ui, sans-serif;
-  --stack-pixel: 'Press Start 2P', 'Courier New', monospace; /* HUD, títulos */
-  --stack-dialog: 'VT323', 'Courier New', monospace; /* diálogos mecanografiados */
-  /* La antigua voz serif ahora habla en la máquina de escribir. */
-  --stack-serif: var(--stack-dialog);
+  /* Escala 1.2 (§4.3) con ajuste fluido hacia móvil */
+  --text-etiqueta: 0.75rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: clamp(1.15rem, 1.05rem + 0.5vw, 1.44rem); /* cuerpo.l */
+  --text-xl: clamp(1.45rem, 1.25rem + 0.9vw, 1.728rem); /* titulo.s */
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.488rem); /* titulo.l */
+  --text-3xl: clamp(2.1rem, 1.5rem + 2.8vw, 3.583rem); /* display.l */
+  --text-dialog: clamp(1.08rem, 1rem + 0.4vw, 1.3rem);
+  --text-pixel-lg: var(--text-2xl);
+  --text-pixel-sm: var(--text-etiqueta);
 
-  /* Escala de la capa aventura */
-  --text-dialog: clamp(1.3rem, 1.15rem + 0.6vw, 1.7rem);
-  --text-pixel-lg: clamp(1.05rem, 0.85rem + 1.4vw, 1.9rem);
-  --text-pixel-sm: clamp(0.62rem, 0.58rem + 0.2vw, 0.72rem);
-  --px-notch: 6px; /* esquina recortada 8-bit */
-  --px-shadow: 5px 5px 0 rgb(0 0 0 / 0.45);
+  --leading-tight: 1.1;
+  --leading-normal: 1.55;
+  --measure: 66ch;
 
-  /* Escala fluida (mín. móvil → máx. escritorio) */
-  --text-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
-  --text-sm: clamp(0.85rem, 0.82rem + 0.15vw, 0.95rem);
-  --text-base: clamp(1rem, 0.96rem + 0.25vw, 1.125rem);
-  --text-lg: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
-  --text-xl: clamp(1.45rem, 1.2rem + 1.1vw, 2rem);
-  --text-2xl: clamp(1.9rem, 1.4rem + 2.2vw, 3rem);
-  --text-3xl: clamp(2.4rem, 1.6rem + 3.6vw, 4.2rem);
-
-  --leading-tight: 1.08;
-  --leading-normal: 1.6;
-  --measure: 62ch;
-
-  /* ---- Espaciado / forma ---------------------------------- */
-  --section-pad: clamp(4.5rem, 12vh, 8.5rem);
-  --gutter: clamp(1.25rem, 4vw, 3rem);
-  --radius-1: 4px;
-  --radius-2: 10px;
+  /* ---- Espacio y forma (§5) --------------------------------- */
+  --section-pad: clamp(4rem, 10vh, 6rem); /* ~space.900 */
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --radius-0: 0px;
+  --radius-ctrl: 6px;
+  --radius-1: var(--radius-ctrl);
+  --radius-2: var(--radius-0);
   --grid-size: 76px;
+  --px-notch: 0px;
 
-  /* ---- Movimiento ----------------------------------------- */
-  --ease-out: cubic-bezier(0.22, 0.61, 0.28, 1);
-  --dur-1: 180ms;
-  --dur-2: 480ms;
-  --dur-3: 950ms;
+  /* ---- Movimiento (§9) -------------------------------------- */
+  --ease-out: cubic-bezier(0.2, 0, 0, 1); /* motion.ciclo */
+  --dur-1: 120ms; /* instante */
+  --dur-2: 320ms; /* medio */
+  --dur-3: 560ms; /* largo */
 
-  /* ---- Capas ---------------------------------------------- */
+  /* ---- Capas ------------------------------------------------ */
   --z-header: 50;
   --z-meter: 60;
   --z-notice: 70;
 }
 
-/* ---- Tema oscuro (por defecto de marca) -------------------- */
+/* ---- Modo Nocturno (pantalla, por defecto) [CANON] ---------- */
 :root,
 [data-theme='dark'] {
   color-scheme: dark;
-  --surface: var(--carbon-900);
-  --surface-raised: var(--carbon-800);
-  --surface-sunken: var(--carbon-950);
-  --ink: var(--bone-100);
-  --ink-muted: var(--bone-400);
-  --accent: var(--gold-400);
-  --accent-soft: var(--gold-300);
-  --accent-contrast: var(--carbon-950); /* texto sobre acento */
-  --line: color-mix(in srgb, var(--bone-100) 16%, transparent);
-  --grid-line: color-mix(in srgb, var(--bone-100) 7%, transparent);
-  --focus-ring: var(--gold-300);
+  --surface: #14110f; /* Noche */
+  --surface-raised: #1e1a17; /* Basalto */
+  --surface-elevated: #292420; /* Bronce oscuro */
+  --surface-sunken: #14110f;
+  --ink: #f9ebdc; /* Arena */
+  --ink-muted: #c4b5a6; /* Arena velada */
+  --ink-faint: #8a7d72; /* Ceniza */
+  --line: #241f1b; /* Sedimento */
+  --line-strong: #3a332d; /* Bronce */
+  --interactive: var(--turquesa);
+  --interactive-ink: #ffffff;
+  --accent: var(--ambar); /* énfasis y logro */
+  --accent-soft: var(--ambar);
+  --accent-contrast: #14110f;
+  --grid-line: var(--line);
+  --focus-ring: var(--turquesa);
+  --pa-2: #8a7d72; /* tono medio del pixel art */
+  --pa-3: #c4b5a6; /* tono claro del pixel art */
 }
 
-/* ---- Tema claro ------------------------------------------- */
+/* ---- Modo Diurno (Arena) [CANON] ---------------------------- */
 [data-theme='light'] {
   color-scheme: light;
-  --surface: var(--paper-50);
-  --surface-raised: #ffffff;
-  --surface-sunken: var(--paper-100);
-  --ink: var(--carbon-900);
-  --ink-muted: #565660;
-  --accent: var(--gold-700);
-  --accent-soft: var(--gold-800);
-  --accent-contrast: var(--paper-50);
-  --line: color-mix(in srgb, var(--carbon-900) 18%, transparent);
-  --grid-line: color-mix(in srgb, var(--carbon-900) 9%, transparent);
-  --focus-ring: var(--carbon-900);
+  --surface: #f9ebdc;
+  --surface-raised: #fdf6ee;
+  --surface-elevated: #fdf6ee;
+  --surface-sunken: #f1e2d0;
+  --ink: #14110f;
+  --ink-muted: #4a423b;
+  --ink-faint: #6e6259;
+  --line: #e2d3c2;
+  --line-strong: #c8b6a2;
+  --interactive: var(--turquesa-texto-claro);
+  --interactive-ink: #ffffff;
+  --accent: var(--ambar-texto-claro);
+  --accent-soft: var(--ambar-texto-claro);
+  --accent-contrast: #f9ebdc;
+  --grid-line: var(--line);
+  --focus-ring: var(--turquesa-texto-claro);
+  --pa-2: #6e6259;
+  --pa-3: #a3968a;
 }
