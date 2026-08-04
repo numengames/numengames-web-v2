@@ -1,17 +1,19 @@
 ---
 /**
- * Un beat del guion (ADR 0008): o un parlamento con firma de personaje,
- * o una acotación de la voz del sistema.
+ * Un beat del guion (ADR 0008 + 0009): parlamento con firma de personaje,
+ * acotación del sistema, elección diegética o ramificación por rol.
  *
- * - El texto SIEMPRE está en el DOM real (sin JS se lee entero, en orden).
- * - La firma (sprite + nombre) sale de la ficha del personaje, nunca de
- *   textos hardcodeados; el sprite es decorativo (aria-hidden) porque el
- *   nombre ya lo identifica en texto.
+ * - El texto SIEMPRE está en el DOM real (sin JS se lee entero, en orden):
+ *   todas las opciones de una elección y todas sus consecuencias son
+ *   visibles — regla dura n.º 3, ambos desenlaces incluidos.
+ * - La firma (sprite + nombre) sale de la ficha del personaje, y los
+ *   rótulos de rol/elección de i18n/ui.ts: nada hardcodeado (regla 5).
  * - `colorHablante` es un NOMBRE de token del canon (validado por Zod
  *   contra tokens.css), así que `var(--nombre)` jamás inventa un valor.
  * - `accion` es dirección escénica (entra/sale/pose…), no contenido: se
- *   serializa en `data-accion` para el futuro motor de escena y no se
- *   pinta. La escena estática queda digna por sí sola.
+ *   serializa en `data-accion` para el futuro motor y no se pinta.
+ *   `data-eleccion` y `data-rol` son el contrato equivalente para la
+ *   interactividad futura (ADR 0009, fuera de alcance aquí).
  */
 import type { CollectionEntry } from 'astro:content';
 
@@ -22,8 +24,15 @@ interface Props {
   beat: Beat;
   /** Ficha del hablante; `undefined` = voz del sistema (acotación). */
   personaje?: FichaPersonaje | undefined;
+  /** Rótulos ya traducidos por la página (i18n/ui.ts). */
+  rotulos: {
+    roles: Record<string, string>;
+    eleccion: string;
+    consecuencia: string;
+    announce: string;
+  };
 }
-const { beat, personaje } = Astro.props;
+const { beat, personaje, rotulos } = Astro.props;
 
 /**
  * Sprites del kit, resueltos en build. `personaje.sprite` es una ruta
@@ -52,32 +61,80 @@ if (personaje) {
 
 /** Dirección escénica para el futuro motor; nunca contenido visible. */
 const accionAttr = beat.accion ? JSON.stringify(beat.accion) : undefined;
+const rolLabel = beat.rol ? rotulos.roles[beat.rol] : undefined;
 ---
 
-{
-  firma ? (
-    <div
-      class="beat-turno"
-      style={`--hablante: var(--${firma.personaje.colorHablante})`}
-      data-hablante={firma.personaje.id}
-      data-accion={accionAttr}
-    >
+<div
+  class="beat-turno"
+  style={firma ? `--hablante: var(--${firma.personaje.colorHablante})` : undefined}
+  data-hablante={firma?.personaje.id}
+  data-accion={accionAttr}
+  data-rol={beat.rol}
+  data-eleccion={beat.eleccion?.id}
+>
+  {
+    rolLabel && (
+      <p class="beat-rol">
+        <span aria-hidden="true">◆</span> {rolLabel}
+      </p>
+    )
+  }
+  {
+    firma && (
       <p class="speaker beat-firma">
         <span class="speaker-portrait" aria-hidden="true" set:html={firma.spriteSvg} />
         <span>{firma.personaje.nombre}</span>
       </p>
-      <p class="beat-parlamento">{beat.parlamento}</p>
-    </div>
-  ) : (
-    <p class="beat-acotacion" data-accion={accionAttr}>
-      {beat.parlamento}
-    </p>
-  )
-}
+    )
+  }
+  {
+    beat.parlamento !== undefined &&
+      (firma ? (
+        <p class="beat-parlamento">{beat.parlamento}</p>
+      ) : (
+        <p class="beat-acotacion">{beat.parlamento}</p>
+      ))
+  }
+  {
+    /* Elección diegética (ADR 0009), patrón de journey-choice: botones
+       server-rendered con aria-pressed; init.ts los vuelve interactivos.
+       Sin JS: botones y TODAS las consecuencias legibles (regla dura 3);
+       con JS: la consecuencia se revela al elegir, estilo point-and-click. */
+    beat.eleccion && (
+      <escena-eleccion data-id={beat.eleccion.id} data-announce={rotulos.announce}>
+        {beat.eleccion.pregunta !== undefined && (
+          <p class="eleccion-pregunta">{beat.eleccion.pregunta}</p>
+        )}
+        <div
+          class="eleccion-opciones"
+          role="group"
+          aria-label={beat.eleccion.pregunta ?? rotulos.eleccion}
+        >
+          {beat.eleccion.opciones.map((opcion, i) => (
+            <div class="eleccion-opcion">
+              <button
+                type="button"
+                class="btn eleccion-btn"
+                data-option={i}
+                data-rol-opcion={opcion.rol}
+              >
+                {opcion.etiqueta}
+              </button>
+              <p class="eleccion-consecuencia" data-consecuencia={i}>
+                <span class="visually-hidden">{rotulos.consecuencia}: </span>
+                {opcion.consecuencia}
+              </p>
+            </div>
+          ))}
+        </div>
+      </escena-eleccion>
+    )
+  }
+</div>
 
 <!--
   Sin <style> propio a propósito: Astro elevaría estas reglas al <head>
   de la home por el mero import, rompiendo la guarda de vacío byte a
-  byte. Las reglas de .beat-* viven en el <style is:inline> de
-  EscenaPanel.astro, que solo se emite cuando hay escenas que pintar.
+  byte. Las reglas de .beat-* y .eleccion-* viven en el <style is:inline>
+  de EscenaPanel.astro, que solo se emite cuando hay escenas que pintar.
 -->

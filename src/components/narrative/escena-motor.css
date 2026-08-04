@@ -1,0 +1,120 @@
+/*
+ * Estilos del motor de escena (ADR 0008 + 0009). Se importan como texto
+ * (?raw) desde EscenaPanel.astro y se emiten UNA vez en un <style
+ * is:inline> — solo cuando hay escenas que pintar: con el guion vacío la
+ * home no recibe ni un byte de esto (guarda de vacío).
+ *
+ * Todo son tokens del canon; sin @keyframes (cupo cerrado 9/9), sin
+ * parallax, sin glitch. Composición de aventura gráfica clásica: telón
+ * detrás, caja de diálogo delante y abajo.
+ */
+.escena-panel {
+  position: relative;
+}
+.escena-fondo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.escena-fondo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+}
+.escena-panel .container-n {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-content: end;
+  min-height: 100%;
+}
+.escena-panel .eyebrow,
+.escena-panel .phase-title {
+  text-shadow: 0 1px 0 var(--surface);
+}
+.escena-beats {
+  display: grid;
+  gap: 1.3rem;
+  max-height: 58vh;
+  overflow-y: auto;
+  padding: 1.1rem 1.2rem;
+}
+.escena-beats .beat-turno {
+  display: grid;
+  gap: 0.45rem;
+  justify-items: start;
+}
+.escena-beats .beat-firma {
+  margin-bottom: 0;
+  color: var(--hablante, var(--accent));
+}
+.escena-beats .beat-firma .speaker-portrait {
+  color: var(--hablante, var(--ink));
+}
+.escena-beats .beat-firma .speaker-portrait svg {
+  width: 2.1rem;
+  height: auto;
+  display: block;
+}
+.escena-beats .beat-parlamento,
+.escena-beats .beat-acotacion {
+  margin: 0;
+  font-family: var(--stack-dialog);
+  font-size: var(--text-dialog);
+  line-height: 1.45;
+  max-width: 56ch;
+  white-space: pre-line;
+}
+.escena-beats .beat-acotacion {
+  color: var(--ink);
+}
+.escena-beats .beat-rol {
+  margin: 0;
+  font-family: var(--stack-mono);
+  font-size: var(--text-etiqueta);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.escena-beats .eleccion-pregunta {
+  margin: 0;
+  font-family: var(--stack-dialog);
+  font-size: var(--text-dialog);
+  color: var(--ink);
+}
+.escena-beats .eleccion-opciones {
+  display: grid;
+  gap: 0.6rem;
+  justify-items: start;
+}
+.escena-beats .eleccion-opcion {
+  display: grid;
+  gap: 0.3rem;
+  justify-items: start;
+  max-width: 56ch;
+}
+.escena-beats .eleccion-btn {
+  text-align: left;
+}
+.escena-beats .eleccion-consecuencia {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+  white-space: pre-line;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--line-strong);
+}
+.js .escena-beats [data-consecuencia] {
+  display: none;
+}
+.js .escena-beats [data-consecuencia].is-elegida {
+  display: block;
+  border-left-color: var(--accent);
+  color: var(--ink);
+}
+.escena-slot {
+  position: relative;
+  z-index: 1;
+}

@@ -14,7 +14,7 @@
  * el contrato para la futura capa de decorado, sin pintar nada aún.
  */
 import type { CollectionEntry } from 'astro:content';
-import type { Lang } from '../../i18n/ui';
+import { useTranslations, type Lang } from '../../i18n/ui';
 import ParlamentoBeat from './ParlamentoBeat.astro';
 
 type FichaPersonaje = CollectionEntry<'personajes'>['data'];
@@ -73,6 +73,17 @@ const beats = escena.data.beats.map((beat, indice) => {
   return { beat, personaje };
 });
 
+const t = useTranslations(lang);
+const rotulos = {
+  roles: {
+    anfitrion: t('rol.anfitrion'),
+    impulsor: t('rol.impulsor'),
+    explorador: t('rol.explorador'),
+  },
+  eleccion: t('escena.eleccion'),
+  consecuencia: t('escena.consecuencia'),
+  announce: t('a11y.choiceMade'),
+};
 const slug = escena.id.split('/').pop() ?? escena.id;
 const headingId = `escena-${slug}-title`;
 
@@ -116,7 +127,7 @@ const estilosMotor = `
     <h2 class="phase-title" id={headingId} data-reveal>{escenario.nombre}</h2>
 
     <div class="dialog px escena-beats" data-reveal>
-      {beats.map(({ beat, personaje }) => <ParlamentoBeat {beat} {personaje} />)}
+      {beats.map(({ beat, personaje }) => <ParlamentoBeat {beat} {personaje} {rotulos} />)}
     </div>
   </div>
 </section>

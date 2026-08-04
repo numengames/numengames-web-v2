@@ -226,13 +226,21 @@ class JourneyProgress extends HTMLElement {
       bar?.setAttribute('aria-valuenow', String(pct));
 
       const score = scoreOf(snap);
+      /* Elecciones alcanzables: las libres cuentan todas; las filtradas
+         por rol (tres activaciones, una por rol) solo pueden jugarse UNA
+         por visitante — contarlas todas prometería un máximo imposible. */
+      const elecciones = Array.from(document.querySelectorAll('escena-eleccion'));
+      const conRol = elecciones.filter((e) => e.closest('[data-rol]') !== null).length;
       const max = maxScoreOf({
         /* Los eggs alcanzables se derivan del DOM, no se fijan a mano: el
            del wordmark existe siempre; el del Umbral solo cuenta cuando los
            enlaces-tesoro se renderizan (esperan P0-1/P0-4 en i18n/ui.ts).
            Así el «PTS máx» del HUD nunca promete tesoros inalcanzables. */
         phases: phaseIds.length,
-        choices: document.querySelectorAll('journey-choice').length,
+        choices:
+          document.querySelectorAll('journey-choice').length +
+          (elecciones.length - conRol) +
+          (conRol > 0 ? 1 : 0),
         eggs: 1 + (document.querySelector('[data-tesoro-link]') ? 1 : 0),
       });
       const pad = (n: number) => String(n).padStart(3, '0');
@@ -319,6 +327,57 @@ class JourneyChoice extends HTMLElement {
 }
 customElements.define('journey-choice', JourneyChoice);
 
+/* ----------------------- <escena-eleccion> ---------------------------
+   Elección diegética del motor de escena (ADR 0009). Mismo contrato que
+   <journey-choice>: botones server-rendered (sin JS, botones y TODAS las
+   consecuencias son legibles), persistencia en numen.journey.v1 vía
+   journey.choose (elección = 15 PTS del SCORING vigente, journey.ts
+   intacto) y anuncio por región viva. La elección de rol además filtra
+   los beats etiquetados con data-rol, estilo aventura por caminos. */
+function aplicarRol(rol: string | undefined) {
+  if (rol === undefined) return;
+  document.documentElement.dataset.rolActivo = rol;
+  document.querySelectorAll<HTMLElement>('.beat-turno[data-rol]').forEach((beat) => {
+    beat.hidden = beat.dataset.rol !== rol;
+  });
+}
+
+class EscenaEleccion extends HTMLElement {
+  connectedCallback() {
+    const id = `escena-${this.dataset.id ?? 'eleccion'}`;
+    const buttons = Array.from(this.querySelectorAll<HTMLButtonElement>('button[data-option]'));
+    const consecuencias = Array.from(this.querySelectorAll<HTMLElement>('[data-consecuencia]'));
+    const open = (idx: number) => {
+      buttons.forEach((b) =>
+        b.setAttribute('aria-pressed', String(Number(b.dataset.option) === idx)),
+      );
+      consecuencias.forEach((c) =>
+        c.classList.toggle('is-elegida', Number(c.dataset.consecuencia) === idx),
+      );
+    };
+    buttons.forEach((btn) => {
+      btn.setAttribute('aria-pressed', 'false');
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.option);
+        journey.choose(id, idx);
+        audio.confirm();
+        open(idx);
+        aplicarRol(btn.dataset.rolOpcion);
+        const consecuencia = consecuencias.find((c) => Number(c.dataset.consecuencia) === idx);
+        announce(
+          `${this.dataset.announce ?? ''} ${btn.textContent?.trim() ?? ''}. ${consecuencia?.textContent?.trim() ?? ''}`.trim(),
+        );
+      });
+    });
+    const prev = journey.getChoice(id);
+    if (typeof prev === 'number') {
+      open(prev);
+      aplicarRol(buttons[prev]?.dataset.rolOpcion);
+    }
+  }
+}
+customElements.define('escena-eleccion', EscenaEleccion);
+
 /* ------------------------- <journey-reset> --------------------------- */
 class JourneyReset extends HTMLElement {
   connectedCallback() {
@@ -331,6 +390,15 @@ class JourneyReset extends HTMLElement {
       document
         .querySelectorAll('button[data-option]')
         .forEach((b) => b.setAttribute('aria-pressed', 'false'));
+      /* Motor de escena (ADR 0009): al reiniciar, las consecuencias se
+         repliegan y el filtro de rol se levanta. */
+      document
+        .querySelectorAll('[data-consecuencia].is-elegida')
+        .forEach((c) => c.classList.remove('is-elegida'));
+      document
+        .querySelectorAll<HTMLElement>('.beat-turno[data-rol]')
+        .forEach((beat) => (beat.hidden = false));
+      delete document.documentElement.dataset.rolActivo;
       announce(this.dataset.done ?? 'Reset');
     });
   }
