@@ -7,6 +7,12 @@ updates:
     groups:
       minor-y-parches:
         update-types: ['minor', 'patch']
+    ignore:
+      # El stack fija Astro 5 (CLAUDE.md): subir de major exige un ADR, así
+      # que los PRs automáticos de major solo invitan a un merge accidental.
+      # Si un día hace falta Astro 6+, se retira esta regla en el mismo ADR.
+      - dependency-name: astro
+        update-types: ['version-update:semver-major']
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
