@@ -63,7 +63,12 @@ test('la panorámica se desplaza en horizontal al avanzar el scroll', async ({ p
    numen.journey.v1. */
 test('la elección de la escena revela su consecuencia y persiste', async ({ page }) => {
   await page.goto('/es/');
-  const btn = page.locator('escena-eleccion button[data-option="0"]').first();
+  /* Con el tecleo progresivo, los beats se revelan al escribirse; el
+     jugador (y el test) puede completar todo con un clic en la caja. */
+  const dialogo = page.locator('escena-dialogo', { has: page.locator('escena-eleccion') }).first();
+  await dialogo.scrollIntoViewIfNeeded();
+  await dialogo.click({ position: { x: 10, y: 10 } });
+  const btn = dialogo.locator('escena-eleccion button[data-option="0"]').first();
   await btn.scrollIntoViewIfNeeded();
   await btn.click();
   await expect(btn).toHaveAttribute('aria-pressed', 'true');

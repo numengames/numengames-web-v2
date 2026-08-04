@@ -4,7 +4,7 @@ lang: en
 nombre: SENET
 papel: voz
 colorHablante: interactive
-sprite: senet.svg
+sprite: retrato-senet.svg
 poses: [neutral, señala, celebra]
 reglasDeVoz: >-
   Interprets what happens, asks questions and points out the consequences of

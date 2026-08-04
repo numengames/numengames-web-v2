@@ -34,6 +34,16 @@ lentes (79 hallazgos).
   radio completo, tinte diurno, velo, neutrales con nombre).
 - Regla (h) del validador: `colorHablante` restringido al subconjunto de
   diálogo con AA verificada sobre la superficie real (test negativo).
+- **La escena como aventura de los 80** (QA de dirección): diálogo a la
+  izquierda con orla píxel de 9 cortes, escenario enmarcado a la
+  derecha, retrato del hablante en marco con su nombre, beats que se
+  ESCRIBEN progresivamente (`<escena-dialogo>`, clic completa). Retratos
+  48×48 nuevos — Senet (reptiliano gamberro), **Vesper** el Deshilador
+  (cyanita: piel azul, pelo blanco, gesto hosco — bautizado), el Nómada
+  encapuchado — y **8 escenarios isométricos** fantástico-steampunk
+  producidos con la gramática §2.4.1 y auto-QA renderizada; retratos
+  deduplicados por página vía `<symbol>`/`<use>` (HTML 212 KB / 31 KB
+  gzip).
 - ADR 0010 (reconciliación del movimiento) y ADR 0011 (desviaciones por
   accesibilidad, propuestas de enmienda al canon §17).
 

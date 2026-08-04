@@ -34,10 +34,39 @@
   /* El hueco que el telón no cubre se completa con Noche (§5.1). */
   background: var(--noche);
 }
+/* Marco píxel de 9 cortes (orla doble en Bronce con remaches de Arena
+   velada), dibujado en Khepri-16. Un solo tile de 15px, sin peticiones. */
+.escena-panel {
+  --marco-pixel: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15' shape-rendering='crispEdges'%3E%3Cpath fill='%233a332d' d='M0 0h15v1H0zM0 14h15v1H0zM0 1h1v13H0zM14 1h1v13h-1zM2 2h11v1H2zM2 12h11v1H2zM2 3h1v9H2zM12 3h1v9h-1z'/%3E%3Cpath fill='%23c4b5a6' d='M1 1h1v1H1zM13 1h1v1h-1zM1 13h1v1H1zM13 13h1v1h-1z'/%3E%3C/svg%3E");
+}
+/* Composición de aventura clásica: cabecera arriba, diálogo a la
+   izquierda, escenario enmarcado a la derecha, slot debajo. */
+.escena-panel .container-n {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  grid-template-areas:
+    'cabecera cabecera'
+    'dialogo escenario'
+    'slot slot';
+  column-gap: var(--space-500);
+  row-gap: var(--space-400);
+  align-content: center;
+  min-height: 100%;
+}
+.escena-cabecera {
+  grid-area: cabecera;
+}
+/* El escenario ya no es telón: es un cuadro isométrico enmarcado en la
+   posición opuesta a la caja de diálogo. */
 .escena-fondo {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+  grid-area: escenario;
+  align-self: start;
+  background: var(--noche);
+  border: 5px solid transparent;
+  border-image: var(--marco-pixel) 5 repeat;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
 }
 .escena-fondo svg {
@@ -46,12 +75,15 @@
   display: block;
   image-rendering: pixelated;
 }
-.escena-panel .container-n {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  align-content: end;
-  min-height: 100%;
+@media (max-width: 48rem) {
+  .escena-panel .container-n {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'cabecera'
+      'escenario'
+      'dialogo'
+      'slot';
+  }
 }
 /* Texto sobre el telón: velo mínimo canónico (§8.2), no sombras.
    Tinta Arena fija: sobre el velo Noche contrasta en ambos temas. */
@@ -69,51 +101,76 @@
   line-height: 44px;
   letter-spacing: 0;
 }
-/* Caja de diálogo (§9.6): superficie Basalto, borde 1px Noche. Sobre
-   superficie sólida el texto no lleva contorno (§4.5.1). Huecos en la
-   escala de 4 (§5). */
+/* Caja de diálogo (§9.6) con orla píxel (dirección de la persona >
+   canon, §19.1: el borde 1px Noche pasa a marco de 9 cortes). */
 .escena-beats {
-  display: grid;
-  gap: var(--space-500);
-  max-height: 58vh;
+  display: block;
+  grid-area: dialogo;
+  align-self: start;
+  max-height: 62vh;
   overflow-y: auto;
-  padding: var(--space-400) var(--space-500);
+  padding: var(--space-400);
   background: var(--surface-raised);
-  border: 1px solid var(--noche);
+  border: 5px solid transparent;
+  border-image: var(--marco-pixel) 5 repeat;
 }
+/* Beat = retrato enmarcado + cuerpo, como ficha de conversación. */
 .escena-beats .beat-turno {
   display: grid;
-  gap: var(--space-200);
-  justify-items: start;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-300);
+  align-items: start;
 }
-/* Hablante (§4.5.1): Pixelify al múltiplo base, sin versales ni
-   tracking — un pixel font con letter-spacing genera medias posiciones
-   de píxel, prohibidas por §4.5.1. */
-.escena-beats .beat-firma {
-  margin-bottom: 0;
-  color: var(--hablante, var(--accent));
-  font-family: var(--stack-pixel);
-  font-size: 22px;
-  line-height: 22px;
-  letter-spacing: 0;
-  text-transform: none;
+.escena-beats .beat-turno + .beat-turno {
+  margin-top: var(--space-500);
 }
-.escena-beats .beat-firma .speaker-portrait {
+.escena-beats .beat-turno:not(:has(.beat-retrato)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+.escena-beats .beat-retrato {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-100);
+}
+.escena-beats .retrato-marco {
+  display: block;
+  padding: var(--space-100);
+  background: var(--noche);
+  border: 5px solid transparent;
+  border-image: var(--marco-pixel) 5 repeat;
   color: var(--hablante, var(--ink));
 }
-/* Retrato a escala entera (§5.1): rejilla 16 × 2 = 32px, sin subpíxel. */
-.escena-beats .beat-firma .speaker-portrait svg {
-  width: 32px;
+/* Retrato a escala entera (§5.1): rejilla 48 × 2 = 96px, sin subpíxel. */
+.escena-beats .retrato-marco svg {
+  width: 96px;
   height: auto;
   display: block;
 }
-/* Diálogo (§4.5): Pixelify a múltiplos exactos — 22px con interlínea
-   33px (1.5 exacto, sin subpíxel). Medida ≥60ch (§4.4). */
+/* Nombre bajo el marco: Pixelify pequeña (desviación 9, ADR 0011). */
+.escena-beats .retrato-nombre {
+  font-family: var(--stack-pixel);
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0;
+  text-align: center;
+  max-width: 108px;
+  color: var(--hablante, var(--accent));
+}
+.escena-beats .beat-cuerpo {
+  display: grid;
+  gap: var(--space-200);
+  justify-items: start;
+  min-width: 0;
+}
+/* Diálogo: Pixelify 16px/24px — más pequeño que los múltiplos 22/33/44
+   del canon a petición de la persona (desviación 9, ADR 0011); la
+   interlínea 24 sigue siendo entera (sin subpíxel). */
 .escena-beats .beat-parlamento {
   margin: 0;
   font-family: var(--stack-pixel);
-  font-size: 22px;
-  line-height: 33px;
+  font-size: 16px;
+  line-height: 24px;
   max-width: 60ch;
   white-space: pre-line;
 }
@@ -138,8 +195,8 @@
 .escena-beats .eleccion-pregunta {
   margin: 0;
   font-family: var(--stack-pixel);
-  font-size: 22px;
-  line-height: 33px;
+  font-size: 16px;
+  line-height: 24px;
   color: var(--ink);
 }
 /* Las opciones son control vectorial del sistema (§5.1): la frontera
