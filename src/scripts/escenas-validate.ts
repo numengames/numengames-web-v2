@@ -183,6 +183,24 @@ export function extraerTokensDeColor(css: string): string[] {
 /* ------------------------------------------------------------------ */
 
 /**
+ * Subconjunto de diálogo del canon v3.3.0 (§3.7), afinado a la
+ * superficie REAL de la caja de diálogo (Basalto #1e1a17, §9.6): el
+ * canon verifica sus colores sobre Noche, pero sobre Basalto la
+ * Turquesa canónica (4.43:1) y Ceniza (4.33:1) caen bajo el 4.5:1 de
+ * AA, y Grana está vetada como texto por el propio canon. `interactive`
+ * entra por ADR 0007 (#1f9cac, 4.69:1 en la peor superficie).
+ */
+export const SUBCONJUNTO_HABLANTE = [
+  'accent',
+  'ambar',
+  'ink',
+  'ink-muted',
+  'interactive',
+  'rareza-poco-comun',
+  'verdemar',
+] as const;
+
+/**
  * Regla (d): paridad ES/EN. Cada id debe existir en ambos idiomas; un id
  * huérfano significa que un visitante de uno de los dos idiomas vería un
  * guion incompleto, y eso rompe la regla dura n.º 5 de CLAUDE.md.
@@ -216,7 +234,10 @@ function comprobarParidad(
  *      guion que salta etapas no cumple su función comercial;
  *  (c) toda pose usada en un beat está declarada en `poses[]` del
  *      personaje que la adopta (y 'sistema' no posa: no tiene cuerpo);
- *  (d) paridad ES/EN de ids en las tres colecciones.
+ *  (d) paridad ES/EN de ids en las tres colecciones;
+ *  (h) todo `colorHablante` pertenece al subconjunto de diálogo
+ *      (§3.7 del canon + AA sobre la superficie real de la caja) —
+ *      la letra salta a (h) porque (e)-(g) son de elecciones (ADR 0009).
  *
  * Caso vacío: mientras el guion no exista (docs/narrativa/ vacío), las
  * colecciones llegan vacías y la validación PASA — las reglas (a) y (b)
@@ -235,6 +256,16 @@ export function validateEscenas(
   comprobarParidad('personajes', personajes, errores);
   comprobarParidad('escenarios', escenarios, errores);
   comprobarParidad('escenas', escenas, errores);
+
+  // (h) Subconjunto de diálogo: se comprueba siempre, como la paridad.
+  for (const personaje of personajes) {
+    if (!(SUBCONJUNTO_HABLANTE as readonly string[]).includes(personaje.colorHablante)) {
+      errores.push(
+        `personajes [${personaje.lang}]: '${personaje.id}' usa colorHablante='${personaje.colorHablante}', ` +
+          `fuera del subconjunto de diálogo (§3.7 + AA sobre Basalto): ${SUBCONJUNTO_HABLANTE.join(', ')}`,
+      );
+    }
+  }
 
   // (a) y (b) por idioma: cada idioma cuenta su propio viaje completo.
   if (escenas.length > 0) {
