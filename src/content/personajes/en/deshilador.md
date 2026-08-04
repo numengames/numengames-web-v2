@@ -4,7 +4,7 @@ lang: en
 nombre: VESPER
 papel: secundario
 colorHablante: ink-muted
-sprite: deshilador.svg
+sprite: retrato-vesper.svg
 poses: [interferencia]
 reglasDeVoz: >-
   Speaks little, with elegant coldness. Appears as interference inside the

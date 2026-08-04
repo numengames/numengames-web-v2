@@ -45,7 +45,7 @@ const sprites = import.meta.glob('../../assets/pixel/**/*.svg', {
   eager: true,
 }) as Record<string, string>;
 
-let firma: { personaje: FichaPersonaje; spriteSvg: string } | undefined;
+let firma: { personaje: FichaPersonaje; viewBox: string } | undefined;
 if (personaje) {
   const spriteSvg = sprites[`../../assets/pixel/${personaje.sprite}`];
   if (spriteSvg === undefined) {
@@ -56,7 +56,10 @@ if (personaje) {
           .join(', ')}`,
     );
   }
-  firma = { personaje, spriteSvg };
+  /* El SVG completo se emite UNA vez como <symbol> en EscenaPanel; aquí
+     solo se referencia (evita duplicar ~12 KB por cada beat). */
+  const viewBox = /viewBox="([^"]+)"/.exec(spriteSvg)?.[1] ?? '0 0 48 48';
+  firma = { personaje, viewBox };
 }
 
 /** Dirección escénica para el futuro motor; nunca contenido visible. */
@@ -78,7 +81,11 @@ const rolLabel = beat.rol ? rotulos.roles[beat.rol] : undefined;
        accesible como figcaption. */
     firma && (
       <figure class="beat-retrato">
-        <span class="retrato-marco" aria-hidden="true" set:html={firma.spriteSvg} />
+        <span class="retrato-marco" aria-hidden="true">
+          <svg viewBox={firma.viewBox} shape-rendering="crispEdges">
+            <use href={`#retrato-${firma.personaje.id}`} />
+          </svg>
+        </span>
         <figcaption class="retrato-nombre">{firma.personaje.nombre}</figcaption>
       </figure>
     )

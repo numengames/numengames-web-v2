@@ -115,6 +115,28 @@ const estiloEscenario = [
  * cualquier fondo futuro queda cubierto sin depender de que el asset lo
  * recuerde.
  */
+/**
+ * Retratos como <symbol> únicos por página (emitidos con conEstilos):
+ * cada beat los referencia con <use>, en vez de incrustar el SVG entero
+ * en cada intervención — sin esto, un hablante recurrente multiplica su
+ * retrato de ~12 KB por cada beat y revienta el peso del HTML.
+ */
+const simbolosRetratos = conEstilos
+  ? [...new Map([...personajes.values()].map((p) => [p.id, p])).values()]
+      .map((p) => {
+        const crudo = fondos[`../../assets/pixel/${p.sprite}`];
+        if (crudo === undefined) {
+          throw new Error(
+            `[motor de escena] El sprite '${p.sprite}' de '${p.id}' no existe en src/assets/pixel/.`,
+          );
+        }
+        const vb = /viewBox="([^"]+)"/.exec(crudo)?.[1] ?? '0 0 48 48';
+        const interior = crudo.replace(/<svg[^>]*>/, '').replace('</svg>', '');
+        return `<symbol id="retrato-${p.id}" viewBox="${vb}">${interior}</symbol>`;
+      })
+      .join('')
+  : '';
+
 let fondoSvg: string | undefined;
 if (escenario.fondo !== undefined) {
   const crudo = fondos[`../../assets/pixel/${escenario.fondo}`];
@@ -131,6 +153,17 @@ if (escenario.fondo !== undefined) {
 ---
 
 {conEstilos && <style is:inline set:html={estilosMotor} />}
+{
+  conEstilos && simbolosRetratos && (
+    <svg
+      width="0"
+      height="0"
+      style="position:absolute"
+      aria-hidden="true"
+      set:html={simbolosRetratos}
+    />
+  )
+}
 <section
   id={`escena-${slug}`}
   class="phase panel escena-panel"

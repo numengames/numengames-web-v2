@@ -141,9 +141,9 @@
   border-image: var(--marco-pixel) 5 repeat;
   color: var(--hablante, var(--ink));
 }
-/* Retrato a escala entera (§5.1): rejilla 16 × 2 = 32px, sin subpíxel. */
+/* Retrato a escala entera (§5.1): rejilla 48 × 2 = 96px, sin subpíxel. */
 .escena-beats .retrato-marco svg {
-  width: 32px;
+  width: 96px;
   height: auto;
   display: block;
 }
@@ -154,7 +154,7 @@
   line-height: 16px;
   letter-spacing: 0;
   text-align: center;
-  max-width: 72px;
+  max-width: 108px;
   color: var(--hablante, var(--accent));
 }
 .escena-beats .beat-cuerpo {
