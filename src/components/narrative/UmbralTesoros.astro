@@ -39,14 +39,16 @@ const announce = `${t('umbral.tesoro.hallado')} · ${t('rarity.epico')}`;
 {
   (hasCalendar || hasMail) && (
     <div class="ctas-tesoro" data-umbral-tesoro data-announce={announce} data-reveal>
+      {/* Un primario por vista (§9.1): el primario del Umbral es el CTA
+          de evento (UmbralCtas); aquí, fantasma y silencioso. */}
       {hasCalendar && (
-        <a class="btn btn-solid" href={UMBRAL_CALENDAR_URL} data-tesoro-link>
+        <a class="btn" href={UMBRAL_CALENDAR_URL} data-tesoro-link>
           <span class="verb">{t('verb.usar')}</span>
           {t('umbral.tesoro.reservar')}
         </a>
       )}
       {hasMail && (
-        <a class="btn" href={`mailto:${UMBRAL_CONTACT_EMAIL}`} data-tesoro-link>
+        <a class="btn btn-quiet" href={`mailto:${UMBRAL_CONTACT_EMAIL}`} data-tesoro-link>
           <span class="verb">{t('verb.hablar')}</span>
           {t('umbral.tesoro.escribir')}
         </a>
@@ -58,10 +60,10 @@ const announce = `${t('umbral.tesoro.hallado')} · ${t('rarity.epico')}`;
 <style>
   /* Solo maquetación: el aspecto de los enlaces es el de .btn (global.css). */
   .ctas-tesoro {
-    margin-top: 1.6rem;
+    margin-top: var(--space-500);
     display: flex;
     flex-wrap: wrap;
-    gap: 1.1rem;
+    gap: var(--space-400);
     align-items: center;
   }
 </style>

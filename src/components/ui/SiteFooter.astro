@@ -53,7 +53,8 @@ const year = new Date().getFullYear();
   .site-footer {
     margin-top: var(--section-pad);
     border-top: 1px solid var(--line);
-    padding-block: 3rem 5.5rem; /* deja aire a la carta de travesía */
+    /* s700 / s900: el hueco inferior deja aire a la carta de travesía. */
+    padding-block: var(--space-700) var(--space-900);
     background: var(--surface-sunken);
   }
   .motto {
@@ -63,17 +64,17 @@ const year = new Date().getFullYear();
     color: var(--ink-muted);
   }
   .cols {
-    margin-top: 1.6rem;
+    margin-top: var(--space-500);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: var(--space-400);
   }
   ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.2rem;
+    gap: var(--space-400);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -85,21 +86,24 @@ const year = new Date().getFullYear();
   a:hover {
     color: var(--ink);
   }
+  /* Texto corrido en caja baja: sin tracking (el +0.10em es solo para
+     etiquetas versales, §4.3; el 0.08em era un valor inventado). */
   .fine {
-    margin-top: 1.6rem;
+    margin-top: var(--space-500);
     font-size: var(--text-xs);
-    letter-spacing: 0.08em;
     color: var(--ink-muted);
   }
+  /* Cifra → Mono tabular (§4.4). */
   .ver {
-    font-family: var(--stack-display);
+    font-family: var(--stack-mono);
+    font-variant-numeric: tabular-nums;
     color: var(--accent);
   }
   .cierre {
-    margin-top: 2.2rem;
+    margin-top: var(--space-600);
     display: flex;
     align-items: center;
-    gap: 1.4rem;
+    gap: var(--space-500);
     flex-wrap: wrap;
   }
   .cierre :global(.khepri-close) {
@@ -108,13 +112,14 @@ const year = new Date().getFullYear();
   }
   .sigil {
     align-items: center;
-    gap: 0.7rem;
-    padding: 0.4rem 0.7rem;
+    gap: var(--space-300);
+    padding: var(--space-200) var(--space-300);
     border: 1px solid;
     border-radius: var(--radius-ctrl);
     font-family: var(--stack-mono);
+    font-weight: 500;
     font-size: var(--text-etiqueta);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
   }
   .sigil.is-found {
     display: inline-flex;

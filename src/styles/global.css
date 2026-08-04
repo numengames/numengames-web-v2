@@ -86,7 +86,7 @@
     color: var(--accent-contrast);
     font-family: var(--stack-display);
     font-size: var(--text-sm);
-    padding: 0.7rem 1.1rem;
+    padding: var(--space-300) var(--space-400);
     border-radius: var(--radius-1);
     transition: top var(--dur-1) var(--ease-out);
   }
@@ -130,37 +130,121 @@
     background: radial-gradient(ellipse 70% 62% at 50% 46%, var(--surface) 0%, transparent 78%);
   }
 
-  /* Botones */
+  /* Botones §9.1 — los cuatro tipos canónicos.
+     Geometría: radio de control, padding 10×24, altura M 40 px
+     (S 32 px con .btn-s), peso 500, sentence case — nunca versales.
+     El tipo base (.btn) es el FANTASMA: transparente, borde linea.fuerte,
+     hover borde+texto Verdemar. */
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    font-family: var(--stack-display);
+    justify-content: center;
+    gap: var(--space-200);
+    font-family: var(--stack-mono);
     font-size: var(--text-sm);
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+    font-weight: 500;
+    line-height: var(--leading-tight);
     text-decoration: none;
-    padding: 0.95rem 1.7rem;
-    border: 1px solid var(--accent);
-    border-radius: var(--radius-1);
-    color: var(--accent);
+    padding: 10px 24px;
+    min-height: 40px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-ctrl);
+    color: var(--ink);
     background: transparent;
     cursor: pointer;
     transition:
       background var(--dur-1) var(--ease-out),
-      color var(--dur-1) var(--ease-out);
+      color var(--dur-1) var(--ease-out),
+      border-color var(--dur-1) var(--ease-out),
+      filter var(--dur-1) var(--ease-out);
+  }
+  .btn:hover {
+    border-color: var(--verdemar);
+    color: var(--verdemar);
+  }
+  .btn-s {
+    min-height: 32px;
+    padding: var(--space-100) var(--space-400);
   }
 
+  /* PRIMARIO. Desviación registrada (§19.1, accesibilidad > canon): el
+     relleno conserva var(--interactive)/var(--interactive-ink) del ADR
+     0007 en lugar de los estados canónicos #02A4BA (hover) / #017486
+     (active), que no alcanzan 4.5:1 con texto blanco. El hover es la
+     elevación del catálogo #04 (un paso de luz, 120 ms, sin
+     desplazamiento). Pendiente de proponerse como enmienda al canon. */
+  .btn-solid {
+    background: var(--interactive);
+    border-color: var(--interactive);
+    color: var(--interactive-ink);
+  }
+  .btn-solid:hover {
+    border-color: var(--interactive);
+    color: var(--interactive-ink);
+    filter: brightness(1.08);
+  }
+
+  /* SILENCIOSO: solo texto Verdemar, subrayado al hover. */
   .btn-quiet {
     border-color: transparent;
-    color: var(--ink-muted);
+    background: transparent;
+    color: var(--verdemar);
+  }
+  .btn-quiet:hover {
+    border-color: transparent;
+    background: transparent;
+    color: var(--verdemar);
     text-decoration: underline;
     text-underline-offset: 0.3em;
   }
-  .btn-quiet:hover {
-    background: transparent;
-    color: var(--ink);
+
+  /* DESTRUCTIVO: fondo Grana, texto blanco (4.8:1). Confirmación
+     obligatoria; nunca junto al primario. Hoy sin uso en el sitio. */
+  .btn-danger {
+    background: var(--grana);
+    border-color: var(--grana);
+    color: var(--interactive-ink);
+  }
+  .btn-danger:hover {
+    border-color: var(--grana);
+    color: var(--interactive-ink);
+    filter: brightness(1.08);
+  }
+
+  /* Desviación §19.1 (accesibilidad > canon): Verdemar #a6dad5 es un
+     color de texto sobre oscuro; sobre Arena no llega a 2:1. En Diurno,
+     fantasma (hover) y silencioso usan el token interactivo del tema
+     (--turquesa-texto-claro, AA). Se propondrá al canon. */
+  [data-theme='light'] .btn:hover {
+    border-color: var(--interactive);
+    color: var(--interactive);
+  }
+  [data-theme='light'] .btn-quiet,
+  [data-theme='light'] .btn-quiet:hover {
+    border-color: transparent;
+    color: var(--interactive);
+  }
+  [data-theme='light'] .btn-solid,
+  [data-theme='light'] .btn-solid:hover {
+    border-color: var(--interactive);
+    color: var(--interactive-ink);
+  }
+  [data-theme='light'] .btn-danger,
+  [data-theme='light'] .btn-danger:hover {
+    border-color: var(--grana);
+    color: var(--interactive-ink);
+  }
+
+  /* DISABLED (§9.1): superficie + texto terciario + not-allowed.
+     Va tras los hover para ganar en cascada a igual especificidad. */
+  .btn:disabled,
+  .btn[aria-disabled='true'] {
+    background: var(--surface);
+    border-color: var(--line);
+    color: var(--ink-faint);
+    cursor: not-allowed;
+    filter: none;
+    text-decoration: none;
   }
 
   /* Secciones narrativas */
@@ -247,11 +331,13 @@
   }
 
   /* Caminos (Travesía) */
+  /* Tarjeta §9.4: padding fijo s500 (el clamp fluido quedaba fuera de la
+     escala de 4 en casi todo su recorrido). */
   .camino {
     border: 1px solid var(--line);
     border-radius: var(--radius-2);
     background: var(--surface-raised);
-    padding: clamp(1.4rem, 3.5vw, 2.4rem);
+    padding: var(--space-500);
   }
   .choice-q {
     font-family: var(--stack-serif);
@@ -260,8 +346,8 @@
   .choice-opts {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.8rem;
-    margin-top: 1.1rem;
+    gap: var(--space-300);
+    margin-top: var(--space-400);
   }
   .choice-outcome {
     margin-top: 1.3rem;
@@ -269,12 +355,15 @@
     border-top: 1px dashed var(--line);
     max-width: var(--measure);
   }
+  /* Etiqueta §4.3: Mono 500, versales, tracking +0.10em exacto. */
   .choice-outcome .outcome-label {
+    font-family: var(--stack-mono);
+    font-weight: 500;
     font-size: var(--text-xs);
-    letter-spacing: 0.18em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-muted);
-    margin-bottom: 0.4rem;
+    margin-bottom: var(--space-200);
   }
   /* Con JS: las opciones son interactivas y los desenlaces se revelan al elegir. */
   .js .choice-outcome {
@@ -291,7 +380,10 @@
     display: none;
   }
 
-  [aria-pressed='true'].btn {
+  /* Elección tomada = relleno del interactivo. El :hover explícito evita
+     que el hover fantasma (texto Verdemar) pise el texto sobre relleno. */
+  [aria-pressed='true'].btn,
+  [aria-pressed='true'].btn:hover {
     background: var(--interactive);
     border-color: var(--interactive);
     color: var(--interactive-ink);
@@ -304,20 +396,23 @@
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
   }
+  /* Tarjeta §9.4: superficie + linea.tenue + padding s500, cantos rectos.
+     Hover = elevación #04 (§10.1): sube un paso de superficie, 120 ms,
+     sin desplazamiento y sin sombra en Nocturno. */
   .portal {
     display: grid;
     align-content: space-between;
-    gap: 1.6rem;
+    gap: var(--space-500);
     min-height: 13rem;
-    padding: 1.6rem;
+    padding: var(--space-500);
     border: 1px solid var(--line);
     border-radius: var(--radius-2);
     background: var(--surface-raised);
     text-decoration: none;
-    transition: border-color var(--dur-1) var(--ease-out);
+    transition: background var(--dur-1) var(--ease-out);
   }
   .portal:hover {
-    border-color: var(--accent);
+    background: var(--surface-elevated);
   }
   .portal h3 {
     font-family: var(--stack-serif);
@@ -331,7 +426,7 @@
     justify-self: end;
     color: var(--accent);
     font-family: var(--stack-display);
-    letter-spacing: 0.14em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     font-size: var(--text-xs);
   }
@@ -348,15 +443,15 @@
   .journey-meter {
     position: fixed;
     left: 50%;
-    bottom: 0.9rem;
+    bottom: var(--space-300);
     translate: -50% 0;
     z-index: var(--z-meter);
     display: flex;
     align-items: center;
-    gap: 0.9rem;
-    padding: 0.55rem 1rem;
+    gap: var(--space-300);
+    padding: var(--space-200) var(--space-400);
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-radius: var(--radius-completo);
     background: color-mix(in srgb, var(--surface) 86%, transparent);
     backdrop-filter: blur(8px);
   }
@@ -365,19 +460,19 @@
     width: clamp(4.5rem, 14vw, 8rem);
     height: 2px;
     background: var(--line);
-    border-radius: 999px;
+    border-radius: var(--radius-completo);
   }
   .journey-fill {
     position: absolute;
     inset: 0 auto 0 0;
     width: calc(var(--journey-progress, 0) * 100%);
     background: var(--accent);
-    border-radius: 999px;
+    border-radius: var(--radius-completo);
     transition: width var(--dur-2) var(--ease-out);
   }
   .journey-acts {
     display: flex;
-    gap: 0.55rem;
+    gap: var(--space-200);
   }
   .journey-act {
     display: grid;
@@ -385,7 +480,7 @@
     width: 1.55rem;
     height: 1.55rem;
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-radius: var(--radius-completo);
     font-family: var(--stack-serif);
     font-size: 0.72rem;
     color: var(--ink-muted);
@@ -418,17 +513,26 @@
     z-index: var(--z-notice);
     border-top: 1px solid var(--line);
     background: var(--surface-raised);
-    padding: 0.9rem var(--gutter);
+    padding: var(--space-400) var(--gutter);
     display: none;
   }
   .notice.is-open {
     display: block;
   }
+  /* Elevación Diurna (§5): la ÚNICA sombra del sistema, solo en las
+     superficies flotantes (aviso y medidor); tarjetas en reposo, sin
+     sombra. En Nocturno no hay sombras (escalón de superficie). */
+  [data-theme='light'] .notice,
+  [data-theme='light'] .journey-meter {
+    box-shadow:
+      0 1px 2px rgba(20, 17, 15, 0.08),
+      0 8px 24px rgba(20, 17, 15, 0.06);
+  }
   .notice-inner {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.9rem;
+    gap: var(--space-400);
     max-width: 72rem;
     margin-inline: auto;
     font-size: var(--text-sm);
@@ -498,7 +602,7 @@
     border: 1px solid var(--line);
     border-radius: var(--radius-2);
     background: var(--surface-raised);
-    padding: 1.2rem 1.3rem;
+    padding: var(--space-500);
   }
   .step h3 {
     font-size: var(--text-base);
@@ -515,20 +619,37 @@
     padding-block: calc(var(--section-pad) * 0.6);
     border-top: 1px solid var(--line);
   }
+  /* Fila de CTA dentro de una sección (sustituye a los estilos inline
+     de las páginas de contacto; hueco de la escala de 4). */
+  .cta-row {
+    margin-top: var(--space-500);
+  }
+  /* Píldora de estado §9.2: Mono cuerpo.s, radio de control, punto de
+     8 px en currentColor (nunca solo: siempre acompaña al texto) y borde
+     del color al 40 %. */
   .todo {
-    display: inline-block;
-    border: 1px dashed var(--accent);
-    border-radius: var(--radius-1);
-    padding: 0.15rem 0.5rem;
-    font-size: var(--text-xs);
-    letter-spacing: 0.08em;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-200);
+    border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+    border-radius: var(--radius-ctrl);
+    padding: var(--space-100) var(--space-200);
+    font-family: var(--stack-mono);
+    font-size: var(--text-sm);
     color: var(--accent);
+  }
+  .todo::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-completo);
+    background: currentColor;
   }
   .person {
     border: 1px solid var(--line);
     border-radius: var(--radius-2);
     background: var(--surface-raised);
-    padding: 1.3rem 1.4rem;
+    padding: var(--space-500);
   }
   .person h3 {
     font-size: var(--text-lg);
@@ -544,11 +665,13 @@
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   }
+  /* Caja de contenido: canto recto (§5); el radio de control era de la
+     época v0.1. */
   .legal-note {
-    margin-top: 1.5rem;
+    margin-top: var(--space-500);
     border: 1px dashed var(--line);
-    border-radius: var(--radius-1);
-    padding: 0.8rem 1rem;
+    border-radius: var(--radius-0);
+    padding: var(--space-300) var(--space-400);
     color: var(--ink-muted);
     font-size: var(--text-sm);
     max-width: var(--measure);
@@ -572,7 +695,8 @@
     color: var(--ink);
     background: var(--surface-raised);
     border: 1px solid var(--line);
-    border-radius: 4px;
+    /* 4px no existe en §19.3: chip de código como marco de control. */
+    border-radius: var(--radius-ctrl);
     padding: 0.05rem 0.35rem;
   }
 }
@@ -667,43 +791,10 @@
   }
 
   /* --- Botones = acciones de juego ------------------------------- */
-  .btn {
-    font-family: var(--stack-mono);
-    font-size: var(--text-etiqueta);
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    padding: 0.8rem 1.15rem;
-    border: 1px solid var(--interactive);
-    border-radius: var(--radius-ctrl);
-    background: var(--surface-raised);
-    color: var(--interactive);
-    transition:
-      background var(--dur-1) var(--ease-out),
-      color var(--dur-1) var(--ease-out),
-      border-color var(--dur-1) var(--ease-out);
-  }
-  .btn:hover {
-    background: var(--interactive);
-    color: var(--interactive-ink);
-  }
-  .btn-solid {
-    background: var(--interactive);
-    border-color: var(--interactive);
-    color: var(--interactive-ink);
-  }
-  .btn-solid:hover {
-    filter: brightness(1.08);
-  }
-  .btn-quiet {
-    border-color: transparent;
-    background: transparent;
-  }
+  /* La anatomía §9.1 vive en el bloque canónico de arriba; aquí solo el
+     sabor: el verbo-prefijo, en sentence case («nunca versales»). */
   .btn .verb {
-    font-size: 0.85em;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
     opacity: 0.75;
-    margin-right: 0.5rem;
   }
 
   /* --- Cabeceras de escena --------------------------------------- */
@@ -862,13 +953,12 @@
   }
 
   /* --- Tarjetas con marco de juego ------------------------------- */
+  /* Tarjeta §9.4: borde linea.tenue; el hover es el escalón de
+     superficie definido en el bloque base (elevación #04). */
   .camino,
   .portal {
-    border: 1px solid var(--line-strong);
+    border: 1px solid var(--line);
     border-radius: var(--radius-0);
-  }
-  .portal:hover {
-    border-color: var(--interactive);
   }
   .portal h3 {
     font-family: var(--stack-display);
@@ -878,6 +968,7 @@
   }
   .portal .go {
     font-family: var(--stack-mono);
+    font-weight: 500;
     font-size: var(--text-etiqueta);
     color: var(--interactive);
   }
@@ -893,24 +984,24 @@
     border-radius: var(--radius-ctrl);
     background: var(--surface-raised);
     backdrop-filter: none;
-    padding: 0.55rem 0.85rem;
-    gap: 0.85rem;
+    padding: var(--space-200) var(--space-300);
+    gap: var(--space-300);
   }
   .journey-track {
     width: clamp(4.6rem, 15vw, 8.5rem);
     height: 8px;
     border: 1px solid var(--line-strong);
-    border-radius: 999px;
+    border-radius: var(--radius-completo);
     background: var(--surface-elevated);
   }
   .journey-fill {
-    border-radius: 999px;
+    border-radius: var(--radius-completo);
     background: var(--interactive);
   }
   .hud-score {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: var(--space-100);
     font-family: var(--stack-mono);
     font-size: var(--text-etiqueta);
     font-variant-numeric: tabular-nums;
@@ -928,7 +1019,7 @@
     color: var(--accent);
   }
   .journey-acts {
-    gap: 0.45rem;
+    gap: var(--space-200);
   }
   .journey-act {
     position: relative;
@@ -977,6 +1068,7 @@
     right: var(--space-200);
     top: calc(-1 * var(--space-500));
     font-family: var(--stack-mono);
+    font-variant-numeric: tabular-nums;
     font-size: var(--text-etiqueta);
     color: var(--accent);
     pointer-events: none;
@@ -1151,11 +1243,12 @@
     }
     .portal-grid {
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.9rem;
+      gap: var(--space-300);
     }
+    /* En la panorámica el alto es finito: padding s400, aún en escala. */
     .portal {
       min-height: 10.5rem;
-      padding: 1.1rem;
+      padding: var(--space-400);
     }
     .nomada-walker {
       display: block;
@@ -1273,7 +1366,10 @@
     font-family: var(--stack-mono);
     font-size: var(--text-sm);
     letter-spacing: 0.15em;
-    /* ADR 0007: token de TEXTO, no de trazo — --line-strong daba 1.5:1. */
+    /* Desviación de §6.1 mantenida (ADR 0007): el canon pide
+       linea.fuerte, pero axe audita el contraste también en elementos
+       aria-hidden (verificado 2026-08-04: en Diurno #e2d3c2/#f9ebdc da
+       1.25:1 y rompe la puerta AA del CI). Token de TEXTO, no de trazo. */
     color: var(--ink-muted);
     white-space: nowrap;
     overflow: hidden;
@@ -1283,11 +1379,11 @@
   /* Escenario del héroe: el portal espera sobre el suelo. */
   .hero-stage {
     position: relative;
-    margin-top: 2.2rem;
+    margin-top: var(--space-600);
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 1.4rem;
+    gap: var(--space-500);
     min-height: 7.5rem;
   }
   .portal-gate {
@@ -1317,14 +1413,15 @@
   }
 
   /* Recuadro final: puntuación y sellos reunidos. */
+  /* Tarjeta §9.4: linea.tenue + padding s500, canto recto. */
   .recap {
-    margin-top: 2rem;
+    margin-top: var(--space-600);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1.2rem;
-    padding: 1rem 1.2rem;
-    border: 1px solid var(--line-strong);
+    gap: var(--space-400);
+    padding: var(--space-500);
+    border: 1px solid var(--line);
     background: var(--surface-raised);
   }
   .recap .hud-score {
@@ -1332,7 +1429,7 @@
   }
   .recap-items {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-400);
     flex-wrap: wrap;
     list-style: none;
     margin: 0;
@@ -1341,10 +1438,11 @@
   .recap-items li {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: var(--space-200);
     font-family: var(--stack-mono);
+    font-weight: 500;
     font-size: var(--text-etiqueta);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     color: var(--ink-faint);
   }
   .recap-items li svg {
@@ -1356,15 +1454,16 @@
   .recap-khepri {
     display: none;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.35rem 0.6rem;
+    gap: var(--space-200);
+    padding: var(--space-100) var(--space-200);
     border: 1px solid var(--rareza-legendario);
     border-radius: var(--radius-ctrl);
     box-shadow: var(--halo-legendario);
     color: var(--rareza-legendario);
     font-family: var(--stack-mono);
+    font-weight: 500;
     font-size: var(--text-etiqueta);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
   }
   .recap-khepri svg {
     width: 22px;
@@ -1377,7 +1476,7 @@
   .step,
   .person {
     border-width: 1px;
-    border-color: var(--line-strong);
+    border-color: var(--line);
   }
   .step h3 {
     color: var(--ink);
@@ -1385,12 +1484,12 @@
     font-weight: 500;
     letter-spacing: 0.1em;
   }
+  /* El borde de la píldora se deriva de currentColor al 40 % (§9.2):
+     basta con cambiar el color del texto. */
   .todo {
-    border-color: var(--coral);
     color: var(--coral);
   }
   [data-theme='light'] .todo {
-    border-color: var(--grana-texto-claro);
     color: var(--grana-texto-claro);
   }
 }

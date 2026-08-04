@@ -97,11 +97,13 @@ const otherLang: Lang = lang === 'es' ? 'en' : 'es';
     margin: 0;
     padding: 0;
   }
+  /* Etiqueta §4.3: Mono 500, versales, tracking +0.10em exacto. */
   nav a,
   .lang {
-    font-family: var(--stack-display);
+    font-family: var(--stack-mono);
+    font-weight: 500;
     font-size: var(--text-xs);
-    letter-spacing: 0.18em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
     color: var(--ink-muted);
@@ -114,8 +116,9 @@ const otherLang: Lang = lang === 'es' ? 'en' : 'es';
   .tools {
     display: flex;
     align-items: center;
-    gap: 0.9rem;
+    gap: var(--space-400);
   }
+  /* Marco de icono (§5): radio de control, no círculo. */
   audio-toggle button,
   theme-toggle button {
     display: grid;
@@ -123,7 +126,7 @@ const otherLang: Lang = lang === 'es' ? 'en' : 'es';
     width: 2rem;
     height: 2rem;
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-radius: var(--radius-ctrl);
     background: transparent;
     color: var(--ink-muted);
     cursor: pointer;
@@ -136,7 +139,7 @@ const otherLang: Lang = lang === 'es' ? 'en' : 'es';
 
   @media (max-width: 40rem) {
     nav ul {
-      gap: 0.8rem;
+      gap: var(--space-300);
     }
     nav a,
     .lang {

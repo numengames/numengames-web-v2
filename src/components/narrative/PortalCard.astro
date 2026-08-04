@@ -22,10 +22,11 @@ const href = localePath(lang, entry.data.portalKey ?? 'experiencias', entry.data
 
 <style>
   .portal-body {
-    margin-top: 0.7rem;
+    margin-top: var(--space-300);
   }
+  /* Cuerpo de tarjeta §9.4: cuerpo.s en texto secundario. */
   .portal-body :global(p) {
     color: var(--ink-muted);
-    font-size: var(--text-base);
+    font-size: var(--text-sm);
   }
 </style>
