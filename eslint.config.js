@@ -11,6 +11,15 @@ export default [
   {
     rules: {
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      /* La regla ya permite tabindex en role="tabpanel" (contenedor de
+         contenido enfocable); se amplía a role="region" por el mismo
+         motivo: una región desplazable DEBE ser alcanzable con teclado
+         (axe `scrollable-region-focusable`, WCAG 2.1.1). Solo aplica a
+         elementos que declaren el role — un div corriente sigue vetado. */
+      'astro/jsx-a11y/no-noninteractive-tabindex': [
+        'error',
+        { tags: [], roles: ['tabpanel', 'region'], allowExpressionValues: true },
+      ],
     },
   },
 ];

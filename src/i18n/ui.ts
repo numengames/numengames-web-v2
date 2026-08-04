@@ -139,6 +139,7 @@ export const ui = {
     'rol.explorador': 'Explorador',
     'escena.eleccion': 'Elección',
     'escena.consecuencia': 'Consecuencia',
+    'escena.dialogo': 'Diálogo de la escena',
   },
   en: {
     'site.name': 'Numen Games',
@@ -221,6 +222,7 @@ export const ui = {
     'rol.explorador': 'Explorer',
     'escena.eleccion': 'Choice',
     'escena.consecuencia': 'Consequence',
+    'escena.dialogo': 'Scene dialogue',
   },
 } as const;
 

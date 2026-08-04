@@ -148,7 +148,18 @@ if (escenario.fondo !== undefined) {
     <p class="eyebrow" data-reveal>{actLabel}</p>
     <h2 class="phase-title" id={headingId} data-reveal>{escenario.nombre}</h2>
 
-    <div class="dialog px escena-beats" data-reveal>
+    {
+      /* Región desplazable (max-height + overflow-y en escena-motor.css):
+        sin tabindex, el teclado no puede alcanzarla ni scrollearla (axe
+        `scrollable-region-focusable`, WCAG 2.1.1). */
+    }
+    <div
+      class="dialog px escena-beats"
+      data-reveal
+      role="region"
+      aria-label={t('escena.dialogo')}
+      tabindex="0"
+    >
       {beats.map(({ beat, personaje }) => <ParlamentoBeat {beat} {personaje} {rotulos} />)}
     </div>
     {
