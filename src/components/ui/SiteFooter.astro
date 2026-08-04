@@ -124,8 +124,11 @@ const year = new Date().getFullYear();
   .sigil.is-found {
     display: inline-flex;
   }
+  /* La marca píxel va en tinta, no en Ámbar (§8.3: no recolorear a
+     acentos), y a escala entera de su rejilla de 32 (§2.4). */
   .sigil :global(.sigil-px) {
-    width: 26px;
+    width: 32px;
+    color: var(--ink);
   }
   .sigil :global(.sigil-word) {
     width: 96px;

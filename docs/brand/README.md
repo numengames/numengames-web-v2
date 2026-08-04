@@ -139,7 +139,7 @@ crispEdges`, `aria-hidden` y **tres tonos tematizables** — `currentColor`
 (tinta) + `--pa-2` (tono medio) + `--pa-3` (tono claro), que cambian con el
 tema. Se inlinan en build (cero peticiones). Personajes: nómada (+ ciclo
 `walk`), senet (3 poses), deshilador; objetos: portal, sello, dado, quest,
-khepri-px, numen-px; telones: `escenarios/` (8). Los sprites generados con
+khepri-px, moneda; telones: `escenarios/` (8). Los sprites generados con
 IA están **pendientes de revisión humana** (BACKLOG P0-8) antes de
 publicar.
 

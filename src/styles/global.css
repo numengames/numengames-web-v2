@@ -1009,10 +1009,11 @@
     white-space: nowrap;
     color: var(--ink-muted);
   }
+  /* Moneda de Ámbar (§8.1) a escala entera de su rejilla de 12 (§2.4);
+     lleva su paleta Khepri-16 fija — el color no se hereda. */
   .hud-score .hud-token {
     display: inline-flex;
-    width: 15px;
-    color: var(--accent);
+    width: 24px;
   }
   .hud-score b {
     font-weight: 500;
@@ -1465,8 +1466,11 @@
     font-size: var(--text-etiqueta);
     letter-spacing: 0.1em;
   }
+  /* Marca píxel en tinta y a escala entera (§8.3 + §2.4): el Ámbar
+     queda para borde, halo y texto de la rareza. */
   .recap-khepri svg {
-    width: 22px;
+    width: 32px;
+    color: var(--ink);
   }
   .recap-khepri.is-found {
     display: inline-flex;
