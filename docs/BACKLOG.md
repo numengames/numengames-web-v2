@@ -32,6 +32,22 @@ ANTES del arreglo.
   excepción de «texto incidental», pero axe no infiere esa intención. Decidir
   explícitamente: corregir el uso, corregir el token, o documentar la excepción.
 
+## P1 — deudas de la adopción del canon v3.3.0 (2026-08-04)
+
+- Redibujar el kit píxel a las rejillas canónicas 12/24/48 (§2.4.2): los
+  personajes actuales son rejilla 16. Deuda aceptada al adoptar; la
+  revisión humana de sprites (P0-8) debe juzgar ya con la gramática de
+  §2.4.1 y la paleta Khepri-16.
+- Momento orquestado completo en el héroe (#09): tecleo del titular con
+  `<type-writer>` + revelados a 80 ms al terminar (ADR 0010).
+- Fase lunar (#06) en el medidor de actos: glifo propio de fases (la Luna
+  no es icono, §7.2).
+- Incorporar `khepri-sprite-24.png` y `moneda-12.png` del kit cuando el
+  cliente los entregue (hoy: khepri-px propio como excepción registrada y
+  moneda generada en el repo).
+- Telón de escena a escala entera con relleno Noche (§5.1) — hoy `cover`
+  fraccional, desviación 8 del ADR 0011.
+
 ## P1 — v0.3
 
 - ~~Ver fallar la prueba de paridad del ADR 0006~~ **Hecho (2026-08-04)**:

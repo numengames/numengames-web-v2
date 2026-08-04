@@ -28,7 +28,7 @@ function crearGuionValido(): {
     lang,
     nombre: lang === 'es' ? 'El Nómada' : 'The Nomad',
     papel: 'avatar',
-    colorHablante: 'turquesa',
+    colorHablante: 'verdemar',
     sprite: 'nomada.svg',
     poses: ['reposo', 'camina'],
     reglasDeVoz: 'habla en segunda persona',
@@ -144,6 +144,18 @@ describe('validateEscenas (validaciones cruzadas del guion)', () => {
     expect(resultado.errores.join('\n')).toContain(
       "personajes: 'nomada' existe en 'es' pero falta en 'en'",
     );
+  });
+
+  it('regla (h): rechaza un colorHablante fuera del subconjunto de diálogo', () => {
+    const { personajes, escenarios, escenas } = crearGuionValido();
+    const primero = personajes[0];
+    if (!primero) throw new Error('el guion de laboratorio debe tener personajes');
+    // Turquesa canónica: en el subconjunto de §3.7 sobre Noche, pero cae
+    // a 4.43:1 sobre el Basalto real de la caja — debe rechazarse.
+    primero.colorHablante = 'turquesa';
+    const resultado = validateEscenas(escenas, personajes, escenarios);
+    expect(resultado.valido).toBe(false);
+    expect(resultado.errores.join('\n')).toContain('fuera del subconjunto de diálogo');
   });
 });
 

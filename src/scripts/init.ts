@@ -46,7 +46,6 @@ function announce(text: string) {
 
 /* ---------------- máquina de escribir (utilidades) -------------------- */
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-const PUNCT = /[.,;:!?…»]/;
 
 async function typeText(el: HTMLElement, text: string, isCancelled: () => boolean) {
   el.setAttribute('data-tw-typing', '');
@@ -55,7 +54,9 @@ async function typeText(el: HTMLElement, text: string, isCancelled: () => boolea
     if (isCancelled()) return;
     el.textContent += ch;
     if (ch !== ' ' && ch !== '\n') audio.blip();
-    await sleep(PUNCT.test(ch) ? 130 : 15);
+    // Tecleo canónico (§10.1-01): 22 ms/carácter, lineal, sin pausas
+    // dramáticas — la pausa de puntuación se propone al canon por ADR.
+    await sleep(22);
   }
 }
 
@@ -191,7 +192,6 @@ class TypeWriter extends HTMLElement {
       if (this.#cancel) return;
       b.removeAttribute('data-tw-typing');
       b.innerHTML = this.#originals[this.#idx];
-      await sleep(140);
     }
     this.finish();
   }
@@ -461,6 +461,9 @@ customElements.define('cookie-notice', CookieNotice);
       journey.unlockEgg('sigil');
       audio.secret();
       reveal();
+      // Pulso legendario (§10.1-05): SOLO el momento de obtención — en
+      // visitas posteriores `reveal()` deja el halo estático.
+      sigil?.classList.add('is-obtained');
       announce(sigil?.textContent ?? '');
     }
   });

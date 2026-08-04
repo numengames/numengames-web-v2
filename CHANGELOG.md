@@ -4,6 +4,54 @@ Todas las novedades relevantes de numen.games. Formato basado en
 [Keep a Changelog](https://keepachangelog.com/es/) y versionado
 [SemVer](https://semver.org/lang/es/).
 
+## [1.3.0] — 2026-08-04
+
+Adopción integral del **canon Khepri v3.3.0**, que entra en el repo como
+archivo maestro (`docs/brand/`, fiel byte a byte) con su contrato de
+agente (§19). Cinco olas guiadas por un análisis de brechas de seis
+lentes (79 hallazgos).
+
+### Añadido
+
+- **Registro píxel** (§2.4/§3.7): la escena del motor es siempre
+  Nocturna (tokens fijados; el hueco sin telón se completa con Noche);
+  **Pixelify Sans** autoalojada (12 KB, OFL) como voz de diálogo,
+  hablantes y titulares de escena a múltiplos exactos 22/33/44 px; caja
+  de diálogo §9.6 (Basalto, borde Noche); retratos a escala entera.
+- **Catálogo de animación** (§10.1, ADR 0010): tecleo canónico a 22 ms
+  con cursor `▌` Ámbar, barrido de señal en el separador binario, pulso
+  legendario solo en la obtención, revelados 320 ms/8 px escalonados a
+  80 ms; hoja del Nómada rehecha a 4 fotogramas/200 ms y ley de sprites
+  §10.4.
+- **Componentes §9**: cuatro tipos de botón canónicos sin versales, un
+  primario por panel, tarjetas con elevación por escalón de superficie,
+  píldora de estado, sombra única diurna solo en flotantes, espaciado en
+  la escala de 4, etiquetas Mono 500 +0.10em, cifras tabulares.
+- **Iconografía Phosphor** (§7): speaker-high/slash y circle-half
+  inline en la cabecera (la Luna no es un icono).
+- **Moneda de Ámbar** 12×12 generada con la gramática del canon para el
+  HUD; tokens nuevos de §19.3 (duraciones con nombre, escala de espacio,
+  radio completo, tinte diurno, velo, neutrales con nombre).
+- Regla (h) del validador: `colorHablante` restringido al subconjunto de
+  diálogo con AA verificada sobre la superficie real (test negativo).
+- ADR 0010 (reconciliación del movimiento) y ADR 0011 (desviaciones por
+  accesibilidad, propuestas de enmienda al canon §17).
+
+### Cambiado
+
+- Rareza con variantes diurnas de texto del canon (antes poco-común
+  pintaba 1.7:1 sobre Arena); títulos de escena con velo §8.2 en vez de
+  sombra; botón de salto del tecleo a táctil 44×44; marca píxel en tinta
+  y a escala entera (nunca más Ámbar); hexes diurnos no canónicos
+  sustituidos por alias del canon.
+
+### Retirado
+
+- `numen-px.svg` (redibujo del wordmark que §8.3 no ampara),
+  `token.svg` (sustituido por la moneda), `portal-pulse` (ni catálogo ni
+  sprite conforme), pausas dramáticas del tecleo (se proponen al canon),
+  iconos a medida de la cabecera.
+
 ## [1.2.0] — 2026-08-04
 
 ### Añadido

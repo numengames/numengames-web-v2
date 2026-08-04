@@ -1,7 +1,8 @@
 /* ============================================================
    NUMEN GAMES — Design tokens
-   Fuente: Design System «Khepri» v3.0.0 (canon, 2026-08-03).
-   Un valor que no esté en §17.3 del sistema no se inventa aquí.
+   Fuente: Design System «Khepri» v3.3.0 (canon, 2026-08-04,
+   docs/brand/2026_08_04-Numen_Design_System-v3.3.0.md).
+   Un valor que no esté en §19.3 del sistema no se inventa aquí.
    ============================================================ */
 
 @font-face {
@@ -14,6 +15,14 @@
   font-family: 'Geist Mono';
   src: url('/fonts/GeistMono-Variable.woff2') format('woff2');
   font-weight: 100 900;
+  font-display: swap;
+}
+/* Voz del registro píxel (§4.5): solo diálogo, titulares de escena y
+   HUD, a múltiplos exactos de su rejilla (22/33/44 px). */
+@font-face {
+  font-family: 'Pixelify Sans';
+  src: url('/fonts/PixelifySans-Variable.woff2') format('woff2');
+  font-weight: 400 700;
   font-display: swap;
 }
 
@@ -37,6 +46,15 @@
      la peor) conservando la lectura de marca. */
   --turquesa-texto-oscuro: #1f9cac;
 
+  /* ---- Neutrales con nombre (§3.2) — invariantes al tema ----- */
+  --noche: #14110f;
+  --basalto: #1e1a17;
+  --bronce-oscuro: #292420;
+  --sedimento: #241f1b;
+  --bronce: #3a332d;
+  --ceniza: #8a7d72;
+  --arena-velada: #c4b5a6;
+
   /* ---- Rareza (solo juego/producto) [CANON] ----------------- */
   --rareza-pobre: #f9ebdc;
   --rareza-comun: #8a7d72;
@@ -52,7 +70,8 @@
   --stack-mono: 'Geist Mono', 'Consolas', 'Courier New', monospace;
   /* La voz mecanografiada del juego y las etiquetas viven en Mono. */
   --stack-dialog: var(--stack-mono);
-  --stack-pixel: var(--stack-mono);
+  /* fontFamily.pixel del canon (§19.3): Pixelify Sans con reserva sans. */
+  --stack-pixel: 'Pixelify Sans', 'Geist', sans-serif;
   --stack-serif: var(--stack-mono);
 
   /* Escala 1.2 (§4.3) con ajuste fluido hacia móvil */
@@ -62,31 +81,57 @@
   --text-base: 1rem;
   --text-lg: clamp(1.15rem, 1.05rem + 0.5vw, 1.44rem); /* cuerpo.l */
   --text-xl: clamp(1.45rem, 1.25rem + 0.9vw, 1.728rem); /* titulo.s */
+  --text-titulo-m: 2.074rem; /* titulo.m */
   --text-2xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.488rem); /* titulo.l */
+  --text-display-m: 2.986rem; /* display.m */
   --text-3xl: clamp(2.1rem, 1.5rem + 2.8vw, 3.583rem); /* display.l */
-  --text-dialog: clamp(1.08rem, 1rem + 0.4vw, 1.3rem);
+  --text-display-xl: 4.3rem; /* display.xl */
+  /* Diálogo: mínimo fluido [DERIVADO], máximo = cuerpo.l canónico */
+  --text-dialog: clamp(1.08rem, 1rem + 0.4vw, 1.44rem);
   --text-pixel-lg: var(--text-2xl);
   --text-pixel-sm: var(--text-etiqueta);
 
   --leading-tight: 1.1;
   --leading-normal: 1.55;
+  --leading-data: 1.35; /* datos (§4.4) */
   --measure: 66ch;
 
-  /* ---- Espacio y forma (§5) --------------------------------- */
+  /* ---- Espacio y forma (§5, §19.3 space) -------------------- */
+  --space-100: 4px;
+  --space-200: 8px;
+  --space-300: 12px;
+  --space-400: 16px;
+  --space-500: 24px;
+  --space-600: 32px;
+  --space-700: 48px;
+  --space-800: 64px;
+  --space-900: 96px;
+  --space-1000: 128px;
   --section-pad: clamp(4rem, 10vh, 6rem); /* ~space.900 */
   --gutter: clamp(1.25rem, 4vw, 4rem);
   --radius-0: 0px;
   --radius-ctrl: 6px;
+  --radius-completo: 9999px; /* círculo: marcadores y pegatinas */
   --radius-1: var(--radius-ctrl);
   --radius-2: var(--radius-0);
   --grid-size: 76px;
   --px-notch: 0px;
+  /* Velo mínimo sobre imagen/textura (§8.2) */
+  --velo: rgba(20, 17, 15, 0.72);
 
-  /* ---- Movimiento (§9) -------------------------------------- */
+  /* ---- Movimiento (§10, §19.3 duration) --------------------- */
   --ease-out: cubic-bezier(0.2, 0, 0, 1); /* motion.ciclo */
   --dur-1: 120ms; /* instante */
+  --dur-corto: 200ms; /* corto */
   --dur-2: 320ms; /* medio */
   --dur-3: 560ms; /* largo */
+  --dur-tecleo-caracter: 22ms;
+  --dur-cursor: 1000ms;
+  --dur-puntos-espera: 900ms;
+  --dur-pulso: 2400ms;
+  --dur-fase-lunar: 560ms;
+  --dur-barrido: 8000ms;
+  --dur-escalonado: 80ms;
 
   /* ---- Capas ------------------------------------------------ */
   --z-header: 50;
@@ -124,12 +169,15 @@
   --surface: #f9ebdc;
   --surface-raised: #fdf6ee;
   --surface-elevated: #fdf6ee;
-  --surface-sunken: #f1e2d0;
+  /* El canon diurno no define sunken ni línea fuerte propias (§3.2):
+     alias de los tokens canónicos, como hace el Nocturno con su base. */
+  --surface-sunken: #f9ebdc;
+  --surface-tint: #e4f2f0; /* diurno.fondo-tinte */
   --ink: #14110f;
   --ink-muted: #4a423b;
   --ink-faint: #6e6259;
   --line: #e2d3c2;
-  --line-strong: #c8b6a2;
+  --line-strong: #e2d3c2;
   --interactive: var(--turquesa-texto-claro);
   --interactive-ink: #ffffff;
   --accent: var(--ambar-texto-claro);
@@ -137,6 +185,14 @@
   --accent-contrast: #f9ebdc;
   --grid-line: var(--line);
   --focus-ring: var(--turquesa-texto-claro);
-  --pa-2: #6e6259;
-  --pa-3: #a3968a;
+  --pa-2: #6e6259; /* diurno.texto-terciario */
+  --pa-3: #8a7d72; /* Ceniza (Khepri-16 nº 05) */
+  /* Rareza como TEXTO sobre Arena: variantes diurnas del canon (§3.6).
+     Sin esto, p. ej. poco-común #8fc46b sobre Arena queda a 1.7:1. */
+  --rareza-pobre: #6e6259;
+  --rareza-comun: #5a4f45;
+  --rareza-poco-comun: #356c19;
+  --rareza-raro: #2e6bb0;
+  --rareza-epico: #6b44b8;
+  --rareza-legendario: #7a5100;
 }

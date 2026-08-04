@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { defineCollection, reference, z } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { extraerTokensDeColor } from './scripts/escenas-validate';
+import { extraerTokensDeColor, SUBCONJUNTO_HABLANTE } from './scripts/escenas-validate';
 
 /**
  * La historia vive aquí, en Markdown, editable sin tocar componentes.
@@ -58,6 +58,22 @@ if (primerToken === undefined) {
 }
 const tokenCanon = z.enum([primerToken, ...restoDeTokens]);
 
+/**
+ * Subconjunto de diálogo (§3.7 del canon v3.3.0 + AA sobre Basalto,
+ * definido y documentado en escenas-validate.ts). Debe ser un
+ * subconjunto real de los tokens del canon: si un nombre desaparece de
+ * tokens.css, mejor romper el build aquí que pintar un hablante roto.
+ */
+for (const token of SUBCONJUNTO_HABLANTE) {
+  if (!nombresDeToken.includes(token)) {
+    throw new Error(
+      `El subconjunto de diálogo referencia '--${token}', que no existe en tokens.css`,
+    );
+  }
+}
+const [primerHablante, ...restoHablantes] = SUBCONJUNTO_HABLANTE;
+const colorHablanteCanon = z.enum([primerHablante, ...restoHablantes]);
+
 const lang = z.enum(['es', 'en']);
 
 /**
@@ -84,8 +100,8 @@ const personajes = defineCollection({
     lang,
     nombre: z.string(),
     papel: z.enum(['avatar', 'voz', 'secundario']),
-    /** Nombre de token del canon; el hex vive solo en tokens.css. */
-    colorHablante: tokenCanon,
+    /** Nombre de token del subconjunto de diálogo; el hex vive solo en tokens.css. */
+    colorHablante: colorHablanteCanon,
     /**
      * Ruta relativa a src/assets/pixel/ (sin barra inicial ni `..`),
      * siempre SVG: los sprites del kit son tematizables vía currentColor.
