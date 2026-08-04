@@ -37,8 +37,9 @@ El idioma de trabajo del repo (docs, commits, issues) es el **español**.
 - Activos oficiales: `public/brand/` (marcas, siempre `currentColor`, nunca
   recolorear) · `src/assets/pixel/` (sprites tematizables) ·
   `public/fonts/` (con su licencia OFL).
-- La guía completa del DS aún no está en el repo (`docs/brand/` pendiente,
-  BACKLOG P0). Ante la duda: tokens mandan y **no inventes valores**.
+- La guía del DS vive en `docs/brand/README.md` (semántica y usos; el
+  canon completo v3.0.0 sigue siendo documento externo del cliente). Ante
+  la duda: tokens mandan y **no inventes valores**.
 
 ## Comandos
 
