@@ -39,7 +39,7 @@ navegador.
 - **Estilo** — una sola fuente de verdad: `src/styles/tokens.css` (canon
   Khepri v3.0.0) → Tailwind 4 `@theme` → Lightning CSS (prefijos y rebaje de
   sintaxis al target). Sin `tailwind.config`.
-- **Movimiento** — cupo cerrado de 9 keyframes (8 en uso); todo tras `.js` +
+- **Movimiento** — cupo cerrado de 9 keyframes (9 en uso: lleno); todo tras `.js` +
   `prefers-reduced-motion` (ADR 0005); piezas de scroll con doble motor: CSS
   scroll-driven donde exista ⇄ `--thread-p`/`--pan-p` por JS (ADR 0006).
   Parallax y glitch: prohibidos.
@@ -86,7 +86,7 @@ navegador.
 ## 4 · Reglas de evolución (planificación)
 
 - Nueva dependencia runtime → ADR + partida de presupuesto + este doc.
-- Nueva animación → solo queda una plaza; pasa por diseño.
+- Nueva animación → cupo lleno: retirar una existente **y** pasar por diseño.
 - API fuera de la matriz → patrón doble motor o no entra.
 - Página/sección nueva → DoD de `CONTRIBUTING.md` (ES+EN, sin JS, a11y).
 - Estado multi-dispositivo (Nivel C) → backend ⇒ ADR mayor + RGPD.
