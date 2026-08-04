@@ -172,3 +172,156 @@ describe('extraerTokensDeColor (enum del canon leído de tokens.css)', () => {
     expect(tokens).not.toContain('halo-legendario');
   });
 });
+
+/* ------------------------------------------------------------------ */
+/* ADR 0009: elecciones y roles                                        */
+/* ------------------------------------------------------------------ */
+
+describe('validateEscenas — elecciones y roles (ADR 0009)', () => {
+  /** Añade al guion válido una elección de rol correcta en la escena 3
+   *  y un beat ramificado por rol en la 4, en ambos idiomas. */
+  function conEleccionDeRol() {
+    const guion = crearGuionValido();
+    for (const escena of guion.escenas) {
+      if (escena.orden === 3) {
+        escena.beats.push({
+          hablante: 'sistema',
+          eleccion: {
+            id: 'proposito',
+            pregunta: '¿Qué has venido a proteger?',
+            opciones: [
+              { etiqueta: 'VALOR Y MEMORIA', consecuencia: 'Anfitrión.', rol: 'anfitrion' },
+              { etiqueta: 'OPORTUNIDADES', consecuencia: 'Impulsor.', rol: 'impulsor' },
+              { etiqueta: 'DIRECCIÓN', consecuencia: 'Explorador.', rol: 'explorador' },
+            ],
+          },
+        });
+      }
+      if (escena.orden === 4) {
+        escena.beats.push({
+          hablante: 'sistema',
+          parlamento: 'Solo para quien organiza.',
+          rol: 'anfitrion',
+        });
+      }
+    }
+    return guion;
+  }
+
+  it('acepta una elección de rol completa con ramificación posterior', () => {
+    const { personajes, escenarios, escenas } = conEleccionDeRol();
+    expect(validateEscenas(escenas, personajes, escenarios).errores).toEqual([]);
+  });
+
+  it('(e) rechaza ids de elección repetidos en el mismo idioma', () => {
+    const guion = conEleccionDeRol();
+    for (const escena of guion.escenas) {
+      if (escena.orden === 5) {
+        escena.beats.push({
+          hablante: 'sistema',
+          eleccion: {
+            id: 'proposito', // repetido a propósito
+            opciones: [
+              { etiqueta: 'A', consecuencia: 'a' },
+              { etiqueta: 'B', consecuencia: 'b' },
+            ],
+          },
+        });
+      }
+    }
+    const { errores } = validateEscenas(guion.escenas, guion.personajes, guion.escenarios);
+    expect(errores.some((e) => e.includes("'proposito'") && e.includes('únicos'))).toBe(true);
+  });
+
+  it('(e-bis) rechaza una elección con distinto número de opciones por idioma', () => {
+    const guion = conEleccionDeRol();
+    for (const escena of guion.escenas) {
+      if (escena.orden === 2 && escena.lang === 'es') {
+        escena.beats.push({
+          hablante: 'sistema',
+          eleccion: {
+            id: 'hilos',
+            opciones: [
+              { etiqueta: 'CONECTAR', consecuencia: 'Ruta.' },
+              { etiqueta: 'DEJAR', consecuencia: 'Se pierde.' },
+            ],
+          },
+        });
+      }
+      if (escena.orden === 2 && escena.lang === 'en') {
+        escena.beats.push({
+          hablante: 'sistema',
+          eleccion: {
+            id: 'hilos',
+            opciones: [
+              { etiqueta: 'CONNECT', consecuencia: 'Route.' },
+              { etiqueta: 'LET GO', consecuencia: 'Lost.' },
+              { etiqueta: 'EXTRA', consecuencia: 'De más.' },
+            ],
+          },
+        });
+      }
+    }
+    const { errores } = validateEscenas(guion.escenas, guion.personajes, guion.escenarios);
+    expect(errores.some((e) => e.includes("'hilos'") && e.includes('opciones'))).toBe(true);
+  });
+
+  it('(f) rechaza la elección de rol que mezcla opciones con y sin rol', () => {
+    const guion = conEleccionDeRol();
+    for (const escena of guion.escenas) {
+      for (const beat of escena.beats) {
+        if (beat.eleccion?.id === 'proposito' && beat.eleccion.opciones[0]) {
+          delete beat.eleccion.opciones[0].rol;
+        }
+      }
+    }
+    const { errores } = validateEscenas(guion.escenas, guion.personajes, guion.escenarios);
+    expect(errores.some((e) => e.includes('todas las opciones asignan rol o ninguna'))).toBe(true);
+  });
+
+  it('(f) rechaza la elección de rol que no cubre los tres roles', () => {
+    const guion = conEleccionDeRol();
+    for (const escena of guion.escenas) {
+      for (const beat of escena.beats) {
+        if (beat.eleccion?.id === 'proposito' && beat.eleccion.opciones[2]) {
+          beat.eleccion.opciones[2].rol = 'anfitrion'; // repite y deja 'explorador' sin cubrir
+        }
+      }
+    }
+    const { errores } = validateEscenas(guion.escenas, guion.personajes, guion.escenarios);
+    expect(errores.some((e) => e.includes('repite'))).toBe(true);
+    expect(errores.some((e) => e.includes("'explorador'"))).toBe(true);
+  });
+
+  it('(g) rechaza ramificar por rol antes de la elección de rol', () => {
+    const guion = conEleccionDeRol();
+    for (const escena of guion.escenas) {
+      if (escena.orden === 1) {
+        escena.beats.push({ hablante: 'sistema', parlamento: 'Prematuro.', rol: 'impulsor' });
+      }
+    }
+    const { errores } = validateEscenas(guion.escenas, guion.personajes, guion.escenarios);
+    expect(errores.some((e) => e.includes('antes o durante'))).toBe(true);
+  });
+
+  it('(g) rechaza beats con rol cuando no existe elección de rol alguna', () => {
+    const guion = crearGuionValido();
+    for (const escena of guion.escenas) {
+      if (escena.orden === 4) {
+        escena.beats.push({ hablante: 'sistema', parlamento: 'Huérfano.', rol: 'explorador' });
+      }
+    }
+    const { errores } = validateEscenas(guion.escenas, guion.personajes, guion.escenarios);
+    expect(errores.some((e) => e.includes('ninguna elección de rol'))).toBe(true);
+  });
+});
+
+describe('validateEscenas — regla h (todo beat dice algo)', () => {
+  it('(h) rechaza un beat sin parlamento y sin eleccion', () => {
+    const guion = crearGuionValido();
+    const escena = guion.escenas.find((e) => e.orden === 1 && e.lang === 'es');
+    escena?.beats.push({ hablante: 'sistema' });
+    const { errores } = validateEscenas(guion.escenas, guion.personajes, guion.escenarios);
+    expect(errores.some((e) => e.includes('regla h'))).toBe(true);
+  });
+});

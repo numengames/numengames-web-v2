@@ -72,13 +72,37 @@ export interface EscenarioPlano {
   /** Una luz por tramo: cada escenario ocupa exactamente un tramo. */
   luz: string;
   tramoPanoramica: number;
+  /** Telón de fondo pixel-art (ruta relativa a src/assets/pixel/). */
+  fondo?: string;
+}
+
+/** Los tres roles del Nómada (ADR 0009); enum cerrado, espejo del Zod. */
+export const ROLES = ['anfitrion', 'impulsor', 'explorador'] as const;
+export type Rol = (typeof ROLES)[number];
+
+export interface OpcionEleccion {
+  etiqueta: string;
+  consecuencia: string;
+  /** Solo en la elección de rol (regla f). */
+  rol?: Rol;
+}
+
+export interface Eleccion {
+  /** Id estable para la persistencia Nivel B. */
+  id: string;
+  pregunta?: string;
+  opciones: OpcionEleccion[];
 }
 
 export interface Beat {
   /** Id de un personaje del mismo idioma, o el literal 'sistema'. */
   hablante: string;
-  parlamento: string;
+  /** Opcional solo si el beat trae eleccion (regla h, en Zod). */
+  parlamento?: string;
   accion?: Accion;
+  /** Beat visible para un rol concreto (ADR 0009). */
+  rol?: Rol;
+  eleccion?: Eleccion;
 }
 
 export interface EscenaPlana {
@@ -240,6 +264,121 @@ export function validateEscenas(
         if (!presentes.has(etapa)) {
           errores.push(`escenas [${lang}]: falta la etapa '${etapa}' del funnel`);
         }
+      }
+    }
+  }
+
+  // (h) Todo beat dice algo: parlamento, eleccion o ambos. Vive aquí y no
+  // como .refine() de Zod porque el ZodEffects resultante rompía la
+  // inferencia de tipos de las colecciones en astro check.
+  for (const escena of escenas) {
+    escena.beats.forEach((beat, indice) => {
+      if (beat.parlamento === undefined && beat.eleccion === undefined) {
+        errores.push(
+          `escena '${escena.id}' [${escena.lang}], beat ${String(indice)}: todo beat dice algo — parlamento, eleccion o ambos (regla h)`,
+        );
+      }
+    });
+  }
+
+  // (e)–(g) Elecciones y roles (ADR 0009), por idioma.
+  for (const lang of IDIOMAS) {
+    const delIdioma = escenas.filter((escena) => escena.lang === lang);
+    if (delIdioma.length === 0) continue;
+
+    // (e) ids de elección únicos dentro del idioma.
+    const vistas = new Map<string, string>(); // id de elección → id de escena
+    for (const escena of delIdioma) {
+      for (const beat of escena.beats) {
+        if (!beat.eleccion) continue;
+        const previa = vistas.get(beat.eleccion.id);
+        if (previa !== undefined) {
+          errores.push(
+            `escenas [${lang}]: la elección '${beat.eleccion.id}' aparece en '${previa}' y en '${escena.id}' — los ids de elección son únicos`,
+          );
+        } else {
+          vistas.set(beat.eleccion.id, escena.id);
+        }
+      }
+    }
+
+    // (f) Exactamente una elección de rol, coherente y con los 3 roles.
+    const conRol = delIdioma.flatMap((escena) =>
+      escena.beats
+        .filter((beat) => beat.eleccion?.opciones.some((opcion) => opcion.rol !== undefined))
+        .map((beat) => ({ escena, eleccion: beat.eleccion as Eleccion })),
+    );
+    for (const { escena, eleccion } of conRol) {
+      const sinRol = eleccion.opciones.filter((opcion) => opcion.rol === undefined);
+      if (sinRol.length > 0) {
+        errores.push(
+          `escenas [${lang}]: en la elección de rol '${eleccion.id}' ('${escena.id}') o todas las opciones asignan rol o ninguna`,
+        );
+      }
+      const asignados = eleccion.opciones.flatMap((opcion) => opcion.rol ?? []);
+      if (new Set(asignados).size !== asignados.length) {
+        errores.push(`escenas [${lang}]: la elección de rol '${eleccion.id}' repite algún rol`);
+      }
+      for (const nombre of ROLES) {
+        if (!asignados.includes(nombre)) {
+          errores.push(
+            `escenas [${lang}]: la elección de rol '${eleccion.id}' no cubre el rol '${nombre}'`,
+          );
+        }
+      }
+    }
+    if (conRol.length > 1) {
+      errores.push(
+        `escenas [${lang}]: hay ${String(conRol.length)} elecciones de rol y debe haber exactamente una`,
+      );
+    }
+
+    // (g) Nada se ramifica por rol antes de que el rol pueda elegirse.
+    const beatsConRol = delIdioma.flatMap((escena) =>
+      escena.beats.filter((beat) => beat.rol !== undefined).map(() => escena),
+    );
+    const [eleccionDeRol] = conRol;
+    if (beatsConRol.length > 0 && !eleccionDeRol) {
+      errores.push(
+        `escenas [${lang}]: hay beats con rol pero ninguna elección de rol que lo asigne`,
+      );
+    }
+    if (eleccionDeRol) {
+      for (const escena of beatsConRol) {
+        if (escena.orden <= eleccionDeRol.escena.orden) {
+          errores.push(
+            `escenas [${lang}]: '${escena.id}' (orden ${String(escena.orden)}) ramifica por rol antes o durante la elección de rol ('${eleccionDeRol.escena.id}', orden ${String(eleccionDeRol.escena.orden)})`,
+          );
+        }
+      }
+    }
+  }
+
+  // (e-bis) Paridad ES/EN de las elecciones: mismos ids y mismo número de
+  // opciones — una elección con 3 salidas en un idioma y 2 en otro es un
+  // guion distinto, no una traducción.
+  {
+    const porIdioma = new Map<Lang, Map<string, number>>(IDIOMAS.map((lang) => [lang, new Map()]));
+    for (const escena of escenas) {
+      for (const beat of escena.beats) {
+        if (beat.eleccion) {
+          porIdioma.get(escena.lang)?.set(beat.eleccion.id, beat.eleccion.opciones.length);
+        }
+      }
+    }
+    const [es, en] = IDIOMAS.map((lang) => porIdioma.get(lang) ?? new Map<string, number>());
+    if (es && en) {
+      for (const [id, opciones] of es) {
+        if (!en.has(id)) {
+          errores.push(`elecciones: '${id}' existe en 'es' pero falta en 'en'`);
+        } else if (en.get(id) !== opciones) {
+          errores.push(
+            `elecciones: '${id}' tiene ${String(opciones)} opciones en 'es' y ${String(en.get(id))} en 'en'`,
+          );
+        }
+      }
+      for (const id of en.keys()) {
+        if (!es.has(id)) errores.push(`elecciones: '${id}' existe en 'en' pero falta en 'es'`);
       }
     }
   }

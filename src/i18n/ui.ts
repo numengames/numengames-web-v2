@@ -133,6 +133,13 @@ export const ui = {
     'item.2': 'Sello de la Travesía',
     'item.3': 'Sello del Regreso',
     'recap.items': 'Sellos reunidos',
+    /* Motor de escena (ADR 0009): roles del Nómada y rótulos de elección. */
+    'rol.anfitrion': 'Anfitrión',
+    'rol.impulsor': 'Impulsor',
+    'rol.explorador': 'Explorador',
+    'escena.eleccion': 'Elección',
+    'escena.consecuencia': 'Consecuencia',
+    'escena.dialogo': 'Diálogo de la escena',
   },
   en: {
     'site.name': 'Numen Games',
@@ -209,6 +216,13 @@ export const ui = {
     'item.2': 'Seal of the Crossing',
     'item.3': 'Seal of the Return',
     'recap.items': 'Seals collected',
+    /* Motor de escena (ADR 0009): roles del Nómada y rótulos de elección. */
+    'rol.anfitrion': 'Host',
+    'rol.impulsor': 'Backer',
+    'rol.explorador': 'Explorer',
+    'escena.eleccion': 'Choice',
+    'escena.consecuencia': 'Consequence',
+    'escena.dialogo': 'Scene dialogue',
   },
 } as const;
 

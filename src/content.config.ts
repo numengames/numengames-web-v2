@@ -113,8 +113,49 @@ const escenarios = defineCollection({
     luz: tokenCanon,
     /** Índice (desde 0) del tramo que este escenario ocupa. */
     tramoPanoramica: z.number().int().min(0),
+    /**
+     * Telón de fondo pixel-art (docs/narrativa/escenarios-numinia.md):
+     * ruta relativa a src/assets/pixel/, SVG tematizable como los sprites.
+     */
+    fondo: z
+      .string()
+      .regex(/^[\w-]+(\/[\w-]+)*\.svg$/, {
+        message: 'fondo debe ser una ruta relativa a src/assets/pixel/ acabada en .svg',
+      })
+      .optional(),
   }),
 });
+
+/** Los tres roles que puede adoptar el Nómada (ADR 0009). Enum cerrado:
+ * un rol nuevo es un cambio de esquema, no una extensión libre del guion. */
+const rol = z.enum(['anfitrion', 'impulsor', 'explorador']);
+
+/**
+ * Elección diegética (ADR 0009): 2–4 opciones, cada una con su
+ * consecuencia VISIBLE (sin JS se leen todas — regla dura n.º 3).
+ * `opciones[].rol` solo aparece en la elección de rol; la unicidad de esa
+ * elección y la cobertura de los tres roles se comprueban en
+ * validateEscenas (no cabe en Zod por-entrada).
+ */
+const eleccion = z
+  .object({
+    /** Id estable para la persistencia Nivel B (numen.journey.v1). */
+    id: z.string().min(1),
+    pregunta: z.string().optional(),
+    opciones: z
+      .array(
+        z
+          .object({
+            etiqueta: z.string().min(1),
+            consecuencia: z.string().min(1),
+            rol: rol.optional(),
+          })
+          .strict(),
+      )
+      .min(2)
+      .max(4),
+  })
+  .strict();
 
 /** Qué pasa: la secuencia de beats que la web interpreta tal cual. */
 const escenas = defineCollection({
@@ -131,12 +172,20 @@ const escenas = defineCollection({
     escenario: reference('escenarios'),
     beats: z
       .array(
+        /* Sin .refine() aquí a propósito: el ZodEffects resultante rompe
+           la inferencia de InferEntrySchema en astro check (todos los
+           props degradan a any). La regla h («todo beat dice algo») vive
+           en validateEscenas, junto al resto de reglas cruzadas. */
         z.object({
           /** El literal va primero: si no, la referencia intentaría
            * resolver 'sistema' como id de personaje y fallaría. */
           hablante: z.union([z.literal('sistema'), reference('personajes')]),
-          parlamento: z.string(),
+          /** Opcional SOLO si el beat trae eleccion (regla h, en validate). */
+          parlamento: z.string().optional(),
           accion: accion.optional(),
+          /** Beat visible para un rol concreto (ADR 0009). */
+          rol: rol.optional(),
+          eleccion: eleccion.optional(),
         }),
       )
       .min(1),

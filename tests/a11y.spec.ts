@@ -56,15 +56,22 @@ test('la panorámica se desplaza en horizontal al avanzar el scroll', async ({ p
   await expect.poll(translateX).toBeLessThan(inicio - 500);
 });
 
-test('la elección de la Travesía revela un desenlace y persiste', async ({ page }) => {
+/* Con el guion cargado, el motor de escena (ADR 0008) retira las secciones
+   clásicas del camino — y con ellas <journey-choice> — y las elecciones
+   pasan a <escena-eleccion> (ADR 0009), con el mismo contrato: botones con
+   aria-pressed, consecuencia revelada al elegir y persistencia en
+   numen.journey.v1. */
+test('la elección de la escena revela su consecuencia y persiste', async ({ page }) => {
   await page.goto('/es/');
-  const btn = page.locator('journey-choice button[data-option="0"]').first();
+  const btn = page.locator('escena-eleccion button[data-option="0"]').first();
   await btn.scrollIntoViewIfNeeded();
   await btn.click();
   await expect(btn).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('journey-choice .choice-outcome.is-open').first()).toBeVisible();
+  await expect(
+    page.locator('escena-eleccion .eleccion-consecuencia.is-elegida').first(),
+  ).toBeVisible();
   await page.reload();
-  await expect(page.locator('journey-choice button[data-option="0"]').first()).toHaveAttribute(
+  await expect(page.locator('escena-eleccion button[data-option="0"]').first()).toHaveAttribute(
     'aria-pressed',
     'true',
   );

@@ -40,7 +40,7 @@ const sections = flow.map((entry) => {
 });
 
 const firstFase = sections.find((s) => s.entry.data.kind === 'fase');
-const enterHref = `#${firstFase?.slug ?? 'acto-2'}`;
+const enterHrefClasico = `#${firstFase?.slug ?? 'acto-2'}`;
 
 /* ------------------------------------------------------------------
    Motor de escena (ADR 0008) — GUARDA DE VACÍO: mientras el guion no
@@ -76,8 +76,12 @@ const veredicto = validateEscenas(
         typeof b.hablante === 'string'
           ? b.hablante
           : (idPersonaje.get(b.hablante.id) ?? b.hablante.id),
-      parlamento: b.parlamento,
+      ...(b.parlamento !== undefined ? { parlamento: b.parlamento } : {}),
       ...(b.accion ? { accion: b.accion } : {}),
+      /* ADR 0009: sin estos dos campos el validador quedaría ciego a las
+         reglas e–g (elecciones y roles). */
+      ...(b.rol ? { rol: b.rol } : {}),
+      ...(b.eleccion ? { eleccion: b.eleccion } : {}),
     })),
   })),
   todosPersonajes.map((p) => p.data),
@@ -102,8 +106,17 @@ const EscenaPanel =
     ? (await import('../../components/narrative/EscenaPanel.astro')).default
     : null;
 
-/* Paneles de la panorámica: héroe + fases + caminos (+ escenas si hay guion). */
-const panelCount = 1 + sections.length + escenas.length;
+/* Con guion vivo, la aventura ES la home: la narrativa clásica (fases y
+   caminos) se retira para no contar dos historias seguidas, y sus piezas
+   operativas se montan dentro de las escenas naturales — los portales en
+   la mesa de cartografía (los territorios del guion) y el Umbral (recap,
+   CTAs y tesoros) en la escena de acción. Sin guion, todo como siempre. */
+const motorActivo = escenas.length > 0;
+const primerEscenaSlug = motorActivo ? idLogicoEscena(escenas[0]?.id ?? '', lang) : '';
+const enterHref = motorActivo ? `#escena-${primerEscenaSlug}` : enterHrefClasico;
+
+/* Paneles de la panorámica: héroe + (escenas | fases y caminos). */
+const panelCount = 1 + (motorActivo ? escenas.length : sections.length);
 ---
 
 <BaseLayout {lang} pageKey="home">
@@ -113,47 +126,46 @@ const panelCount = 1 + sections.length + escenas.length;
         <HeroFiltro {lang} {enterHref} actLabel={actLabel(1)} />
 
         {
-          sections.map((s) =>
-            s.entry.data.kind === 'camino' ? (
-              <CaminoSection {lang} entry={s.entry} slug={s.slug} actLabel={s.actLabel} />
-            ) : (
-              <PhaseSection
-                {lang}
-                entry={s.entry}
-                slug={s.slug}
-                actLabel={s.actLabel}
-                actAnchor={s.actAnchor}
-              >
-                {s.entry.data.phase === 4 && (
-                  <div class="portal-grid">
-                    {portales.map((p) => (
-                      <PortalCard {lang} entry={p} />
-                    ))}
-                  </div>
-                )}
-                {s.entry.data.phase === 5 && (
-                  <div class="manifesto-mark" aria-hidden="true">
-                    ✦
-                  </div>
-                )}
-                {s.entry.data.phase === 6 && (
-                  <>
-                    <Recap {lang} />
-                    <UmbralCtas {lang} />
-                    {/* Tesoros de conversión: no emiten nada hasta que
-                        Producto (P0-4) y Legal (P0-1) rellenen sus destinos
-                        en i18n/ui.ts. Montados ya para que activarse sea
-                        editar dos constantes, no código. */}
-                    <UmbralTesoros {lang} />
-                  </>
-                )}
-              </PhaseSection>
-            ),
-          )
+          !motorActivo &&
+            sections.map((s) =>
+              s.entry.data.kind === 'camino' ? (
+                <CaminoSection {lang} entry={s.entry} slug={s.slug} actLabel={s.actLabel} />
+              ) : (
+                <PhaseSection
+                  {lang}
+                  entry={s.entry}
+                  slug={s.slug}
+                  actLabel={s.actLabel}
+                  actAnchor={s.actAnchor}
+                >
+                  {s.entry.data.phase === 4 && (
+                    <div class="portal-grid">
+                      {portales.map((p) => (
+                        <PortalCard {lang} entry={p} />
+                      ))}
+                    </div>
+                  )}
+                  {s.entry.data.phase === 5 && (
+                    <div class="manifesto-mark" aria-hidden="true">
+                      ✦
+                    </div>
+                  )}
+                  {s.entry.data.phase === 6 && (
+                    <>
+                      <Recap {lang} />
+                      <UmbralCtas {lang} />
+                      <UmbralTesoros {lang} />
+                    </>
+                  )}
+                </PhaseSection>
+              ),
+            )
         }{
           /* Motor de escena tras la guarda de vacío. Va yuxtapuesto (`}{`)
              a la expresión anterior a propósito: así no se añade ningún
-             nodo de texto y, sin guion, el HTML es byte a byte el de hoy. */
+             nodo de texto y, sin guion, el HTML es byte a byte el de hoy.
+             Los portales viven en la mesa de cartografía (los territorios
+             del guion) y el Umbral entero en la escena de acción. */
           EscenaPanel &&
             escenas.map((escena, i) => (
               <EscenaPanel
@@ -163,7 +175,25 @@ const panelCount = 1 + sections.length + escenas.length;
                 escenarios={fichasEscenario}
                 actLabel={actLabel(escena.data.acto)}
                 conEstilos={i === 0}
-              />
+              >
+                {escena.data.escenario.id.endsWith('mesa-cartografia') && (
+                  <div class="portal-grid">
+                    {portales.map((p) => (
+                      <PortalCard {lang} entry={p} />
+                    ))}
+                  </div>
+                )}
+                {escena.data.funnel === 'accion' && (
+                  <>
+                    <Recap {lang} />
+                    <UmbralCtas {lang} />
+                    {/* Tesoros de conversión: no emiten nada hasta que
+                        Producto (P0-4) y Legal (P0-1) rellenen sus destinos
+                        en i18n/ui.ts. */}
+                    <UmbralTesoros {lang} />
+                  </>
+                )}
+              </EscenaPanel>
             ))
         }
       </div>
