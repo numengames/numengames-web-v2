@@ -4,7 +4,7 @@ lang: es
 nombre: EL DESHILADOR
 papel: secundario
 colorHablante: ink-muted
-sprite: quest.svg
+sprite: deshilador.svg
 poses: [interferencia]
 reglasDeVoz: >-
   Habla poco y con frialdad elegante. Aparece como interferencia en el
@@ -14,5 +14,5 @@ limites: >-
   estructura. Jamás amenaza al visitante; su amenaza es el olvido de la feria.
 ---
 
-Antagonista. SPRITE PROVISIONAL (quest.svg): el suyo propio está pendiente
-de diseño.
+Antagonista. Figura encapuchada que se deshilacha por el borde inferior;
+los acentos usan la paleta tematizable (`--pa-2`, `--pa-3`).
