@@ -11,7 +11,7 @@
 | 5   | Revisión nativa del inglés                                                                                                                                                           | Creativo   |
 | 6   | Auditoría manual de accesibilidad (teclado + lector de pantalla)                                                                                                                     | Ingeniería |
 | 7   | ~~Contraste AA: 3 fallos `color-contrast` en axe~~ **Resuelto 2026-08-04** vía ADR 0007 (aceptada): token nuevo + 2 usos corregidos + exclusión justificada del flotante transitorio | Ingeniería |
-| 8   | Revisión humana de los sprites IA (ciclo `walk`, poses de Senet) antes de publicar: ritmo a 10 fps, gesto «señala», pérdida del tono medio en marcha                                 | Creativo   |
+| 8   | Revisión humana de los sprites IA (ciclo `walk`, poses de Senet, sprite del Deshilador) antes de publicar: ritmo a 10 fps, gesto «señala», pérdida del tono medio en marcha          | Creativo   |
 
 ### P0-7 — Contraste AA (axe, WCAG 1.4.3) — RESUELTO
 
@@ -41,10 +41,11 @@ ANTES del arreglo.
   (faltan dependencias de sistema en la máquina local). El principio queda
   como doctrina en `scripts/check-e2e.test.sh`.
 
-- Escribir `docs/narrativa/guion-numinia.md` (ES y EN): el motor de escena
-  (ADR 0008) espera con las colecciones vacías y la home intacta; con guion,
-  las escenas aparecen sin tocar código. Bloquea también la migración con
-  diff cero y las fichas/escenario fundacionales.
+- ~~Escribir `docs/narrativa/guion-numinia.md` (ES y EN)~~ **Hecho
+  (2026-08-04)**: guion canónico v0.6.0 + `escenarios-numinia.md` volcados
+  a las colecciones (8 escenas, personajes y escenarios en ES/EN); el motor
+  de escena (ADR 0008) renderiza en la home con elecciones y roles
+  (ADR 0009).
 - Rellenar `UMBRAL_CALENDAR_URL` (P0-4) y `UMBRAL_CONTACT_EMAIL` (P0-1) en
   `src/i18n/ui.ts`: activan los enlaces-tesoro del Umbral y su hallazgo
   épico `tesoro-umbral` (ya implementados, no renderizan hasta entonces).

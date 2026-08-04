@@ -13,7 +13,16 @@ Todas las novedades relevantes de numen.games. Formato basado en
   vocabulario cerrado de acciones escénicas, validador puro testeado
   (`escenas-validate.ts`) y renderizador con guarda de vacío — sin guion,
   la home es byte a byte la misma; con guion, las escenas aparecen sin
-  tocar código. El guion (`docs/narrativa/guion-numinia.md`) aún no existe.
+  tocar código.
+- **Guion canónico de Numinia v0.6.0** (`docs/narrativa/guion-numinia.md`
+  y `escenarios-numinia.md`): ocho escenas, personajes y escenarios en ES
+  y EN volcados a las colecciones — el motor deja de esperar en vacío.
+- **Elecciones y roles del guion** (ADR 0009): esquema y validador de
+  elecciones, y render sin JS con ambos desenlaces legibles.
+- **Parte gráfica del motor**: telón, estilos completos del vocabulario
+  escénico y slot operativo en la home.
+- **Sprite propio del Deshilador** (retira el provisional `quest.svg`);
+  se suma a la revisión de diseño de sprites IA (P0-8).
 - **Tesoros del Umbral**: dos enlaces de conversión (reserva y correo) sin
   red, sin widgets y operativos sin JS, con hallazgo _épico_
   `tesoro-umbral` (25 PTS). No se renderizan hasta que P0-1/P0-4 rellenen
@@ -26,8 +35,8 @@ Todas las novedades relevantes de numen.games. Formato basado en
   revisión de diseño** (P0-8).
 - Guarda anti-verde-falso para e2e (`scripts/check-e2e.sh`) con su test
   negativo, y prueba de paridad de la panorámica en los tres motores.
-- Propuesta de canon ADR 0007: `--turquesa-texto-oscuro` para cumplir
-  contraste AA en tema Nocturno (pendiente de diseño).
+- Canon ADR 0007 **aceptada y aplicada**: `--turquesa-texto-oscuro` cumple
+  contraste AA en tema Nocturno; axe a cero violaciones (cierra P0-7).
 
 ### Corregido
 
