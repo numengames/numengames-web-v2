@@ -1260,7 +1260,8 @@
       color: var(--ink);
     }
     .nomada-walker .character {
-      width: clamp(56px, 6vw, 76px);
+      /* Escala entera ×3 de la celda de 23 (§2.4): el Nómada se ve. */
+      width: 69px;
       image-rendering: pixelated;
     }
     /* Ciclo «walk» (novena y ÚLTIMA plaza del cupo de animación): la hoja

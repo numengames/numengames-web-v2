@@ -1,7 +1,7 @@
 ---
 id: deshilador
 lang: en
-nombre: THE UNRAVELER
+nombre: VESPER
 papel: secundario
 colorHablante: ink-muted
 sprite: deshilador.svg
@@ -14,5 +14,7 @@ limites: >-
   structure. Never threatens the visitor; its threat is the fair's oblivion.
 ---
 
-Antagonist. Hooded figure unraveling along its lower edge; accents use the
-themeable palette (`--pa-2`, `--pa-3`).
+Antagonist. **Vesper, the Unraveler**: a cyanite — human in appearance,
+with blue-tinted skin (cold-signal ramp: Turquesa/Verdemar) and white
+hair (Arena), wearing a surly scowl. "The Unraveler" is what the fair
+calls him; Vesper is his name.

@@ -143,17 +143,20 @@ if (escenario.fondo !== undefined) {
   data-tramo={String(escenario.tramoPanoramica)}
   aria-labelledby={headingId}
 >
-  {fondoSvg && <div class="escena-fondo" aria-hidden="true" set:html={fondoSvg} />}
   <div class="container-n">
-    <p class="eyebrow" data-reveal>{actLabel}</p>
-    <h2 class="phase-title" id={headingId} data-reveal>{escenario.nombre}</h2>
+    <header class="escena-cabecera">
+      <p class="eyebrow" data-reveal>{actLabel}</p>
+      <h2 class="phase-title" id={headingId} data-reveal>{escenario.nombre}</h2>
+    </header>
 
     {
-      /* Región desplazable (max-height + overflow-y en escena-motor.css):
-        sin tabindex, el teclado no puede alcanzarla ni scrollearla (axe
-        `scrollable-region-focusable`, WCAG 2.1.1). */
+      /* Composición de aventura clásica: diálogo a la izquierda,
+         escenario enmarcado a la derecha (ya no telón a pantalla
+         completa). Región desplazable con tabindex por WCAG 2.1.1.
+         <escena-dialogo> teclea los beats progresivamente (init.ts);
+         sin JS o con movimiento reducido, todo está escrito. */
     }
-    <div
+    <escena-dialogo
       class="dialog px escena-beats"
       data-reveal
       role="region"
@@ -161,7 +164,9 @@ if (escenario.fondo !== undefined) {
       tabindex="0"
     >
       {beats.map(({ beat, personaje }) => <ParlamentoBeat {beat} {personaje} {rotulos} />)}
-    </div>
+    </escena-dialogo>
+
+    {fondoSvg && <div class="escena-fondo" aria-hidden="true" set:html={fondoSvg} />}
     {
       /* Piezas operativas montadas por la página dentro de la escena
          (portales en la mesa de cartografía; Umbral en la de acción).

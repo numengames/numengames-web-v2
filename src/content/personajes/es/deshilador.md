@@ -1,7 +1,7 @@
 ---
 id: deshilador
 lang: es
-nombre: EL DESHILADOR
+nombre: VESPER
 papel: secundario
 colorHablante: ink-muted
 sprite: deshilador.svg
@@ -14,5 +14,7 @@ limites: >-
   estructura. Jamás amenaza al visitante; su amenaza es el olvido de la feria.
 ---
 
-Antagonista. Figura encapuchada que se deshilacha por el borde inferior;
-los acentos usan la paleta tematizable (`--pa-2`, `--pa-3`).
+Antagonista. **Vesper, el Deshilador**: un cyanita — ser de apariencia
+humana, piel azulada (rampa de señal fría: Turquesa/Verdemar) y pelo
+blanco (Arena), de gesto hosco. Su título («el Deshilador») es como lo
+nombra la feria; Vesper es su nombre.

@@ -31,12 +31,20 @@
 7. **Pausa dramática del tecleo retirada** (130/140 ms): el canon exige
    22 ms lineales. La pausa de puntuación se propone al canon como
    EXTENSIÓN expresiva; hasta entonces no se usa.
-8. **Telón a `cover`**: el fondo de escena SVG escala fraccionalmente
-   (§5.1 pediría múltiplo entero + relleno Noche). Al ser rects
-   vectoriales con `crispEdges` no hay desenfoque, pero puede haber
-   «píxeles» desiguales. Se acepta como desviación de composición
-   pendiente de criterio de diseño; los retratos y la moneda SÍ escalan
-   entero.
+8. **Escenario dentro del marco a `cover`**: el arte del escenario escala
+   fraccionalmente dentro de su cuadro (§5.1 pediría múltiplo entero +
+   relleno Noche). Al ser rects vectoriales con `crispEdges` no hay
+   desenfoque, pero puede haber «píxeles» desiguales. Pendiente del
+   redibujo isométrico; los retratos, el caminante y la moneda SÍ
+   escalan entero.
+9. **Pixelify a 16 px en cuerpo de diálogo y nombres de retrato**
+   (decisión de la persona, precedencia 1 de §19.1): fuera de los
+   múltiplos 22/33/44 de §4.5. La interlínea se mantiene entera (24 px)
+   para no generar subpíxel. Se propone al canon ampliar la escala del
+   registro con un peldaño de lectura compacta.
+10. **Orla píxel de 9 cortes** en caja de diálogo, marcos de retrato y
+    cuadro de escenario (dirección de la persona): §9.6 pedía borde
+    1 px Noche. La orla usa solo Bronce y Arena velada (Khepri-16).
 
 ## Consecuencias
 

@@ -73,63 +73,68 @@ const rolLabel = beat.rol ? rotulos.roles[beat.rol] : undefined;
   data-eleccion={beat.eleccion?.id}
 >
   {
-    rolLabel && (
-      <p class="beat-rol">
-        <span aria-hidden="true">◆</span> {rolLabel}
-      </p>
-    )
-  }
-  {
+    /* Retrato en marco junto al texto, con el nombre debajo (composición
+       de aventura de los 80). El sprite es decorativo; el nombre queda
+       accesible como figcaption. */
     firma && (
-      <p class="speaker beat-firma">
-        <span class="speaker-portrait" aria-hidden="true" set:html={firma.spriteSvg} />
-        <span>{firma.personaje.nombre}</span>
-      </p>
+      <figure class="beat-retrato">
+        <span class="retrato-marco" aria-hidden="true" set:html={firma.spriteSvg} />
+        <figcaption class="retrato-nombre">{firma.personaje.nombre}</figcaption>
+      </figure>
     )
   }
-  {
-    beat.parlamento !== undefined &&
-      (firma ? (
-        <p class="beat-parlamento">{beat.parlamento}</p>
-      ) : (
-        <p class="beat-acotacion">{beat.parlamento}</p>
-      ))
-  }
-  {
-    /* Elección diegética (ADR 0009), patrón de journey-choice: botones
+  <div class="beat-cuerpo">
+    {
+      rolLabel && (
+        <p class="beat-rol">
+          <span aria-hidden="true">◆</span> {rolLabel}
+        </p>
+      )
+    }
+    {
+      beat.parlamento !== undefined &&
+        (firma ? (
+          <p class="beat-parlamento">{beat.parlamento}</p>
+        ) : (
+          <p class="beat-acotacion">{beat.parlamento}</p>
+        ))
+    }
+    {
+      /* Elección diegética (ADR 0009), patrón de journey-choice: botones
        server-rendered con aria-pressed; init.ts los vuelve interactivos.
        Sin JS: botones y TODAS las consecuencias legibles (regla dura 3);
        con JS: la consecuencia se revela al elegir, estilo point-and-click. */
-    beat.eleccion && (
-      <escena-eleccion data-id={beat.eleccion.id} data-announce={rotulos.announce}>
-        {beat.eleccion.pregunta !== undefined && (
-          <p class="eleccion-pregunta">{beat.eleccion.pregunta}</p>
-        )}
-        <div
-          class="eleccion-opciones"
-          role="group"
-          aria-label={beat.eleccion.pregunta ?? rotulos.eleccion}
-        >
-          {beat.eleccion.opciones.map((opcion, i) => (
-            <div class="eleccion-opcion">
-              <button
-                type="button"
-                class="btn eleccion-btn"
-                data-option={i}
-                data-rol-opcion={opcion.rol}
-              >
-                {opcion.etiqueta}
-              </button>
-              <p class="eleccion-consecuencia" data-consecuencia={i}>
-                <span class="visually-hidden">{rotulos.consecuencia}: </span>
-                {opcion.consecuencia}
-              </p>
-            </div>
-          ))}
-        </div>
-      </escena-eleccion>
-    )
-  }
+      beat.eleccion && (
+        <escena-eleccion data-id={beat.eleccion.id} data-announce={rotulos.announce}>
+          {beat.eleccion.pregunta !== undefined && (
+            <p class="eleccion-pregunta">{beat.eleccion.pregunta}</p>
+          )}
+          <div
+            class="eleccion-opciones"
+            role="group"
+            aria-label={beat.eleccion.pregunta ?? rotulos.eleccion}
+          >
+            {beat.eleccion.opciones.map((opcion, i) => (
+              <div class="eleccion-opcion">
+                <button
+                  type="button"
+                  class="btn eleccion-btn"
+                  data-option={i}
+                  data-rol-opcion={opcion.rol}
+                >
+                  {opcion.etiqueta}
+                </button>
+                <p class="eleccion-consecuencia" data-consecuencia={i}>
+                  <span class="visually-hidden">{rotulos.consecuencia}: </span>
+                  {opcion.consecuencia}
+                </p>
+              </div>
+            ))}
+          </div>
+        </escena-eleccion>
+      )
+    }
+  </div>
 </div>
 
 <!--

@@ -61,7 +61,7 @@ async function typeText(el: HTMLElement, text: string, isCancelled: () => boolea
 }
 
 /** Mecanografía un elemento corto conservando su HTML final (accesible). */
-async function typeRich(el: HTMLElement) {
+async function typeRich(el: HTMLElement, isCancelled: () => boolean = () => false) {
   if (!motionOK) return;
   const original = el.innerHTML;
   const text = el.textContent ?? '';
@@ -72,7 +72,7 @@ async function typeRich(el: HTMLElement) {
   el.setAttribute('aria-hidden', 'true');
   let cancelled = false;
   el.addEventListener('click', () => (cancelled = true), { once: true });
-  await typeText(el, text, () => cancelled);
+  await typeText(el, text, () => cancelled || isCancelled());
   el.removeAttribute('data-tw-typing');
   el.innerHTML = original;
   el.removeAttribute('aria-hidden');
@@ -377,6 +377,56 @@ class EscenaEleccion extends HTMLElement {
   }
 }
 customElements.define('escena-eleccion', EscenaEleccion);
+
+/* ----------------------- <escena-dialogo> -----------------------------
+   Tecleo progresivo del guion (§2.4: el diálogo hereda el tecleo #01).
+   Los beats se revelan de uno en uno y su texto se escribe con typeRich
+   (que mantiene copia accesible mientras teclea). Un clic en la caja
+   completa todo al instante. Sin JS o con movimiento reducido este
+   controlador no oculta nada: el guion entero está escrito. */
+class EscenaDialogo extends HTMLElement {
+  #started = false;
+  #skipAll = false;
+
+  connectedCallback() {
+    if (!motionOK) return;
+    const beats = Array.from(this.querySelectorAll<HTMLElement>('.beat-turno'));
+    if (beats.length === 0) return;
+    beats.forEach((beat, i) => {
+      if (i > 0) beat.hidden = true;
+    });
+    this.addEventListener('click', () => (this.#skipAll = true));
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          io.disconnect();
+          void this.#run(beats);
+        }
+      },
+      { threshold: 0.3 },
+    );
+    io.observe(this);
+  }
+
+  async #run(beats: HTMLElement[]) {
+    if (this.#started) return;
+    this.#started = true;
+    for (const beat of beats) {
+      beat.hidden = false;
+      this.scrollTop = this.scrollHeight;
+      if (this.#skipAll) continue;
+      const bloques = Array.from(
+        beat.querySelectorAll<HTMLElement>('.beat-parlamento, .beat-acotacion, .eleccion-pregunta'),
+      );
+      for (const bloque of bloques) {
+        if (this.#skipAll) break;
+        await typeRich(bloque, () => this.#skipAll);
+        this.scrollTop = this.scrollHeight;
+      }
+    }
+  }
+}
+customElements.define('escena-dialogo', EscenaDialogo);
 
 /* ------------------------- <journey-reset> --------------------------- */
 class JourneyReset extends HTMLElement {
