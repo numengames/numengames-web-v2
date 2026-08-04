@@ -609,18 +609,21 @@
     }
   }
 
-  /* Hilo de scroll bajo la cabecera (CSS scroll-driven, con @supports). */
+  /* Hilo de scroll bajo la cabecera: doble motor (ADR 0006). Layout
+     compartido; solo cambia quién produce el `scale`. */
+  .scroll-thread {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: var(--accent);
+    transform-origin: 0 50%;
+    scale: 0 1;
+    z-index: calc(var(--z-header) + 1);
+  }
   @supports (animation-timeline: scroll()) {
     .scroll-thread {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 2px;
-      width: 100%;
-      background: var(--accent);
-      transform-origin: 0 50%;
-      scale: 0 1;
-      z-index: calc(var(--z-header) + 1);
       animation: thread linear both;
       animation-timeline: scroll(root);
     }
@@ -628,6 +631,11 @@
       to {
         scale: 1 1;
       }
+    }
+  }
+  @supports not (animation-timeline: scroll()) {
+    .scroll-thread {
+      scale: var(--thread-p, 0) 1;
     }
   }
 }
@@ -920,7 +928,8 @@
     background: var(--surface-elevated);
     font-family: var(--stack-mono);
     font-size: 0.62rem;
-    color: var(--ink-faint);
+    /* ADR 0007: --ink-faint daba 3.84:1 sobre elevated; muted cumple AA. */
+    color: var(--ink-muted);
   }
   .journey-act .slot-item {
     display: none;
@@ -1044,85 +1053,146 @@
   }
 }
 
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) and (min-width: 48rem) {
+/* Panorámica: doble motor (ADR 0006). El layout es idéntico para los dos
+   motores — solo el bloque @supports correspondiente decide QUIÉN mueve
+   .journey-panorama en horizontal. */
+@media (prefers-reduced-motion: no-preference) and (min-width: 48rem) {
+  @layer components {
+    .journey-h {
+      height: calc(var(--panels, 1) * 100vh);
+    }
+    .journey-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+    /* Suelo pixelado sobre el que camina el Nómada. */
+    .journey-sticky::after {
+      content: '';
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 44px;
+      border-top: 1px solid var(--line-strong);
+      background:
+        repeating-linear-gradient(90deg, var(--line-strong) 0 2px, transparent 2px 14px),
+        var(--surface-raised);
+      z-index: 4;
+    }
+    .journey-panorama {
+      display: flex;
+      height: 100%;
+    }
+    .journey-panorama > .panel {
+      flex: 0 0 100vw;
+      width: 100vw;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      padding: calc(3.6rem + 1.5rem) clamp(1.5rem, 4vw, 4rem) 78px;
+      border-top: 0;
+    }
+    .journey-panorama > .panel + .panel {
+      border-left: 1px solid var(--line);
+    }
+    .journey-panorama > .panel .container-n {
+      width: min(100%, 62rem);
+    }
+    .hero.panel {
+      min-height: 0;
+    }
+    .hero-nomada {
+      display: none; /* en la panorámica ya camina abajo */
+    }
+    .portal-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.9rem;
+    }
+    .portal {
+      min-height: 10.5rem;
+      padding: 1.1rem;
+    }
+    .nomada-walker {
+      display: block;
+      position: absolute;
+      left: clamp(0.8rem, 5vw, 3.5rem);
+      bottom: 36px;
+      z-index: 5;
+      color: var(--ink);
+    }
+    .nomada-walker .character {
+      width: clamp(56px, 6vw, 76px);
+      image-rendering: pixelated;
+    }
+    /* Ciclo «walk» (novena y ÚLTIMA plaza del cupo de animación): la hoja
+       nomada-walk.svg (8 fotogramas en fila, celda 23×17) se aplica como
+       máscara sobre un fondo currentColor. Así el sprite sigue saliendo de
+       los tokens del tema — un background-image externo no puede heredar
+       currentColor —, y el SVG inline solo se oculta con visibility para
+       que la caja conserve su tamaño y proporción. */
+    @supports (mask-image: none) or (-webkit-mask-image: none) {
+      .nomada-walker.is-walking .pixel-art {
+        background-color: currentColor;
+        -webkit-mask-image: url('../assets/pixel/nomada-walk.svg');
+        mask-image: url('../assets/pixel/nomada-walk.svg');
+        -webkit-mask-size: 800% 100%;
+        mask-size: 800% 100%;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        image-rendering: pixelated;
+        /* steps(8, jump-none) reparte 8 valores equiespaciados en 0,8 s:
+           0,1 s por fotograma = 10 fps exactos. */
+        animation: walk 0.8s steps(8, jump-none) infinite;
+      }
+      .nomada-walker.is-walking .pixel-art svg {
+        visibility: hidden;
+      }
+    }
+    /* Reserva sin soporte de máscaras CSS: se conserva el hop clásico. */
+    @supports not ((mask-image: none) or (-webkit-mask-image: none)) {
+      .nomada-walker.is-walking {
+        animation: hop 0.34s steps(1) infinite;
+      }
+    }
+  }
+  @keyframes hop {
+    0%,
+    49% {
+      translate: 0 0;
+    }
+    50%,
+    100% {
+      translate: 0 -3px;
+    }
+  }
+  /* Novena y última animación del cupo: recorre la hoja de sprites del
+     Nómada (8 celdas → mask-size 800%). Con jump-none, 0%→100% cae
+     exactamente en las 8 celdas, sin fotograma fantasma al cerrar el bucle. */
+  @keyframes walk {
+    from {
+      -webkit-mask-position: 0% 0;
+      mask-position: 0% 0;
+    }
+    to {
+      -webkit-mask-position: 100% 0;
+      mask-position: 100% 0;
+    }
+  }
+
+  /* Motor nativo: el navegador calcula el progreso (cero JS). */
+  @supports (animation-timeline: view()) {
     @layer components {
       .journey-h {
-        height: calc(var(--panels, 1) * 100vh);
         view-timeline: --journey block;
       }
-      .journey-sticky {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        overflow: hidden;
-      }
-      /* Suelo pixelado sobre el que camina el Nómada. */
-      .journey-sticky::after {
-        content: '';
-        position: absolute;
-        inset: auto 0 0 0;
-        height: 44px;
-        border-top: 1px solid var(--line-strong);
-        background:
-          repeating-linear-gradient(90deg, var(--line-strong) 0 2px, transparent 2px 14px),
-          var(--surface-raised);
-        z-index: 4;
-      }
-      .journey-track {
-        display: flex;
-        height: 100%;
+      .journey-panorama {
         animation: panorama linear both;
         animation-timeline: --journey;
         animation-range: contain 0% contain 100%;
         will-change: transform;
-      }
-      .journey-track > .panel {
-        flex: 0 0 100vw;
-        width: 100vw;
-        height: 100%;
-        min-height: 0;
-        overflow: hidden;
-        display: grid;
-        align-items: center;
-        justify-items: center;
-        padding: calc(3.6rem + 1.5rem) clamp(1.5rem, 4vw, 4rem) 78px;
-        border-top: 0;
-      }
-      .journey-track > .panel + .panel {
-        border-left: 1px solid var(--line);
-      }
-      .journey-track > .panel .container-n {
-        width: min(100%, 62rem);
-      }
-      .hero.panel {
-        min-height: 0;
-      }
-      .hero-nomada {
-        display: none; /* en la panorámica ya camina abajo */
-      }
-      .portal-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.9rem;
-      }
-      .portal {
-        min-height: 10.5rem;
-        padding: 1.1rem;
-      }
-      .nomada-walker {
-        display: block;
-        position: absolute;
-        left: clamp(0.8rem, 5vw, 3.5rem);
-        bottom: 36px;
-        z-index: 5;
-        color: var(--ink);
-      }
-      .nomada-walker .character {
-        width: clamp(56px, 6vw, 76px);
-        image-rendering: pixelated;
-      }
-      .nomada-walker.is-walking {
-        animation: hop 0.34s steps(1) infinite;
       }
     }
     @keyframes panorama {
@@ -1130,14 +1200,14 @@
         transform: translateX(calc((1 - var(--panels, 1)) * 100vw));
       }
     }
-    @keyframes hop {
-      0%,
-      49% {
-        translate: 0 0;
-      }
-      50%,
-      100% {
-        translate: 0 -3px;
+  }
+
+  /* Motor de reserva: viewport.ts + init.ts calculan el progreso. */
+  @supports not (animation-timeline: view()) {
+    @layer components {
+      .journey-panorama {
+        transform: translateX(calc(var(--pan-p, 0) * (1 - var(--panels, 1)) * 100vw));
+        will-change: transform;
       }
     }
   }
@@ -1160,7 +1230,8 @@
     font-family: var(--stack-mono);
     font-size: var(--text-sm);
     letter-spacing: 0.15em;
-    color: var(--line-strong);
+    /* ADR 0007: token de TEXTO, no de trazo — --line-strong daba 1.5:1. */
+    color: var(--ink-muted);
     white-space: nowrap;
     overflow: hidden;
     user-select: none;

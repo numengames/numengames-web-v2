@@ -4,6 +4,41 @@ Todas las novedades relevantes de numen.games. Formato basado en
 [Keep a Changelog](https://keepachangelog.com/es/) y versionado
 [SemVer](https://semver.org/lang/es/).
 
+## [1.2.0] — 2026-08-04
+
+### Añadido
+
+- **Motor de escena** (ADR 0008 «el guion como fuente de verdad»): tres
+  Content Collections (`personajes`, `escenarios`, `escenas`) con Zod,
+  vocabulario cerrado de acciones escénicas, validador puro testeado
+  (`escenas-validate.ts`) y renderizador con guarda de vacío — sin guion,
+  la home es byte a byte la misma; con guion, las escenas aparecen sin
+  tocar código. El guion (`docs/narrativa/guion-numinia.md`) aún no existe.
+- **Tesoros del Umbral**: dos enlaces de conversión (reserva y correo) sin
+  red, sin widgets y operativos sin JS, con hallazgo _épico_
+  `tesoro-umbral` (25 PTS). No se renderizan hasta que P0-1/P0-4 rellenen
+  sus constantes en `i18n/ui.ts`; el máximo del HUD se deriva del DOM para
+  no prometer tesoros inalcanzables.
+- **Ciclo `walk` del Nómada**: novena y última animación del cupo (9/9),
+  hoja de 8 fotogramas a 10 fps con `steps()` y `mask-image` sobre
+  `currentColor`; reserva a `hop` donde no hay soporte. Tres poses de
+  Senet (`neutral`, `señala`, `celebra`). Sprites IA **pendientes de
+  revisión de diseño** (P0-8).
+- Guarda anti-verde-falso para e2e (`scripts/check-e2e.sh`) con su test
+  negativo, y prueba de paridad de la panorámica en los tres motores.
+- Propuesta de canon ADR 0007: `--turquesa-texto-oscuro` para cumplir
+  contraste AA en tema Nocturno (pendiente de diseño).
+
+### Corregido
+
+- Motor de reserva del scroll (ADR 0006): separadas lectura y escritura de
+  geometría (adiós al reflujo síncrono por fotograma) y recálculo en
+  `resize`/`orientationchange`.
+- Playwright ejecuta ahora chromium, firefox y webkit; el ADR 0006 y
+  `ARCHITECTURE.md` ya no afirman una verificación tri-motor que no
+  existía.
+- Mapa Octalysis y embudo narrativo documentados en `GAMIFICATION.md`.
+
 ## [1.1.1] — 2026-08-03
 
 ### Añadido

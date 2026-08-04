@@ -1,0 +1,67 @@
+---
+/**
+ * CTAs-tesoro del Umbral (etapa de conversión).
+ *
+ * Dos enlaces planos <a> — sin widgets, iframes, fetch, píxeles, analítica,
+ * scripts de terceros, contadores, urgencia ni FOMO. Operativos sin JS.
+ *
+ * Con JS, usar cualquiera de los dos desbloquea el hallazgo épico
+ * «tesoro-umbral» (listener en src/scripts/init.ts). Sin JS el enlace
+ * navega exactamente igual y simplemente no hay hallazgo: degradación
+ * aceptada — la conversión nunca depende del juego.
+ *
+ * Las hrefs viven en src/i18n/ui.ts y están bloqueadas por P0:
+ * - UMBRAL_CALENDAR_URL   → [POR DEFINIR — P0-4] (Producto)
+ * - UMBRAL_CONTACT_EMAIL  → [POR DEFINIR — P0-1] (Legal)
+ * Mientras una constante esté vacía, su enlace NO se renderiza (nunca un
+ * href="#"). Si ambas están vacías, el componente no emite nada.
+ */
+import {
+  UMBRAL_CALENDAR_URL,
+  UMBRAL_CONTACT_EMAIL,
+  useTranslations,
+  type Lang,
+} from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const hasCalendar = UMBRAL_CALENDAR_URL.length > 0;
+const hasMail = UMBRAL_CONTACT_EMAIL.length > 0;
+
+/* Anuncio para la región viva (#sr-announcer) al desbloquear el hallazgo. */
+const announce = `${t('umbral.tesoro.hallado')} · ${t('rarity.epico')}`;
+---
+
+{
+  (hasCalendar || hasMail) && (
+    <div class="ctas-tesoro" data-umbral-tesoro data-announce={announce} data-reveal>
+      {hasCalendar && (
+        <a class="btn btn-solid" href={UMBRAL_CALENDAR_URL} data-tesoro-link>
+          <span class="verb">{t('verb.usar')}</span>
+          {t('umbral.tesoro.reservar')}
+        </a>
+      )}
+      {hasMail && (
+        <a class="btn" href={`mailto:${UMBRAL_CONTACT_EMAIL}`} data-tesoro-link>
+          <span class="verb">{t('verb.hablar')}</span>
+          {t('umbral.tesoro.escribir')}
+        </a>
+      )}
+    </div>
+  )
+}
+
+<style>
+  /* Solo maquetación: el aspecto de los enlaces es el de .btn (global.css). */
+  .ctas-tesoro {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    align-items: center;
+  }
+</style>

@@ -29,6 +29,29 @@
 | Huevo de pascua           | 5 toques al wordmark → sello de Numinia en el pie                                                                     | sí                  |
 | Reinicio                  | Pie de página; limpia estado y anuncia por región viva                                                                | —                   |
 
+## Mapa Octalysis (política operativa — enforcement)
+
+Motores **permitidos** (white hat): significado épico (1), logro (2),
+creatividad (3), propiedad (4) y curiosidad (7). Motores **vetados en
+código y en copy**: escasez/urgencia (6) — contadores, «quedan N plazas» —
+y pérdida/FOMO (8). Influencia social (5) **aplazada**: testimonios pasan
+antes por Legal. Cualquier guion o mecánica que pida un motor vetado se
+rechaza citando esta sección.
+
+## Embudo narrativo (funnel)
+
+Las escenas del motor (colecciones `escenas/`, ADR 0008) declaran su etapa:
+`conciencia → interés → consideración → intención → acción`. El esquema
+exige las cinco etapas presentes y una única escena de `acción` como
+cierre. Medición: únicamente conversiones finales, hasta que la telemetría
+sin cookies pase por Legal (P1).
+
+## Mecánica pendiente de activación
+
+| Mecánica          | Detalle                                                                                                                                                                                                         | Persistencia       |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| Tesoro del Umbral | Hallazgo _épico_ `tesoro-umbral` (25 PTS) al usar cualquiera de los dos enlaces de conversión; los enlaces no se renderizan hasta que P0-1 (buzón) y P0-4 (reserva) rellenen sus constantes en `src/i18n/ui.ts` | `numen.journey.v1` |
+
 ## Backlog de diseño (priorizar en `docs/BACKLOG.md`)
 
 - **CTA del Umbral sensible a la elección** de Transformación (avanzar ≠

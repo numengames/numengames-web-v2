@@ -3,6 +3,13 @@
 Léeme entero antes de tocar nada. Si algo de aquí contradice a un humano del
 equipo, gana el humano; si contradice a tu intuición, gano yo.
 
+## Cómo explicar el trabajo
+
+El propietario del repo es junior/en aprendizaje. Cada vez que se ejecute un
+comando, se edite código o se tome una decisión técnica, explícalo como a un
+dev junior: qué se hace, por qué esa opción y no otra, y qué efecto tiene.
+No lo dejes para un resumen final — explica mientras ejecutas, no después.
+
 ## Qué es esto y para quién
 
 Web narrativa de **numen.games** (Numen Games: estructuras de juego y
@@ -52,12 +59,12 @@ Puerta mínima antes de cualquier commit: `check + lint + test + build`.
 1. **Presupuesto de página: ≤ 1 MB** transferido en la home (hoy ≈ 250 KB:
    HTML 69 + CSS 33 + JS 13 + Geist 57 + Geist Mono 58 + textura 15). El CI
    lo bloquea (`lighthouserc.json → resource-summary:total:size`).
-2. **Cupo de animación cerrado: máximo nueve, hoy ocho en uso** —
+2. **Cupo de animación cerrado y COMPLETO: nueve de nueve** —
    `hero-in · thread · caret-blink · pts-rise · panorama · hop ·
-portal-pulse · spawn-out`. La novena plaza está **vacante**: ningún
-   `@keyframes` nuevo sin pasar por diseño. **Parallax y efectos glitch
-   PROHIBIDOS** por canon (el glitch de v0.1.0 fue purgado en v1.1.1; no lo
-   resucites).
+portal-pulse · spawn-out · walk`. No quedan plazas: cualquier
+   `@keyframes` nuevo exige retirar otro **y** pasar por diseño (ADR).
+   **Parallax y efectos glitch PROHIBIDOS** por canon (el glitch de v0.1.0
+   fue purgado en v1.1.1; no lo resucites).
 3. **`prefers-reduced-motion` siempre**: toda animación va tras `.js` +
    `motionOK`/media query; sin JavaScript el 100 % del contenido es legible
    (ambos desenlaces de cada elección incluidos).
@@ -88,10 +95,12 @@ portal-pulse · spawn-out`. La novena plaza está **vacante**: ningún
 
 ## Mapa de lectura
 
-`CONTRIBUTING.md` (flujo y Definition of Done) · `docs/AUDIT_2026-08-03.md`
-(estado real y por qué) · `docs/BACKLOG.md` (qué toca ahora; P0 bloquea
-producción) · `docs/CONTENT_GUIDE.md` (voz y vocabulario permitido) ·
-`docs/GAMIFICATION.md` · `docs/adr/` (decisiones; cambiarlas = nuevo ADR).
+`docs/ARCHITECTURE.md` (referencia de planificación: capas, presupuestos,
+reglas de evolución) · `CONTRIBUTING.md` (flujo y Definition of Done) ·
+`docs/AUDIT_2026-08-03.md` (estado real y por qué) · `docs/BACKLOG.md` (qué
+toca ahora; P0 bloquea producción) · `docs/CONTENT_GUIDE.md` (voz y
+vocabulario permitido) · `docs/GAMIFICATION.md` · `docs/adr/` (decisiones;
+cambiarlas = nuevo ADR).
 
 ## No hagas sin preguntar antes
 

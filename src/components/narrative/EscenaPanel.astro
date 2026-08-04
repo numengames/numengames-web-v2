@@ -1,0 +1,122 @@
+---
+/**
+ * Panel de escena del motor narrativo (ADR 0008): una escena del guion =
+ * un panel dentro de .journey-panorama, con la misma anatomía que los
+ * paneles existentes (section.phase.panel > .container-n) para heredar
+ * el layout de la panorámica sin tocar global.css.
+ *
+ * Este componente solo se monta cuando la colección `escenas` del idioma
+ * tiene entradas (guarda de vacío en las páginas índice); con el guion
+ * vacío no aporta ni un byte al HTML.
+ *
+ * `bandas` y `luz` del escenario se exponen como custom properties
+ * (--escena-luz, --escena-banda-N) referenciando tokens del canon: son
+ * el contrato para la futura capa de decorado, sin pintar nada aún.
+ */
+import type { CollectionEntry } from 'astro:content';
+import type { Lang } from '../../i18n/ui';
+import ParlamentoBeat from './ParlamentoBeat.astro';
+
+type FichaPersonaje = CollectionEntry<'personajes'>['data'];
+type FichaEscenario = CollectionEntry<'escenarios'>['data'];
+
+interface Props {
+  lang: Lang;
+  escena: CollectionEntry<'escenas'>;
+  /** Fichas por id de ENTRADA (el id que guardan las referencias de Astro). */
+  personajes: ReadonlyMap<string, FichaPersonaje>;
+  escenarios: ReadonlyMap<string, FichaEscenario>;
+  /** Rótulo del acto, ya traducido por la página (i18n/ui.ts). */
+  actLabel: string;
+  /**
+   * true solo en el PRIMER panel de la página: emite el bloque de estilos
+   * del motor de escena una única vez. Va como <style is:inline> en la
+   * plantilla —no como <style> scoped— porque Astro elevaría el scoped al
+   * <head> de la home por el mero import, rompiendo la guarda de vacío.
+   */
+  conEstilos?: boolean | undefined;
+}
+const { lang, escena, personajes, escenarios, actLabel, conEstilos = false } = Astro.props;
+
+/* Astro valida en build que la referencia exista; aquí validamos lo que
+   la referencia no cubre (idioma cruzado) con errores que dicen QUÉ
+   corregir en el guion. */
+const escenario = escenarios.get(escena.data.escenario.id);
+if (!escenario) {
+  throw new Error(
+    `[motor de escena] La escena '${escena.id}' referencia el escenario ` +
+      `'${escena.data.escenario.id}' y no está cargado.`,
+  );
+}
+if (escenario.lang !== lang) {
+  throw new Error(
+    `[motor de escena] La escena '${escena.id}' (${lang}) usa el escenario ` +
+      `'${escenario.id}', que es de '${escenario.lang}'. Referencia el del mismo idioma.`,
+  );
+}
+
+const beats = escena.data.beats.map((beat, indice) => {
+  if (beat.hablante === 'sistema') return { beat, personaje: undefined };
+  const personaje = personajes.get(beat.hablante.id);
+  if (!personaje) {
+    throw new Error(
+      `[motor de escena] Beat ${String(indice)} de '${escena.id}': el hablante ` +
+        `'${beat.hablante.id}' no está cargado en la colección de personajes.`,
+    );
+  }
+  if (personaje.lang !== lang) {
+    throw new Error(
+      `[motor de escena] Beat ${String(indice)} de '${escena.id}' (${lang}): el ` +
+        `hablante '${personaje.id}' es de '${personaje.lang}'. Usa la ficha del mismo idioma.`,
+    );
+  }
+  return { beat, personaje };
+});
+
+const slug = escena.id.split('/').pop() ?? escena.id;
+const headingId = `escena-${slug}-title`;
+
+/* Decorado como contrato: solo nombres de token del canon (Zod ya los
+   valida contra tokens.css), jamás valores inventados. */
+const estiloEscenario = [
+  `--escena-luz: var(--${escenario.luz})`,
+  ...escenario.bandas.map((banda, i) => `--escena-banda-${String(i)}: var(--${banda})`),
+].join('; ');
+/* Estilos del motor de escena, emitidos una sola vez (conEstilos) y solo
+   cuando existe al menos una escena. Todo son tokens del canon; sin
+   @keyframes (cupo cerrado), sin parallax, sin glitch: la escena
+   estática ya es digna, también con prefers-reduced-motion. */
+const estilosMotor = `
+  .escena-beats { display: grid; gap: 1.4rem; }
+  .escena-beats .beat-turno { display: grid; gap: 0.45rem; justify-items: start; }
+  .escena-beats .beat-firma { margin-bottom: 0; color: var(--hablante, var(--accent)); }
+  .escena-beats .beat-firma .speaker-portrait { color: var(--hablante, var(--ink)); }
+  .escena-beats .beat-firma .speaker-portrait svg { width: 1.7rem; height: auto; display: block; }
+  .escena-beats .beat-parlamento,
+  .escena-beats .beat-acotacion { margin: 0; font-family: var(--stack-dialog); font-size: var(--text-dialog); line-height: 1.45; max-width: 56ch; }
+  .escena-beats .beat-acotacion { color: var(--ink); }
+`;
+---
+
+{conEstilos && <style is:inline set:html={estilosMotor} />}
+<section
+  id={`escena-${slug}`}
+  class="phase panel escena-panel"
+  style={estiloEscenario}
+  data-escena={slug}
+  data-acto={String(escena.data.acto)}
+  data-fase={String(escena.data.fase)}
+  data-funnel={escena.data.funnel}
+  data-escenario={escena.data.escenario.id}
+  data-tramo={String(escenario.tramoPanoramica)}
+  aria-labelledby={headingId}
+>
+  <div class="container-n">
+    <p class="eyebrow" data-reveal>{actLabel}</p>
+    <h2 class="phase-title" id={headingId} data-reveal>{escenario.nombre}</h2>
+
+    <div class="dialog px escena-beats" data-reveal>
+      {beats.map(({ beat, personaje }) => <ParlamentoBeat {beat} {personaje} />)}
+    </div>
+  </div>
+</section>
