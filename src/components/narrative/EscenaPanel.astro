@@ -9,13 +9,28 @@
  * tiene entradas (guarda de vacío en las páginas índice); con el guion
  * vacío no aporta ni un byte al HTML.
  *
- * `bandas` y `luz` del escenario se exponen como custom properties
- * (--escena-luz, --escena-banda-N) referenciando tokens del canon: son
- * el contrato para la futura capa de decorado, sin pintar nada aún.
+ * El decorado: `fondo` se pinta como telón pixel-art inline detrás del
+ * diálogo (composición de aventura clásica, escena-motor.css); `bandas`
+ * y `luz` se exponen como custom properties (--escena-luz,
+ * --escena-banda-N) referenciando tokens del canon, contrato para
+ * capas futuras.
  */
 import type { CollectionEntry } from 'astro:content';
 import { useTranslations, type Lang } from '../../i18n/ui';
 import ParlamentoBeat from './ParlamentoBeat.astro';
+import estilosMotor from './escena-motor.css?raw';
+
+/**
+ * Telones de fondo pixel-art, inline como los sprites de ParlamentoBeat
+ * (tokens del canon ⇒ tematizables, cero peticiones). El glob vive AQUÍ,
+ * pegado a los imports: más abajo, el escáner del compilador de Astro
+ * (2.13.1) pierde la interfaz Props y Astro.props degrada a any.
+ */
+const fondos = import.meta.glob('../../assets/pixel/**/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
 
 type FichaPersonaje = CollectionEntry<'personajes'>['data'];
 type FichaEscenario = CollectionEntry<'escenarios'>['data'];
@@ -93,20 +108,26 @@ const estiloEscenario = [
   `--escena-luz: var(--${escenario.luz})`,
   ...escenario.bandas.map((banda, i) => `--escena-banda-${String(i)}: var(--${banda})`),
 ].join('; ');
-/* Estilos del motor de escena, emitidos una sola vez (conEstilos) y solo
-   cuando existe al menos una escena. Todo son tokens del canon; sin
-   @keyframes (cupo cerrado), sin parallax, sin glitch: la escena
-   estática ya es digna, también con prefers-reduced-motion. */
-const estilosMotor = `
-  .escena-beats { display: grid; gap: 1.4rem; }
-  .escena-beats .beat-turno { display: grid; gap: 0.45rem; justify-items: start; }
-  .escena-beats .beat-firma { margin-bottom: 0; color: var(--hablante, var(--accent)); }
-  .escena-beats .beat-firma .speaker-portrait { color: var(--hablante, var(--ink)); }
-  .escena-beats .beat-firma .speaker-portrait svg { width: 1.7rem; height: auto; display: block; }
-  .escena-beats .beat-parlamento,
-  .escena-beats .beat-acotacion { margin: 0; font-family: var(--stack-dialog); font-size: var(--text-dialog); line-height: 1.45; max-width: 56ch; }
-  .escena-beats .beat-acotacion { color: var(--ink); }
-`;
+/**
+ * Telón del escenario. `preserveAspectRatio` se inyecta aquí y no en el
+ * asset: cómo encaja el SVG en su caja es contexto de uso (telón que
+ * CUBRE el panel, anclado al suelo), no una propiedad del dibujo — así
+ * cualquier fondo futuro queda cubierto sin depender de que el asset lo
+ * recuerde.
+ */
+let fondoSvg: string | undefined;
+if (escenario.fondo !== undefined) {
+  const crudo = fondos[`../../assets/pixel/${escenario.fondo}`];
+  if (crudo === undefined) {
+    throw new Error(
+      `[motor de escena] El fondo '${escenario.fondo}' del escenario ` +
+        `'${escenario.id}' no existe en src/assets/pixel/.`,
+    );
+  }
+  fondoSvg = crudo.includes('preserveAspectRatio')
+    ? crudo
+    : crudo.replace('<svg ', '<svg preserveAspectRatio="xMidYMax slice" ');
+}
 ---
 
 {conEstilos && <style is:inline set:html={estilosMotor} />}
@@ -122,6 +143,7 @@ const estilosMotor = `
   data-tramo={String(escenario.tramoPanoramica)}
   aria-labelledby={headingId}
 >
+  {fondoSvg && <div class="escena-fondo" aria-hidden="true" set:html={fondoSvg} />}
   <div class="container-n">
     <p class="eyebrow" data-reveal>{actLabel}</p>
     <h2 class="phase-title" id={headingId} data-reveal>{escenario.nombre}</h2>
@@ -129,5 +151,15 @@ const estilosMotor = `
     <div class="dialog px escena-beats" data-reveal>
       {beats.map(({ beat, personaje }) => <ParlamentoBeat {beat} {personaje} {rotulos} />)}
     </div>
+    {
+      /* Piezas operativas montadas por la página dentro de la escena
+         (portales en la mesa de cartografía; Umbral en la de acción).
+         Sin este slot, ese contenido se descartaba en silencio. */
+      Astro.slots.has('default') && (
+        <div class="escena-slot">
+          <slot />
+        </div>
+      )
+    }
   </div>
 </section>
