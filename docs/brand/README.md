@@ -1,13 +1,16 @@
 # Guía del design system «Khepri» — edición del repositorio
 
 Esta guía documenta el subconjunto **ejecutable** del Design System Khepri
-v3.0.0 tal y como vive en este repositorio. No sustituye al canon.
+v3.3.0 tal y como vive en este repositorio. No sustituye al canon.
 
 ## Jerarquía de fuentes (quién manda)
 
-1. **El canon Khepri v3.0.0** (documento externo del cliente, 2026-08-03).
-   No está en el repo; las referencias «§N» de esta guía y de los
-   comentarios del código apuntan a sus secciones.
+1. **El canon Khepri v3.3.0**, que desde 2026-08-04 **vive en este mismo
+   directorio**: `2026_08_04-Numen_Design_System-v3.3.0.md` (fiel byte a
+   byte al maestro; excluido de prettier). Las referencias «§N» de esta
+   guía y del código apuntan a sus secciones. Su §19 es el contrato de
+   agente. Las desviaciones vigentes (todas por accesibilidad, §19.1)
+   están consolidadas en `docs/adr/0011`.
 2. **`src/styles/tokens.css`** — la fuente de verdad ejecutable. Todo valor
    de color, tipografía, espacio o movimiento sale de ahí. Si esta guía y
    `tokens.css` discrepan, gana `tokens.css` (y esta guía tiene un bug).
@@ -73,14 +76,18 @@ en todo el sistema**; cualquier otro resplandor está fuera de canon.
 
 ## Tipografía
 
-Dos familias, autoalojadas, y ninguna más (`public/fonts/`, licencia OFL
-en `LICENSE-Geist.txt`):
+Tres familias, autoalojadas con sus licencias OFL en `public/fonts/`, y
+ninguna más:
 
 - **Geist** (`--stack-display`, `--stack-body`): la voz humana — títulos y
   prosa.
-- **Geist Mono** (`--stack-mono` y sus alias `--stack-dialog`,
-  `--stack-pixel`, `--stack-serif`): «el mono es la máquina» (§4.2) — la
-  voz mecanografiada del juego, HUD, etiquetas y datos.
+- **Geist Mono** (`--stack-mono`, `--stack-dialog`, `--stack-serif`): «el
+  mono es la máquina» (§4.2) — etiquetas, datos y la voz mecanografiada
+  fuera del registro píxel.
+- **Pixelify Sans** (`--stack-pixel`, §4.5): SOLO el registro píxel —
+  diálogo de escena, hablantes, titulares de escena y display píxel, a
+  **múltiplos exactos 22/33/44 px**, sin tracking ni falsos pesos. El
+  cuerpo largo sigue en Geist incluso dentro del registro.
 
 Escala 1.2 (§4.3) con ajuste fluido: de `--text-etiqueta` (0.75rem) a
 `--text-3xl` (display, con `clamp()`). Medida de lectura `--measure: 66ch`;
@@ -102,12 +109,16 @@ Tokens: `--ease-out: cubic-bezier(0.2, 0, 0, 1)` (motion.ciclo) y tres
 duraciones — `--dur-1: 120ms` (instante), `--dur-2: 320ms` (medio),
 `--dur-3: 560ms` (largo).
 
-**El cupo de animación está cerrado y COMPLETO (9/9)**: `hero-in · thread ·
-caret-blink · pts-rise · panorama · hop · portal-pulse · spawn-out · walk`.
-Un `@keyframes` nuevo exige retirar otro **y** ADR. **Parallax y glitch
-están prohibidos** (el glitch se purgó en v1.1.1). Toda animación va tras
-`.js` + `motionOK`/media query: con `prefers-reduced-motion` o sin
-JavaScript, el contenido completo es legible y estático.
+**El movimiento se rige por el catálogo cerrado del canon (§10.1, nueve
+piezas) y la ley de sprites (§10.4)** — mapa completo en `docs/adr/0010`.
+Implementadas: tecleo 22 ms con cursor `▌` Ámbar, revelado 320 ms/8 px,
+barrido de señal (uno por vista), cursor de bloque, pulso legendario en
+la obtención, escalonado a 80 ms del héroe; sprites walk/hop a 200 ms por
+fotograma. Pendientes: #09 completo en el héroe y fase lunar #06.
+**Parallax y glitch están prohibidos** (el glitch se purgó en v1.1.1).
+Toda animación va tras `.js` + `motionOK`/media query: con
+`prefers-reduced-motion` o sin JavaScript, el contenido completo es
+legible y estático.
 
 ## Marca y activos oficiales (§8)
 

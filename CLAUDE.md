@@ -29,17 +29,27 @@ El idioma de trabajo del repo (docs, commits, issues) es el **español**.
 - Interactividad: **Web Components vanilla** (`src/scripts/`). Cero
   frameworks de cliente, cero dependencias runtime nuevas sin ADR.
 
-## Design system: canon «Khepri» v3.0.0 — NORMATIVO
+## Design system: canon «Khepri» v3.3.0 — NORMATIVO
 
+- **El canon completo VIVE EN EL REPO**:
+  `docs/brand/2026_08_04-Numen_Design_System-v3.3.0.md` (protegido de
+  prettier: fidelidad byte a byte). Su §19 es el contrato de agente:
+  precedencia persona → accesibilidad → canon, y **ningún valor fuera de
+  §19.3**.
 - La fuente de verdad ejecutable es `src/styles/tokens.css` (paleta
   Nocturno/Diurno: Noche `#14110f`, Basalto, Arena, Turquesa = interactivo,
-  Ámbar = énfasis y logro; tipografías **Geist** y **Geist Mono**, únicas).
+  Ámbar = énfasis y logro; tipografías **Geist**, **Geist Mono** y
+  **Pixelify Sans** — esta última SOLO para el registro píxel, a múltiplos
+  exactos 22/33/44 px).
+- El **registro píxel** (§2.4/§3.7): la escena del motor es SIEMPRE
+  Nocturna, paleta cerrada Khepri-16, sprites a escala entera. Los colores
+  de hablante están restringidos por el validador (regla (h), ADR 0011).
 - Activos oficiales: `public/brand/` (marcas, siempre `currentColor`, nunca
-  recolorear) · `src/assets/pixel/` (sprites tematizables) ·
-  `public/fonts/` (con su licencia OFL).
-- La guía del DS vive en `docs/brand/README.md` (semántica y usos; el
-  canon completo v3.0.0 sigue siendo documento externo del cliente). Ante
-  la duda: tokens mandan y **no inventes valores**.
+  recolorear) · `src/assets/pixel/` (sprites) · `public/fonts/` (cada
+  fuente con su licencia OFL).
+- La guía del DS vive en `docs/brand/README.md` (semántica y usos). Las
+  desviaciones vigentes al canon (todas por accesibilidad) están en
+  `docs/adr/0011`. Ante la duda: tokens mandan y **no inventes valores**.
 
 ## Comandos
 
@@ -57,13 +67,16 @@ Puerta mínima antes de cualquier commit: `check + lint + test + build`.
 
 ## Reglas duras
 
-1. **Presupuesto de página: ≤ 1 MB** transferido en la home (hoy ≈ 250 KB:
-   HTML 69 + CSS 33 + JS 13 + Geist 57 + Geist Mono 58 + textura 15). El CI
-   lo bloquea (`lighthouserc.json → resource-summary:total:size`).
-2. **Cupo de animación cerrado y COMPLETO: nueve de nueve** —
-   `hero-in · thread · caret-blink · pts-rise · panorama · hop ·
-portal-pulse · spawn-out · walk`. No quedan plazas: cualquier
-   `@keyframes` nuevo exige retirar otro **y** pasar por diseño (ADR).
+1. **Presupuesto de página: ≤ 1 MB** transferido en la home (hoy ≈ 265 KB:
+   HTML 69 + CSS 36 + JS 13 + Geist 57 + Geist Mono 58 + Pixelify 12 +
+   textura 15). El CI lo bloquea
+   (`lighthouserc.json → resource-summary:total:size`).
+2. **El movimiento se rige por el catálogo del canon (§10.1) y la ley de
+   sprites (§10.4)** — ADR 0010. Toda animación de interfaz ES una pieza
+   del catálogo con su spec exacta; los sprites: 2–4 fotogramas a
+   120/200/320 ms, sin tweening. Un `@keyframes` nuevo solo puede
+   implementar una pieza del catálogo aún no implementada (pendientes:
+   tecleo del titular del héroe #09 completo, fase lunar #06).
    **Parallax y efectos glitch PROHIBIDOS** por canon (el glitch de v0.1.0
    fue purgado en v1.1.1; no lo resucites).
 3. **`prefers-reduced-motion` siempre**: toda animación va tras `.js` +
