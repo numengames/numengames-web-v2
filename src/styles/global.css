@@ -810,12 +810,17 @@
   }
   .tw-skip {
     position: absolute;
-    right: 0.5rem;
-    bottom: 0.3rem;
+    right: 0;
+    bottom: 0;
     border: 0;
     background: none;
-    padding: 0.3rem 0.45rem;
-    font-size: 0.85rem;
+    /* Objetivo táctil mínimo 44×44 (§12); el glifo sigue discreto. */
+    min-width: 44px;
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+    padding: var(--space-200);
+    font-size: var(--text-sm);
     line-height: 1;
     color: var(--interactive);
     cursor: pointer;

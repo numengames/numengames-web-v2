@@ -30,9 +30,16 @@
   align-content: end;
   min-height: 100%;
 }
+/* Texto sobre el telón: velo mínimo canónico (§8.2), no sombras.
+   Tinta Arena fija: sobre el velo Noche contrasta en ambos temas. */
 .escena-panel .eyebrow,
 .escena-panel .phase-title {
-  text-shadow: 0 1px 0 var(--surface);
+  width: fit-content;
+  background: var(--velo);
+  padding: var(--space-100) var(--space-200);
+}
+.escena-panel .phase-title {
+  color: var(--arena);
 }
 .escena-beats {
   display: grid;
