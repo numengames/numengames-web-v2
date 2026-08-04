@@ -928,7 +928,8 @@
     background: var(--surface-elevated);
     font-family: var(--stack-mono);
     font-size: 0.62rem;
-    color: var(--ink-faint);
+    /* ADR 0007: --ink-faint daba 3.84:1 sobre elevated; muted cumple AA. */
+    color: var(--ink-muted);
   }
   .journey-act .slot-item {
     display: none;
@@ -1229,7 +1230,8 @@
     font-family: var(--stack-mono);
     font-size: var(--text-sm);
     letter-spacing: 0.15em;
-    color: var(--line-strong);
+    /* ADR 0007: token de TEXTO, no de trazo — --line-strong daba 1.5:1. */
+    color: var(--ink-muted);
     white-space: nowrap;
     overflow: hidden;
     user-select: none;

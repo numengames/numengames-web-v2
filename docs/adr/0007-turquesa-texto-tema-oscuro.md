@@ -1,8 +1,15 @@
 # ADR 0007 — Turquesa de texto para tema oscuro
 
-**Estado:** propuesta · 2026-08-04 · **requiere visto bueno de diseño**
+**Estado:** aceptada · propuesta y aprobada por el propietario el 2026-08-04
 
-No aplicar sin aprobación: cambia el canon Khepri v3.0.0, que es normativo.
+Aplicada el mismo día: token `--turquesa-texto-oscuro` en `tokens.css`,
+`--interactive` del tema Nocturno apuntando a él, y los dos usos indebidos
+de tokens corregidos (`.bin-sep` y `.journey-act` pasan a `--ink-muted`,
+ratios 7.7–9.4:1 verificados). Hallazgo posterior del CI incorporado: el
+flotante `.pts-float` fallaba contraste solo a mitad de su fundido de
+salida (timing-dependiente); se excluye del escaneo de axe con
+justificación en `tests/a11y.spec.ts` — su color base cumple y la
+puntuación es accesible vía `aria-valuetext`.
 
 ## Problema
 

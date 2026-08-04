@@ -2,16 +2,16 @@
 
 ## P0 — Bloqueantes de publicación (v0.2)
 
-| #   | Ítem                                                                                                                                                 | Dueño      |
-| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| 1   | Datos legales reales (LSSI + RGPD) y buzones `hola@`/`security@`                                                                                     | Legal      |
-| 2   | Logo/wordmark oficial SVG + favicon + og.png definitivos                                                                                             | Creativo   |
-| 3   | Copy literal «No somos / Sí somos» y equipo (nombres, roles, correos)                                                                                | Creativo   |
-| 4   | CTA de conversión definitivo (correo real / formulario / agenda)                                                                                     | Producto   |
-| 5   | Revisión nativa del inglés                                                                                                                           | Creativo   |
-| 6   | Auditoría manual de accesibilidad (teclado + lector de pantalla)                                                                                     | Ingeniería |
-| 7   | Contraste AA: 3 fallos `color-contrast` en axe (detalle abajo)                                                                                       | Ingeniería |
-| 8   | Revisión humana de los sprites IA (ciclo `walk`, poses de Senet) antes de publicar: ritmo a 10 fps, gesto «señala», pérdida del tono medio en marcha | Creativo   |
+| #   | Ítem                                                                                                                                                                                 | Dueño      |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- |
+| 1   | Datos legales reales (LSSI + RGPD) y buzones `hola@`/`security@`                                                                                                                     | Legal      |
+| 2   | Logo/wordmark oficial SVG + favicon + og.png definitivos                                                                                                                             | Creativo   |
+| 3   | Copy literal «No somos / Sí somos» y equipo (nombres, roles, correos)                                                                                                                | Creativo   |
+| 4   | CTA de conversión definitivo (correo real / formulario / agenda)                                                                                                                     | Producto   |
+| 5   | Revisión nativa del inglés                                                                                                                                                           | Creativo   |
+| 6   | Auditoría manual de accesibilidad (teclado + lector de pantalla)                                                                                                                     | Ingeniería |
+| 7   | ~~Contraste AA: 3 fallos `color-contrast` en axe~~ **Resuelto 2026-08-04** vía ADR 0007 (aceptada): token nuevo + 2 usos corregidos + exclusión justificada del flotante transitorio | Ingeniería |
+| 8   | Revisión humana de los sprites IA (ciclo `walk`, poses de Senet) antes de publicar: ritmo a 10 fps, gesto «señala», pérdida del tono medio en marcha                                 | Creativo   |
 
 ### P0-7 — Contraste AA (axe, WCAG 1.4.3)
 

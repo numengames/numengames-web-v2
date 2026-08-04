@@ -31,6 +31,12 @@
   --ambar-texto-claro: #7a5100;
   --grana-texto-claro: #b02330;
 
+  /* Variantes de texto sobre oscuro [DERIVADO] — ADR 0007: la marca
+     #018ea1 no alcanza 4.5:1 sobre Basalto/Bronce oscuro; esta mezcla
+     (~11,5 % hacia blanco) cumple AA en las tres superficies (4.69:1 en
+     la peor) conservando la lectura de marca. */
+  --turquesa-texto-oscuro: #1f9cac;
+
   /* ---- Rareza (solo juego/producto) [CANON] ----------------- */
   --rareza-pobre: #f9ebdc;
   --rareza-comun: #8a7d72;
@@ -101,7 +107,7 @@
   --ink-faint: #8a7d72; /* Ceniza */
   --line: #241f1b; /* Sedimento */
   --line-strong: #3a332d; /* Bronce */
-  --interactive: var(--turquesa);
+  --interactive: var(--turquesa-texto-oscuro); /* ADR 0007: AA en oscuro */
   --interactive-ink: #ffffff;
   --accent: var(--ambar); /* énfasis y logro */
   --accent-soft: var(--ambar);
