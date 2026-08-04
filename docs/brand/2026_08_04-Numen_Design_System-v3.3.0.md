@@ -48,7 +48,7 @@ No existe un estándar universal de design systems. Existen: el formato de token
 
 ### 1.1 De dónde viene todo [CANON]
 
-Propósito: _Leveling up organizations to build better relationships._ Misión: _Build games to make work better._ Causa: Digital Humanism — _Humans are not the problem._ HXC: _Build organizations that elevate lives._ Emoción: Joy + Trust + Interest = Optimism & Love. Arquetipos: Mago (Sanador) · Cuidador · Explorador. Cierre: _Leave things better than we found them._
+Propósito: *Leveling up organizations to build better relationships.* Misión: *Build games to make work better.* Causa: Digital Humanism — *Humans are not the problem.* HXC: *Build organizations that elevate lives.* Emoción: Joy + Trust + Interest = Optimism & Love. Arquetipos: Mago (Sanador) · Cuidador · Explorador. Cierre: *Leave things better than we found them.*
 
 ### 1.2 Los valores, traducidos a diseño [DERIVADO]
 
@@ -67,13 +67,13 @@ Propósito: _Leveling up organizations to build better relationships._ Misión: 
 
 ### 2.1 La mezcla · 40 / 40 / 20 [CANON — decisión de dirección]
 
-El _SolarSteamCyberPunk_ del Brand & Culture, con la dosis fijada:
+El *SolarSteamCyberPunk* del Brand & Culture, con la dosis fijada:
 
-| Hilo          | Dosis    | Qué es                                                                                       | Qué aporta al sistema                                                                                                                                                                                                                                  |
-| ------------- | -------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Hilo | Dosis | Qué es | Qué aporta al sistema |
+|---|---|---|---|
 | **Solarpunk** | **40 %** | El optimismo mediterráneo: tecnología al servicio de la vida, luz, comunidad, sostenibilidad | Arena, Verdemar y el Ámbar-sol; el modo Diurno entero; la serenidad compositiva; la sostenibilidad como requisito técnico (§1.2). El Nocturno es **su noche cálida de jardín** —negros marrones, arena a la luz de la luna—, no la noche ácida de neón |
-| **Steampunk** | **40 %** | La máquina: bronce, mecanismo, medida, la II Revolución Industrial                           | Los neutrales bronce del Nocturno; Geist Mono; la retícula mecánica; el relieve de circuito (§6); los instrumentos en la iconografía                                                                                                                   |
-| **Cyberpunk** | **20 %** | La señal: el destello que atraviesa                                                          | Coral y Turquesa como neón **dosificado**; la textura binaria; el tecleo de terminal (§10). Al 20 %, el cyber es acento, jamás ambiente                                                                                                                |
+| **Steampunk** | **40 %** | La máquina: bronce, mecanismo, medida, la II Revolución Industrial | Los neutrales bronce del Nocturno; Geist Mono; la retícula mecánica; el relieve de circuito (§6); los instrumentos en la iconografía |
+| **Cyberpunk** | **20 %** | La señal: el destello que atraviesa | Coral y Turquesa como neón **dosificado**; la textura binaria; el tecleo de terminal (§10). Al 20 %, el cyber es acento, jamás ambiente |
 
 **Regla de mezcla.** La luz domina, la máquina estructura, la señal parpadea. **Test de dosis** (entrecerrando los ojos): ¿parece un jardín mediterráneo con maquinaria de bronce donde parpadea una señal? Correcto. ¿Parece Blade Runner? Sobra ciber. ¿Parece un catálogo de jardinería? Falta máquina.
 
@@ -89,7 +89,7 @@ Cuatro elementos, y no hay más; todo lo demás es tipografía, espacio y color.
 
 ### 2.4 El registro píxel [CANON — decisión de dirección]
 
-Cuando la narrativa lo pide, Numen habla en píxel: la herencia de **Monkey Island, Day of the Tentacle y La Abadía del Crimen** — las aventuras gráficas que enseñaron que se aprende jugando (_Learn_, hecho forma). No es un tema decorativo: es un **registro de renderizado** del nivel II, con su propia disciplina.
+Cuando la narrativa lo pide, Numen habla en píxel: la herencia de **Monkey Island, Day of the Tentacle y La Abadía del Crimen** — las aventuras gráficas que enseñaron que se aprende jugando (*Learn*, hecho forma). No es un tema decorativo: es un **registro de renderizado** del nivel II, con su propia disciplina.
 
 **Cuándo sí:** momentos de juego y lore, escenas narrativas de evento, contenido del mundo Numinia, logros e insignias, pantallas de carga de producto, piezas de nostalgia con propósito.
 **Cuándo no:** comunicación corporativa, propuestas y documentación (nivel III), visualización de datos, y cualquier pieza donde el píxel sea disfraz y no narrativa.
@@ -114,21 +114,21 @@ La referencia de los años 90 no se reproduce como filtro nostálgico: se adopta
 - **Clúster, no confeti.** Los píxeles se agrupan en clústeres continuos. Un píxel aislado solo PUEDE existir como brillo especular, estrella, partícula funcional o rasgo facial imprescindible; nunca como textura indiscriminada.
 - **Escalones deliberados.** Las diagonales y curvas mantienen un ritmo regular de píxeles. Dientes accidentales, dobles contornos y cambios arbitrarios de grosor se corrigen a escala ×1.
 - **Contorno selectivo.** Noche (`#14110F`) separa la silueta del fondo activo; dentro de la figura, las divisiones se resuelven con sombras de la propia rampa. Un contorno negro uniforme alrededor de todo aplana el volumen y NO DEBERÍA usarse salvo en sprites muy pequeños.
-- **Luz única.** La fuente principal viene de arriba-izquierda, como ya fija el registro. Cada plano, sombra proyectada, brillo metálico y cambio de material DEBE obedecerla. No hay _pillow shading_ —luz centrada que rodea la forma— ni reflejos sin fuente.
+- **Luz única.** La fuente principal viene de arriba-izquierda, como ya fija el registro. Cada plano, sombra proyectada, brillo metálico y cambio de material DEBE obedecerla. No hay *pillow shading* —luz centrada que rodea la forma— ni reflejos sin fuente.
 - **Carácter por proporción.** Cabeza, torso, herramientas y gesto se exageran solo para mejorar la lectura; no para imitar una franquicia concreta. Se hereda la economía narrativa de la aventura gráfica, no sus diseños propietarios.
 
 #### 2.4.2 Escalas de trabajo y consistencia [EXTENSIÓN — validar]
 
-| Familia                 | Rejilla canónica | Se decide primero                                      | Se comprueba a ×1                                          |
-| ----------------------- | ---------------: | ------------------------------------------------------ | ---------------------------------------------------------- |
-| **Objeto / insignia**   |       `12×12 px` | silueta, orientación, punto de interacción             | que el objeto no se confunda con otro del mismo inventario |
-| **Personaje / emblema** |       `24×24 px` | pose, eje de equilibrio, herramienta o rasgo dominante | que acción y dirección se lean sin animación               |
-| **Módulo de escena**    |       `48×48 px` | profundidad, entrada/salida, foco y masa de luz        | que el foco siga visible sin zoom                          |
+| Familia | Rejilla canónica | Se decide primero | Se comprueba a ×1 |
+|---|---:|---|---|
+| **Objeto / insignia** | `12×12 px` | silueta, orientación, punto de interacción | que el objeto no se confunda con otro del mismo inventario |
+| **Personaje / emblema** | `24×24 px` | pose, eje de equilibrio, herramienta o rasgo dominante | que acción y dirección se lean sin animación |
+| **Módulo de escena** | `48×48 px` | profundidad, entrada/salida, foco y masa de luz | que el foco siga visible sin zoom |
 
 - Se dibuja y corrige a **×1**; ×2, ×3, ×4, ×6 y ×8 sirven para inspección y presentación, no para decidir el píxel.
 - La escala de un activo se fija al iniciar. NO DEBE dibujarse grande para reducirlo después ni rotarse con interpolación. Una nueva escala exige redibujo sobre su rejilla.
 - Todos los puntos de anclaje —pies, centro de objeto, origen de herramienta y caja de diálogo— usan coordenadas enteras y se mantienen entre fotogramas.
-- El _hitbox_ y la zona táctil pertenecen a la interacción, no al contorno visual: PUEDE ser mayor que el sprite para cumplir los `44×44 px` de accesibilidad sin agrandar el dibujo.
+- El *hitbox* y la zona táctil pertenecen a la interacción, no al contorno visual: PUEDE ser mayor que el sprite para cumplir los `44×44 px` de accesibilidad sin agrandar el dibujo.
 
 #### 2.4.3 Profundidad y composición de escena [EXTENSIÓN — validar]
 
@@ -143,14 +143,14 @@ Un objeto interactivo DEBE poder localizarse por al menos dos vías: silueta + p
 
 #### 2.4.4 Matriz visual · cómo sí / cómo no [EXTENSIÓN — validar]
 
-| Cómo sí                                                            | Cómo no                                                    |
-| ------------------------------------------------------------------ | ---------------------------------------------------------- |
-| Dibujar la silueta y probarla sobre Noche y Basalto                | Añadir textura antes de resolver la forma                  |
-| Compartir colores entre materiales para cohesionar la escena       | Crear una rampa nueva para cada objeto                     |
-| Reservar los píxeles sueltos para brillos o partículas funcionales | Salpicar ruido para que «parezca retro»                    |
-| Exagerar gesto, herramienta o dirección para leer a ×1             | Confiar en detalles que solo se ven ampliados              |
-| Mantener el mismo origen y volumen entre fotogramas                | Hacer que el personaje tiemble por cambios de contorno     |
-| Usar la nostalgia como gramática de producción                     | Copiar composiciones, personajes o interfaces propietarias |
+| Cómo sí | Cómo no |
+|---|---|
+| Dibujar la silueta y probarla sobre Noche y Basalto | Añadir textura antes de resolver la forma |
+| Compartir colores entre materiales para cohesionar la escena | Crear una rampa nueva para cada objeto |
+| Reservar los píxeles sueltos para brillos o partículas funcionales | Salpicar ruido para que «parezca retro» |
+| Exagerar gesto, herramienta o dirección para leer a ×1 | Confiar en detalles que solo se ven ampliados |
+| Mantener el mismo origen y volumen entre fotogramas | Hacer que el personaje tiemble por cambios de contorno |
+| Usar la nostalgia como gramática de producción | Copiar composiciones, personajes o interfaces propietarias |
 
 ---
 
@@ -158,14 +158,14 @@ Un objeto interactivo DEBE poder localizarse por al menos dos vías: silueta + p
 
 ### 3.1 Paleta canónica [CANON]
 
-| Hex       | Nombre       | Hilo  | Papel                                        |
-| --------- | ------------ | ----- | -------------------------------------------- |
-| `#A6DAD5` | **Verdemar** | Solar | Confirmación, calma, tintes de superficie    |
-| `#018EA1` | **Turquesa** | Cyber | **Primario de acción e interacción**         |
-| `#EFA517` | **Ámbar**    | Solar | Énfasis, valor, logro; el sol de Khepri      |
-| `#F9EBDC` | **Arena**    | Solar | Neutral principal                            |
-| `#F35059` | **Coral**    | Cyber | Aviso, tiempo real; destello, nunca ambiente |
-| `#D33440` | **Grana**    | —     | Crítico, gravedad                            |
+| Hex | Nombre | Hilo | Papel |
+|---|---|---|---|
+| `#A6DAD5` | **Verdemar** | Solar | Confirmación, calma, tintes de superficie |
+| `#018EA1` | **Turquesa** | Cyber | **Primario de acción e interacción** |
+| `#EFA517` | **Ámbar** | Solar | Énfasis, valor, logro; el sol de Khepri |
+| `#F9EBDC` | **Arena** | Solar | Neutral principal |
+| `#F35059` | **Coral** | Cyber | Aviso, tiempo real; destello, nunca ambiente |
+| `#D33440` | **Grana** | — | Crítico, gravedad |
 
 ### 3.2 Neutrales [EXTENSIÓN]
 
@@ -174,7 +174,7 @@ Un objeto interactivo DEBE poder localizarse por al menos dos vías: silueta + p
 
 ### 3.3 Variantes de texto sobre claro [DERIVADO]
 
-Los canónicos son colores de _mood_; sobre Arena, como texto, se usa la variante: Turquesa→`#016E7D` (5.1:1) · Grana→`#B02330` (5.8:1) · Ámbar→`#7A5100` (6.0:1). Coral y Verdemar no tienen variante: sobre claro son solo relleno.
+Los canónicos son colores de *mood*; sobre Arena, como texto, se usa la variante: Turquesa→`#016E7D` (5.1:1) · Grana→`#B02330` (5.8:1) · Ámbar→`#7A5100` (6.0:1). Coral y Verdemar no tienen variante: sobre claro son solo relleno.
 
 ### 3.4 Semántica y reglas [DERIVADO]
 
@@ -188,14 +188,14 @@ Primero los seis canónicos; después variantes de luminosidad; nunca hues ajeno
 
 Capa categórica para juego y producto (objetos, recompensas, Cartas de Navegación, activos digitales). Convención MMO que cualquier jugador reconoce sin manual, afinada a esta paleta y verificada:
 
-| Rareza         | Nocturno  | vs Noche | Texto en Diurno | vs Arena | Coherencia                                             |
-| -------------- | --------- | -------- | --------------- | -------- | ------------------------------------------------------ |
-| **Pobre**      | `#F9EBDC` | 16.1     | `#6E6259`       | 5.1      | = Arena: lo pobre es el papel                          |
-| **Común**      | `#8A7D72` | 4.7      | `#5A4F45`       | 6.8      | = Ceniza, la neutral existente                         |
-| **Poco común** | `#8FC46B` | 9.2      | `#356C19`       | 5.4      | Verde cálido, hermano de Verdemar                      |
-| **Raro**       | `#5D9BD6` | 6.4      | `#2E6BB0`       | 4.7      | Azul templado, distinto del Turquesa interactivo       |
-| **Épico**      | `#A98BE0` | 6.7      | `#6B44B8`       | 5.7      | Morado suavizado al mundo cálido                       |
-| **Legendario** | `#EFA517` | 9.0      | `#7A5100`       | 6.0      | **= Ámbar**: lo legendario y el logro son el mismo sol |
+| Rareza | Nocturno | vs Noche | Texto en Diurno | vs Arena | Coherencia |
+|---|---|---|---|---|---|
+| **Pobre** | `#F9EBDC` | 16.1 | `#6E6259` | 5.1 | = Arena: lo pobre es el papel |
+| **Común** | `#8A7D72` | 4.7 | `#5A4F45` | 6.8 | = Ceniza, la neutral existente |
+| **Poco común** | `#8FC46B` | 9.2 | `#356C19` | 5.4 | Verde cálido, hermano de Verdemar |
+| **Raro** | `#5D9BD6` | 6.4 | `#2E6BB0` | 4.7 | Azul templado, distinto del Turquesa interactivo |
+| **Épico** | `#A98BE0` | 6.7 | `#6B44B8` | 5.7 | Morado suavizado al mundo cálido |
+| **Legendario** | `#EFA517` | 9.0 | `#7A5100` | 6.0 | **= Ámbar**: lo legendario y el logro son el mismo sol |
 
 Reglas: escala completa y en orden, sin peldaños inventados. **Tratamiento progresivo además del color**: pobre/común borde `linea.tenue`; poco común/raro borde de su color al 40 %; épico borde pleno; legendario borde pleno + halo `0 0 12px rgba(239,165,23,.25)` — **el único glow del sistema**. Nombre escrito en `type.etiqueta` la primera vez por vista. Vive en producto y juego; NUNCA en comunicación corporativa: un precio no es épico y un plazo no es legendario.
 
@@ -203,24 +203,24 @@ Reglas: escala completa y en orden, sin peldaños inventados. **Tratamiento prog
 
 Dieciséis colores, **cero hexes nuevos**: siete neutrales, los seis de marca y tres sombras ya definidas, más el verde de rareza. Todo sprite y toda escena píxel DEBE limitarse a este índice.
 
-| Nº  | Hex       | Nombre            | Origen                | Papel en píxel                   |
-| --- | --------- | ----------------- | --------------------- | -------------------------------- |
-| 01  | `#14110F` | Noche             | nocturno.fondo-base   | Fondo, contorno de sprite        |
-| 02  | `#1E1A17` | Basalto           | nocturno.superficie   | Sombra profunda                  |
-| 03  | `#292420` | Bronce oscuro     | nocturno.elevada      | Sombra                           |
-| 04  | `#3A332D` | Bronce            | nocturno.linea-fuerte | Sombra media, metal              |
-| 05  | `#8A7D72` | Ceniza            | nocturno.terciario    | Gris de trabajo                  |
-| 06  | `#C4B5A6` | Arena velada      | nocturno.secundario   | Luz media                        |
-| 07  | `#F9EBDC` | Arena             | marca                 | Luz, brillo, sprite base         |
-| 08  | `#A6DAD5` | Verdemar          | marca                 | Acento solar                     |
-| 09  | `#018EA1` | Turquesa          | marca                 | Acento cyber                     |
-| 10  | `#016E7D` | Turquesa profunda | texto-sobre-claro     | Sombra de 09                     |
-| 11  | `#EFA517` | Ámbar             | marca                 | Oro, logro, sol                  |
-| 12  | `#7A5100` | Ámbar tostado     | texto-sobre-claro     | Sombra de 11                     |
-| 13  | `#F35059` | Coral             | marca                 | Señal viva                       |
-| 14  | `#D33440` | Grana             | marca                 | Rojo profundo — **solo relleno** |
-| 15  | `#B02330` | Grana profunda    | texto-sobre-claro     | Sombra de 14                     |
-| 16  | `#8FC46B` | Verde             | rareza.poco-comun     | Naturaleza, el jardín solarpunk  |
+| Nº | Hex | Nombre | Origen | Papel en píxel |
+|---|---|---|---|---|
+| 01 | `#14110F` | Noche | nocturno.fondo-base | Fondo, contorno de sprite |
+| 02 | `#1E1A17` | Basalto | nocturno.superficie | Sombra profunda |
+| 03 | `#292420` | Bronce oscuro | nocturno.elevada | Sombra |
+| 04 | `#3A332D` | Bronce | nocturno.linea-fuerte | Sombra media, metal |
+| 05 | `#8A7D72` | Ceniza | nocturno.terciario | Gris de trabajo |
+| 06 | `#C4B5A6` | Arena velada | nocturno.secundario | Luz media |
+| 07 | `#F9EBDC` | Arena | marca | Luz, brillo, sprite base |
+| 08 | `#A6DAD5` | Verdemar | marca | Acento solar |
+| 09 | `#018EA1` | Turquesa | marca | Acento cyber |
+| 10 | `#016E7D` | Turquesa profunda | texto-sobre-claro | Sombra de 09 |
+| 11 | `#EFA517` | Ámbar | marca | Oro, logro, sol |
+| 12 | `#7A5100` | Ámbar tostado | texto-sobre-claro | Sombra de 11 |
+| 13 | `#F35059` | Coral | marca | Señal viva |
+| 14 | `#D33440` | Grana | marca | Rojo profundo — **solo relleno** |
+| 15 | `#B02330` | Grana profunda | texto-sobre-claro | Sombra de 14 |
+| 16 | `#8FC46B` | Verde | rareza.poco-comun | Naturaleza, el jardín solarpunk |
 
 **Dominancia:** ≥ 60 % de la superficie en los neutrales 01–07. **Subconjunto de diálogo** (texto píxel sobre Noche, ≥ 4.5:1 verificado): Arena 16.1 · Verdemar 12.2 · Arena velada 9.4 · Verde 9.2 · Ámbar 9.0 · Coral 5.5 · Turquesa 4.8 · Ceniza 4.7. **Grana queda fuera del diálogo** (3.9:1): relleno sí, texto jamás.
 
@@ -228,13 +228,13 @@ Dieciséis colores, **cero hexes nuevos**: siete neutrales, los seis de marca y 
 
 La paleta es única, pero se trabaja por **rampas compartidas**. Una rampa no añade colores: ordena los existentes para que materiales distintos parezcan pertenecer al mismo mundo.
 
-| Rampa                | Colores disponibles                                                      | Uso principal                                                                    |
-| -------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
-| **Neutral mecánica** | Noche · Basalto · Bronce oscuro · Bronce · Ceniza · Arena velada · Arena | estructura, piedra, metal, ropa, volumen general                                 |
-| **Solar**            | Ámbar tostado · Ámbar · Arena                                            | sol, recompensa, latón iluminado, punto de valor                                 |
-| **Señal fría**       | Turquesa profunda · Turquesa · Verdemar                                  | interacción, energía, vidrio, tecnología al servicio de la vida                  |
-| **Señal cálida**     | Grana profunda · Grana · Coral                                           | daño, alarma y tiempo real; Coral y Grana siguen sin convivir en una composición |
-| **Jardín**           | Verde · Verdemar · Arena                                                 | vegetación y materia viva                                                        |
+| Rampa | Colores disponibles | Uso principal |
+|---|---|---|
+| **Neutral mecánica** | Noche · Basalto · Bronce oscuro · Bronce · Ceniza · Arena velada · Arena | estructura, piedra, metal, ropa, volumen general |
+| **Solar** | Ámbar tostado · Ámbar · Arena | sol, recompensa, latón iluminado, punto de valor |
+| **Señal fría** | Turquesa profunda · Turquesa · Verdemar | interacción, energía, vidrio, tecnología al servicio de la vida |
+| **Señal cálida** | Grana profunda · Grana · Coral | daño, alarma y tiempo real; Coral y Grana siguen sin convivir en una composición |
+| **Jardín** | Verde · Verdemar · Arena | vegetación y materia viva |
 
 Cada material DEBERÍA resolverse con **2–4 colores** de una o dos rampas. Compartir una sombra o una luz entre materiales cohesiona la escena y conserva el carácter limitado de los gráficos de los 90.
 
@@ -244,7 +244,7 @@ Cada material DEBERÍA resolverse con **2–4 colores** de una o dos rampas. Com
 - Solo se permite el damero de **dos colores adyacentes de una misma rampa**, como ya fija §2.4. Se usa para transición de material, niebla o superficie amplia; nunca para «crear» un color de marca nuevo.
 - NO se trama el contorno exterior, la tipografía, los ojos, los iconos de inventario ni los objetos que deban encontrarse rápido.
 - El damero mantiene un patrón estable. Cambiar el patrón sin razón produce ruido y parpadeo al animar.
-- Las bandas de color visibles son válidas y preferibles a un degradado suavizado. No se aplica _blur_, antialias ni transparencia intermedia para esconderlas.
+- Las bandas de color visibles son válidas y preferibles a un degradado suavizado. No se aplica *blur*, antialias ni transparencia intermedia para esconderlas.
 
 #### 3.7.3 Cambio de paleta [EXTENSIÓN — validar]
 
@@ -262,7 +262,7 @@ La rotación o sustitución de índices —recurso clásico para agua, luz y se�
 
 ### 4.2 El contraste sans / mono [DERIVADO]
 
-**Sans para lo que se afirma, Mono para lo que se mide.** Titulares, cuerpo e interfaz en Sans; cifras, coordenadas, etiquetas, código y lore técnico en Mono. El monoespaciado _es_ la máquina: resuelve el steampunk sin tipografías temáticas.
+**Sans para lo que se afirma, Mono para lo que se mide.** Titulares, cuerpo e interfaz en Sans; cifras, coordenadas, etiquetas, código y lore técnico en Mono. El monoespaciado *es* la máquina: resuelve el steampunk sin tipografías temáticas.
 
 ### 4.3 Escala [EXTENSIÓN]
 
@@ -322,17 +322,15 @@ Dos texturas, los dos estados de la máquina: la señal (lo que fluye) y el circ
 
 Derivado del **normal map canónico** (`textura-circuito-normal.png`, 4096², panel greeble: la II Revolución Industrial encontrándose con lo digital, literal). Derivados entregados:
 
-| Activo                              | Formato         | Peso   | Uso                                                            |
-| ----------------------------------- | --------------- | ------ | -------------------------------------------------------------- |
-| `textura-circuito-normal.png`       | PNG 4096²       | 9.5 MB | Material 3D (canal normal PBR, Three.js — el stack de Numinia) |
-| `textura-relieve-nocturno-768.webp` | WebP 768²       | 14 KB  | **CSS**: fondos Nocturno, horneado al 5.5 %                    |
-| `textura-relieve-nocturno.png`      | PNG 1536²       | 683 KB | Alta calidad: portadas, impresión de pantalla, OG              |
-| `textura-relieve-alpha.webp`        | WebP 1536² RGBA | 695 KB | Líneas Arena sobre transparente, para hornear                  |
+| Activo | Formato | Peso | Uso |
+|---|---|---|---|
+| `textura-circuito-normal.png` | PNG 4096² | 9.5 MB | Material 3D (canal normal PBR, Three.js — el stack de Numinia) |
+| `textura-relieve-nocturno-768.webp` | WebP 768² | 14 KB | **CSS**: fondos Nocturno, horneado al 5.5 % |
+| `textura-relieve-nocturno.png` | PNG 1536² | 683 KB | Alta calidad: portadas, impresión de pantalla, OG |
+| `textura-relieve-alpha.webp` | WebP 1536² RGBA | 695 KB | Líneas Arena sobre transparente, para hornear |
 
 ```css
-.hero {
-  background: var(--fondo-base) url('textura-relieve-nocturno-768.webp') center/cover;
-}
+.hero { background: var(--fondo-base) url("textura-relieve-nocturno-768.webp") center/cover; }
 ```
 
 **Dónde sí:** fondo de hero Nocturno, portadas de deck, OG images, bandas separadoras anchas, materiales 3D.
@@ -365,18 +363,18 @@ En producción, **subconjunto autoalojado** (SVG inline o sprite), como hace la 
 
 ### 8.1 Inventario (todos normalizados a `fill="currentColor"`, en `/assets/`)
 
-| Archivo                             | Qué es                         | viewBox          | Uso canónico                                        |
-| ----------------------------------- | ------------------------------ | ---------------- | --------------------------------------------------- |
-| `Khepri_Logo.svg`                   | Isotipo: el escarabajo         | 75.44×75.53      | Cierre, favicon, avatar, sello                      |
-| `Khepri_NG_Logo.svg`                | Isotipo + NG                   | 75.44×75.53      | Compacto con atribución                             |
-| `NG_Logo.svg`                       | Monograma                      | 113.37×50.29     | < 120 px de ancho                                   |
-| `Numen_Games_Horizontal_Word.svg`   | Wordmark horizontal            | 382.79×28.09     | **Firma principal**                                 |
-| `Numen_Games_Vertical_Word.svg`     | Wordmark apilado               | 180.74×73.25     | Formatos cuadrados/verticales                       |
-| `Numen_Word.svg`                    | «numen»                        | 180.74×28.09     | Cuando «games» es evidente                          |
-| `Numinia_Word.svg`                  | El mundo                       | 194.25×28.01     | **Solo** piezas de Numinia                          |
-| `pixel/khepri-sprite-24.png`        | Sprite canónico del escarabajo | 24×24 px         | Registro píxel; única traducción píxel de la marca  |
-| `pixel/moneda-12.png`               | Moneda de Ámbar                | 12×12 px         | Objeto de ejemplo del registro; tokens, recompensas |
-| `fonts/PixelifySans-Variable.woff2` | Tipografía píxel               | variable 400–700 | Diálogo y display del registro píxel                |
+| Archivo | Qué es | viewBox | Uso canónico |
+|---|---|---|---|
+| `Khepri_Logo.svg` | Isotipo: el escarabajo | 75.44×75.53 | Cierre, favicon, avatar, sello |
+| `Khepri_NG_Logo.svg` | Isotipo + NG | 75.44×75.53 | Compacto con atribución |
+| `NG_Logo.svg` | Monograma | 113.37×50.29 | < 120 px de ancho |
+| `Numen_Games_Horizontal_Word.svg` | Wordmark horizontal | 382.79×28.09 | **Firma principal** |
+| `Numen_Games_Vertical_Word.svg` | Wordmark apilado | 180.74×73.25 | Formatos cuadrados/verticales |
+| `Numen_Word.svg` | «numen» | 180.74×28.09 | Cuando «games» es evidente |
+| `Numinia_Word.svg` | El mundo | 194.25×28.01 | **Solo** piezas de Numinia |
+| `pixel/khepri-sprite-24.png` | Sprite canónico del escarabajo | 24×24 px | Registro píxel; única traducción píxel de la marca |
+| `pixel/moneda-12.png` | Moneda de Ámbar | 12×12 px | Objeto de ejemplo del registro; tokens, recompensas |
+| `fonts/PixelifySans-Variable.woff2` | Tipografía píxel | variable 400–700 | Diálogo y display del registro píxel |
 
 Selección: horizontal por defecto → vertical en cuadrado → NG bajo 120 px → isotipo para cierre/avatar. `Numinia_Word` jamás firma comunicación corporativa.
 
@@ -405,12 +403,12 @@ Todos demostrados en vivo en `index.html`.
 
 ### 9.1 Botones
 
-| Tipo            | Estilo                                                         | Cuándo                                                              |
-| --------------- | -------------------------------------------------------------- | ------------------------------------------------------------------- |
-| **Primario**    | Fondo Turquesa, texto blanco                                   | La acción principal. **Uno por vista**                              |
-| **Fantasma**    | Transparente, borde `linea.fuerte`; hover borde+texto Verdemar | Acción secundaria                                                   |
-| **Silencioso**  | Solo texto Verdemar, subrayado al hover                        | Acción terciaria                                                    |
-| **Destructivo** | Fondo Grana, texto blanco                                      | Irreversible. **Confirmación obligatoria. Nunca junto al primario** |
+| Tipo | Estilo | Cuándo |
+|---|---|---|
+| **Primario** | Fondo Turquesa, texto blanco | La acción principal. **Uno por vista** |
+| **Fantasma** | Transparente, borde `linea.fuerte`; hover borde+texto Verdemar | Acción secundaria |
+| **Silencioso** | Solo texto Verdemar, subrayado al hover | Acción terciaria |
+| **Destructivo** | Fondo Grana, texto blanco | Irreversible. **Confirmación obligatoria. Nunca junto al primario** |
 
 Especificación: radio `6px`, padding `10×24`, altura M 40 px / S 32 px, peso 500. Estados: hover aclara el fondo un paso (`#02A4BA`), active oscurece (`#017486`), disabled `superficie` + texto terciario + `not-allowed`, cargando con **puntos de espera** (§10) y ancho bloqueado. Icono opcional a la izquierda, 16 px, `gap s200`, mismo color. La etiqueta es un **verbo que dice exactamente lo que ocurre** y conserva el nombre en todo el flujo. Nunca versales.
 
@@ -434,13 +432,13 @@ Cifra en Mono tabular `dato.xl`, etiqueta en `type.etiqueta` terciario debajo. E
 
 Estos componentes viven **dentro de una escena o experiencia píxel**. No sustituyen los componentes corporativos de §9.1–9.5.
 
-| Componente               | Construcción                                                                                     | Regla de uso                                                               |
-| ------------------------ | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| **Caja de diálogo**      | superficie Basalto o Bronce oscuro, borde 1 px Noche, texto Pixelify, hablante en color aprobado | una voz por bloque; lectura completa disponible antes o después del tecleo |
-| **Retrato**              | rejilla `24×24` o módulo `48×48`, silueta clara, mismo sentido de luz que la escena              | acompaña a una conversación; no sustituye el nombre del hablante           |
-| **Ranura de inventario** | objeto `12×12`, marco recto `linea-fuerte`, nombre visible en foco o selección                   | estado seleccionado = borde Turquesa + etiqueta; no solo cambio de color   |
-| **HUD breve**            | números en Geist Mono o Pixelify, icono `12×12`, fondo liso                                      | solo estado necesario durante la acción; nada ornamental                   |
-| **Logro / insignia**     | rejilla `12×12` o `24×24`, rareza escrita y tratamiento §3.6                                     | el halo legendario sigue siendo el único glow                              |
+| Componente | Construcción | Regla de uso |
+|---|---|---|
+| **Caja de diálogo** | superficie Basalto o Bronce oscuro, borde 1 px Noche, texto Pixelify, hablante en color aprobado | una voz por bloque; lectura completa disponible antes o después del tecleo |
+| **Retrato** | rejilla `24×24` o módulo `48×48`, silueta clara, mismo sentido de luz que la escena | acompaña a una conversación; no sustituye el nombre del hablante |
+| **Ranura de inventario** | objeto `12×12`, marco recto `linea-fuerte`, nombre visible en foco o selección | estado seleccionado = borde Turquesa + etiqueta; no solo cambio de color |
+| **HUD breve** | números en Geist Mono o Pixelify, icono `12×12`, fondo liso | solo estado necesario durante la acción; nada ornamental |
+| **Logro / insignia** | rejilla `12×12` o `24×24`, rareza escrita y tratamiento §3.6 | el halo legendario sigue siendo el único glow |
 
 El foco del sistema (`2 px` Turquesa, offset `2 px`) permanece vectorial y visible incluso alrededor de un componente píxel. La accesibilidad tiene precedencia sobre la fidelidad histórica.
 
@@ -448,21 +446,21 @@ El foco del sistema (`2 px` Turquesa, offset `2 px`) permanece vectorial y visib
 
 ## 10. Movimiento y animación [CANON — decisión de dirección]
 
-Principios (de _Curiosity_): nada se mueve donde el usuario actúa; el contenido se revela donde el usuario descubre; **un solo momento orquestado por pieza**; con `prefers-reduced-motion` todo aparece al instante (se conserva la opacidad, se elimina el desplazamiento); el movimiento no bloquea el scroll. Curva por defecto `cubic-bezier(.2,0,0,1)`.
+Principios (de *Curiosity*): nada se mueve donde el usuario actúa; el contenido se revela donde el usuario descubre; **un solo momento orquestado por pieza**; con `prefers-reduced-motion` todo aparece al instante (se conserva la opacidad, se elimina el desplazamiento); el movimiento no bloquea el scroll. Curva por defecto `cubic-bezier(.2,0,0,1)`.
 
 ### 10.1 El catálogo — nueve animaciones, y ninguna más
 
-| #      | Animación                                                                                                                            | Especificación                                                               | Dónde sí                                                            | Dónde no                                             |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------- |
-| **01** | **Tecleo** — la bandera [CANON]: texto letra a letra con cursor de bloque, herencia de las aventuras gráficas y terminales de los 90 | `22 ms/carácter`, lineal; cursor de bloque en Ámbar                          | Titulares hero, revelaciones de lore (nivel II), cargas de producto | Cuerpo largo, interfaz funcional, nivel III, impreso |
-| 02     | Revelado por avance                                                                                                                  | `320 ms` · ciclo; opacidad + 8 px de ascenso, al entrar en viewport, una vez | Contenido al descubrirse                                            | Controles; re-disparo en scroll                      |
-| 03     | Barrido de señal                                                                                                                     | `8 s` lineal infinito; banda Turquesa recorriendo la binaria                 | **Máximo uno por vista** — la dosis cyber ambiental                 | Varios a la vez; sobre texto de lectura              |
-| 04     | Elevación                                                                                                                            | `120 ms` · ciclo; sube un escalón de superficie, **sin desplazamiento**      | Hover de superficies                                                | Cualquier movimiento de posición                     |
-| 05     | Pulso legendario                                                                                                                     | `2.4 s` ease-in-out **× 2**; el halo respira                                 | Solo el momento de obtención; después, halo estático                | Loop ambiental; otros elementos                      |
-| 06     | Fase de progreso                                                                                                                     | `560 ms`/fase · steps(1); el indicador avanza por fases lunares              | Cargas largas, progreso de secuencia real                           | Esperas < 2 s                                        |
-| 07     | Puntos de espera                                                                                                                     | `900 ms` · steps(3); `Cargando···`                                           | Botones cargando                                                    | Texto corriente                                      |
-| 08     | Cursor de bloque                                                                                                                     | `1 s` · steps(2)                                                             | Acompañando al tecleo o a un campo activo                           | Suelto, decorativo                                   |
-| 09     | Momento orquestado                                                                                                                   | Tecleo del titular + revelados escalonados a `80 ms`                         | La entrada de la pieza — uno por pieza                              | Repetido; en cada sección                            |
+| # | Animación | Especificación | Dónde sí | Dónde no |
+|---|---|---|---|---|
+| **01** | **Tecleo** — la bandera [CANON]: texto letra a letra con cursor de bloque, herencia de las aventuras gráficas y terminales de los 90 | `22 ms/carácter`, lineal; cursor de bloque en Ámbar | Titulares hero, revelaciones de lore (nivel II), cargas de producto | Cuerpo largo, interfaz funcional, nivel III, impreso |
+| 02 | Revelado por avance | `320 ms` · ciclo; opacidad + 8 px de ascenso, al entrar en viewport, una vez | Contenido al descubrirse | Controles; re-disparo en scroll |
+| 03 | Barrido de señal | `8 s` lineal infinito; banda Turquesa recorriendo la binaria | **Máximo uno por vista** — la dosis cyber ambiental | Varios a la vez; sobre texto de lectura |
+| 04 | Elevación | `120 ms` · ciclo; sube un escalón de superficie, **sin desplazamiento** | Hover de superficies | Cualquier movimiento de posición |
+| 05 | Pulso legendario | `2.4 s` ease-in-out **× 2**; el halo respira | Solo el momento de obtención; después, halo estático | Loop ambiental; otros elementos |
+| 06 | Fase de progreso | `560 ms`/fase · steps(1); el indicador avanza por fases lunares | Cargas largas, progreso de secuencia real | Esperas < 2 s |
+| 07 | Puntos de espera | `900 ms` · steps(3); `Cargando···` | Botones cargando | Texto corriente |
+| 08 | Cursor de bloque | `1 s` · steps(2) | Acompañando al tecleo o a un campo activo | Suelto, decorativo |
+| 09 | Momento orquestado | Tecleo del titular + revelados escalonados a `80 ms` | La entrada de la pieza — uno por pieza | Repetido; en cada sección |
 
 ### 10.2 Prohibido siempre
 
@@ -480,7 +478,7 @@ La animación interna de un sprite es contenido del registro píxel, no una déc
 - **Cuatro fotogramas:** ciclo de marcha o acción sencilla. Orden recomendado para locomoción: contacto · paso · contacto opuesto · paso opuesto.
 - **Cadencia:** usa duraciones ya existentes: `120 ms` por fotograma para acciones rápidas, `200 ms` para locomoción y gestos, `320 ms` para revelaciones deliberadas. No se inventa una duración por sprite.
 - **Pose clave primero:** se dibujan las poses de mayor lectura antes de los intermedios. Si un ciclo no se entiende con las poses clave, añadir fotogramas no lo arregla.
-- **Sin interpolación:** no hay _tweening_, desenfoque de movimiento, rotación suavizada ni desplazamiento subpíxel. El movimiento ocurre en saltos enteros y las poses cargan con la sensación de peso.
+- **Sin interpolación:** no hay *tweening*, desenfoque de movimiento, rotación suavizada ni desplazamiento subpíxel. El movimiento ocurre en saltos enteros y las poses cargan con la sensación de peso.
 - **Volumen estable:** cabeza, torso y masa principal conservan tamaño. El contorno solo cambia cuando la acción lo exige; el temblor involuntario invalida el ciclo.
 - **Loops con causa:** marcha mientras el personaje camina, máquina mientras opera, señal mientras comunica. Un personaje inmóvil no necesita respirar eternamente; la quietud también es una decisión.
 - **Movimiento reducido:** se muestra la pose de mayor información, se completan estados funcionales al instante y se detienen ciclos decorativos.
@@ -491,11 +489,11 @@ La rotación de paleta de §3.7.3 y los ciclos de sprite no pueden competir en l
 
 ## 11. Identidad verbal
 
-**Voz [CANON]:** cultivada, llana y clara; precisión con un toque de fantasía; sin tecnicismos hasta alcanzar al receptor. Líneas: _Precision meets playfulness_ · _Building Bridges, Not Walls_ · _Innovation with a human touch_.
+**Voz [CANON]:** cultivada, llana y clara; precisión con un toque de fantasía; sin tecnicismos hasta alcanzar al receptor. Líneas: *Precision meets playfulness* · *Building Bridges, Not Walls* · *Innovation with a human touch*.
 
 **Tres niveles [CANON] — REGLA DURA:** cada pieza declara su nivel y lo mantiene. **I Coloquial** (comunidad, jerga tech/web3): redes, producto, interfaz. **II Literario** (lore): home, portadas, evento, campañas. **III Técnico** (fundamento): documentación, propuesta, contrato. Un contrato con lore no se firma; una home con KPIs no convoca.
 
-**Mensajes clave [CANON]** (se eligen por espacio, no se reescriben): 15 palabras _Empower and transform organizational culture with engaging experiences that foster fun and drive impactful social change_ · 11 _Foster organizational transformation and social change through engaging, fun experiences_ · 8 _Cultivate fun, transformative experiences for organizational and social change_ · 7 _Create fun, drive social change in organizations_.
+**Mensajes clave [CANON]** (se eligen por espacio, no se reescriben): 15 palabras *Empower and transform organizational culture with engaging experiences that foster fun and drive impactful social change* · 11 *Foster organizational transformation and social change through engaging, fun experiences* · 8 *Cultivate fun, transformative experiences for organizational and social change* · 7 *Create fun, drive social change in organizations*.
 
 **Léxico interno [CANON]:** Oráculos · Numinianos · Dark Councils · Public Domain Day.
 
@@ -505,7 +503,7 @@ La rotación de paleta de §3.7.3 y los ciclos de sprite no pueden competir en l
 
 ---
 
-## 12. Accesibilidad · _Equable_
+## 12. Accesibilidad · *Equable*
 
 **WCAG 2.2 AA** (EN 301 549, obligación legal UE). Contraste 4.5:1 / 3:1. Foco visible siempre. Teclado en orden lógico. Nada solo por color — rareza incluida. Táctil 44×44. Alternativa textual en imagen informativa. `prefers-reduced-motion` respetado (§10). En evento: señalética legible a 10 m sin depender del color; instrucciones también en nivel I.
 
@@ -536,13 +534,13 @@ La rotación de paleta de §3.7.3 y los ciclos de sprite no pueden competir en l
 
 ### 13.2 Entregables mínimos [EXTENSIÓN — validar]
 
-| Entregable           | Debe contener                                                                                 |
-| -------------------- | --------------------------------------------------------------------------------------------- |
-| **Maestro editable** | modo indexado, paleta Khepri-16 ordenada, capas o grupos nombrados, fotogramas etiquetados    |
-| **PNG individual**   | dimensiones nativas, transparencia binaria, sin suavizado ni reescalado                       |
-| **Sprite sheet**     | celdas uniformes, mismo origen, secuencia documentada, sin margen accidental entre fotogramas |
-| **Ficha de activo**  | función, rejilla, estados, rampa, duración, punto de anclaje, texto alternativo si aplica     |
-| **Captura de QA**    | vista ×1 y escala entera, fondo real, estado de foco y variante de movimiento reducido        |
+| Entregable | Debe contener |
+|---|---|
+| **Maestro editable** | modo indexado, paleta Khepri-16 ordenada, capas o grupos nombrados, fotogramas etiquetados |
+| **PNG individual** | dimensiones nativas, transparencia binaria, sin suavizado ni reescalado |
+| **Sprite sheet** | celdas uniformes, mismo origen, secuencia documentada, sin margen accidental entre fotogramas |
+| **Ficha de activo** | función, rejilla, estados, rampa, duración, punto de anclaje, texto alternativo si aplica |
+| **Captura de QA** | vista ×1 y escala entera, fondo real, estado de foco y variante de movimiento reducido |
 
 **Criterio de salida:** el activo se aprueba primero a ×1. La ampliación solo demuestra; nunca rescata.
 
@@ -550,25 +548,25 @@ La rotación de paleta de §3.7.3 y los ciclos de sprite no pueden competir en l
 
 ## 14. Referencias y créditos
 
-| Recurso                                                        | Autoría                     | Licencia                 | Enlace · distribución                                                                                                                                 | Uso en el sistema                                                                        |
-| -------------------------------------------------------------- | --------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| **Geist · Geist Mono**                                         | Vercel                      | SIL OFL 1.1              | [vercel.com/font](https://vercel.com/font) · npm `geist` · autoalojado en `/assets/fonts/`                                                            | Tipografía única (§4)                                                                    |
-| **Phosphor Icons**                                             | Helena Zhang · Tobias Fried | MIT                      | [phosphoricons.com](https://phosphoricons.com) · [github.com/phosphor-icons/core](https://github.com/phosphor-icons/core) · npm `@phosphor-icons/web` | Iconografía única (§7)                                                                   |
-| **Pixelify Sans**                                              | Stefie Justprince           | SIL OFL 1.1              | [Google Fonts](https://fonts.google.com/specimen/Pixelify+Sans) · autoalojada en `/assets/fonts/`                                                     | Tipografía del registro píxel (§4.5)                                                     |
-| **Monkey Island · Day of the Tentacle · La Abadía del Crimen** | LucasArts · Opera Soft      | Herencia cultural citada | —                                                                                                                                                     | Referencia del registro píxel (§2.4); no se usan activos                                 |
-| **W3C Design Tokens (DTCG)**                                   | W3C Community Group         | Especificación abierta   | [design-tokens.github.io/community-group/format](https://design-tokens.github.io/community-group/format/)                                             | Formato de tokens (§19.3)                                                                |
-| **WCAG 2.2**                                                   | W3C                         | Norma (EN 301 549)       | [w3.org/TR/WCAG22](https://www.w3.org/TR/WCAG22/)                                                                                                     | Suelo de accesibilidad (§12)                                                             |
-| **Octalysis**                                                  | Yu-kai Chou                 | Marco conductual         | [yukaichou.com](https://yukaichou.com/gamification-examples/octalysis-complete-gamification-framework/)                                               | Diseño conductual de las propuestas                                                      |
-| **8 Bit & ‘8 Bitish’ Graphics — Outside the Box**              | Mark Ferrari · GDC 2016     | Referencia profesional   | [gdcvault.com/play/1023586](https://www.gdcvault.com/play/1023586/8-Bit-8-Bitish-Graphics)                                                            | Clústeres, paleta limitada y cambio de paleta; referencia de producción, no canon visual |
-| **ScummVM · Understanding the graphics settings**              | Proyecto ScummVM            | GPL / documentación      | [docs.scummvm.org](https://docs.scummvm.org/en/latest/advanced_topics/understand_graphics.html)                                                       | Escalado de gráficos de aventura, nearest-neighbor y preservación del píxel              |
-| **SDL · Integer scale**                                        | Simple DirectMedia Layer    | zlib                     | [wiki.libsdl.org](https://wiki.libsdl.org/SDL2/SDL_RenderSetIntegerScale)                                                                             | Referencia técnica para escalado entero                                                  |
-| **Aseprite · Indexed color y sprite sheets**                   | Igara Studio                | Documentación oficial    | [aseprite.org/docs](https://www.aseprite.org/docs/color-mode/)                                                                                        | Flujo indexado, paleta cerrada y exportación de hojas de sprites                         |
-| **Rueda de Plutchik · Arquetipos de Jung**                     | —                           | Fundamento teórico       | —                                                                                                                                                     | Emoción y personalidad del Brand & Culture                                               |
-| **Brand & Culture Numinia v0.1.2**                             | Numen Games                 | Interno                  | `2026_03_20-Numinia_Brand_and_Culture-v0.1.2.pdf`                                                                                                     | Fuente de la identidad                                                                   |
+| Recurso | Autoría | Licencia | Enlace · distribución | Uso en el sistema |
+|---|---|---|---|---|
+| **Geist · Geist Mono** | Vercel | SIL OFL 1.1 | [vercel.com/font](https://vercel.com/font) · npm `geist` · autoalojado en `/assets/fonts/` | Tipografía única (§4) |
+| **Phosphor Icons** | Helena Zhang · Tobias Fried | MIT | [phosphoricons.com](https://phosphoricons.com) · [github.com/phosphor-icons/core](https://github.com/phosphor-icons/core) · npm `@phosphor-icons/web` | Iconografía única (§7) |
+| **Pixelify Sans** | Stefie Justprince | SIL OFL 1.1 | [Google Fonts](https://fonts.google.com/specimen/Pixelify+Sans) · autoalojada en `/assets/fonts/` | Tipografía del registro píxel (§4.5) |
+| **Monkey Island · Day of the Tentacle · La Abadía del Crimen** | LucasArts · Opera Soft | Herencia cultural citada | — | Referencia del registro píxel (§2.4); no se usan activos |
+| **W3C Design Tokens (DTCG)** | W3C Community Group | Especificación abierta | [design-tokens.github.io/community-group/format](https://design-tokens.github.io/community-group/format/) | Formato de tokens (§19.3) |
+| **WCAG 2.2** | W3C | Norma (EN 301 549) | [w3.org/TR/WCAG22](https://www.w3.org/TR/WCAG22/) | Suelo de accesibilidad (§12) |
+| **Octalysis** | Yu-kai Chou | Marco conductual | [yukaichou.com](https://yukaichou.com/gamification-examples/octalysis-complete-gamification-framework/) | Diseño conductual de las propuestas |
+| **8 Bit & ‘8 Bitish’ Graphics — Outside the Box** | Mark Ferrari · GDC 2016 | Referencia profesional | [gdcvault.com/play/1023586](https://www.gdcvault.com/play/1023586/8-Bit-8-Bitish-Graphics) | Clústeres, paleta limitada y cambio de paleta; referencia de producción, no canon visual |
+| **ScummVM · Understanding the graphics settings** | Proyecto ScummVM | GPL / documentación | [docs.scummvm.org](https://docs.scummvm.org/en/latest/advanced_topics/understand_graphics.html) | Escalado de gráficos de aventura, nearest-neighbor y preservación del píxel |
+| **SDL · Integer scale** | Simple DirectMedia Layer | zlib | [wiki.libsdl.org](https://wiki.libsdl.org/SDL2/SDL_RenderSetIntegerScale) | Referencia técnica para escalado entero |
+| **Aseprite · Indexed color y sprite sheets** | Igara Studio | Documentación oficial | [aseprite.org/docs](https://www.aseprite.org/docs/color-mode/) | Flujo indexado, paleta cerrada y exportación de hojas de sprites |
+| **Rueda de Plutchik · Arquetipos de Jung** | — | Fundamento teórico | — | Emoción y personalidad del Brand & Culture |
+| **Brand & Culture Numinia v0.1.2** | Numen Games | Interno | `2026_03_20-Numinia_Brand_and_Culture-v0.1.2.pdf` | Fuente de la identidad |
 
 ---
 
-## 15. Licencia · _Legal by Design_ [DERIVADO]
+## 15. Licencia · *Legal by Design* [DERIVADO]
 
 **CC0 1.0 Universal** para todo el sistema. **Excepción:** logotipo, isotipo Khepri, «Numen Games» y «Numinia» son identificadores de origen y quedan fuera. Se puede copiar el sistema; no se puede decir que se es Numen. Lo liberado usa formatos abiertos y licencias libres (OFL, MIT). Public Domain Day es el momento de liberar lo acumulado.
 
@@ -588,14 +586,14 @@ Semver: MAYOR ruptura/dirección · MENOR adiciones · PARCHE correcciones. Jera
 
 ## 18. Registro de versiones
 
-| Versión | Fecha      | Cambios                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 3.3.0   | 2026-08-04 | **Guía detallada de producción de Pixel Art** [EXTENSIÓN — validar], integrada en las secciones existentes: gramática visual, silueta, clústeres, contorno selectivo, rampas funcionales, tramado, cambio de paleta limitado al catálogo, composición y profundidad, rejilla interna, componentes de escena, animación de sprites con duraciones canónicas, pipeline, entregables, exportación indexada y QA a ×1. Referencias profesionales y técnicas añadidas sin convertirlas en canon visual.                                                                                     |
-| 3.2.0   | 2026-08-03 | **Registro píxel** [CANON]: la herencia de las aventuras gráficas como registro de renderizado del nivel II. Paleta indexada **Khepri-16** (cero hexes nuevos, dominancia neutral ≥60 %, subconjunto de diálogo verificado — Grana excluida). Tipografía píxel **Pixelify Sans** autoalojada (las fuentes SCUMM son propietarias: herencia citada, no imitada). **Sprite canónico de Khepri** 24 px y moneda 12 px como excepción cerrada al no-redibujo. Reglas de rejilla, escalado entero, contorno, tramado y entrada/salida completa del registro. Demostrado en vivo en la guía. |
-| 3.1.0   | 2026-08-03 | Dosis de dirección fijada: **Solarpunk 40 · Steampunk 40 · Cyberpunk 20**, con test de mezcla. **Catálogo de animación** (9 piezas; el Tecleo de aventuras gráficas como bandera) con prohibiciones. **Componentes**: botones (4 tipos + estados), píldoras, campo, tarjeta, KPI. Cómo sí / cómo no de marca, texturas e iconos. Sección de **Referencias y créditos**. Guía web completa con todo demostrado en vivo y autoalojado. Tokens: duraciones de animación añadidas.                                                                                                         |
-| 3.0.0   | 2026-08-03 | Phosphor sustituye a los iconos a medida (ruptura). Escala de rareza. Materia (normal map + derivados CSS). Activos reales normalizados; isotipo embebido. Geist=Vercel confirmado. Hoja de ruta.                                                                                                                                                                                                                                                                                                                                                                                      |
-| 2.0.0   | 2026-08-03 | Reescritura desde el Brand & Culture: paleta canónica, Geist, niveles de lengua, CC0, procedencias.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| 1.0.0   | 2026-08-03 | «La Carta». Obsoleta: identidad inventada previa a la lectura del Brand & Culture.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Versión | Fecha | Cambios |
+|---|---|---|
+| 3.3.0 | 2026-08-04 | **Guía detallada de producción de Pixel Art** [EXTENSIÓN — validar], integrada en las secciones existentes: gramática visual, silueta, clústeres, contorno selectivo, rampas funcionales, tramado, cambio de paleta limitado al catálogo, composición y profundidad, rejilla interna, componentes de escena, animación de sprites con duraciones canónicas, pipeline, entregables, exportación indexada y QA a ×1. Referencias profesionales y técnicas añadidas sin convertirlas en canon visual. |
+| 3.2.0 | 2026-08-03 | **Registro píxel** [CANON]: la herencia de las aventuras gráficas como registro de renderizado del nivel II. Paleta indexada **Khepri-16** (cero hexes nuevos, dominancia neutral ≥60 %, subconjunto de diálogo verificado — Grana excluida). Tipografía píxel **Pixelify Sans** autoalojada (las fuentes SCUMM son propietarias: herencia citada, no imitada). **Sprite canónico de Khepri** 24 px y moneda 12 px como excepción cerrada al no-redibujo. Reglas de rejilla, escalado entero, contorno, tramado y entrada/salida completa del registro. Demostrado en vivo en la guía. |
+| 3.1.0 | 2026-08-03 | Dosis de dirección fijada: **Solarpunk 40 · Steampunk 40 · Cyberpunk 20**, con test de mezcla. **Catálogo de animación** (9 piezas; el Tecleo de aventuras gráficas como bandera) con prohibiciones. **Componentes**: botones (4 tipos + estados), píldoras, campo, tarjeta, KPI. Cómo sí / cómo no de marca, texturas e iconos. Sección de **Referencias y créditos**. Guía web completa con todo demostrado en vivo y autoalojado. Tokens: duraciones de animación añadidas. |
+| 3.0.0 | 2026-08-03 | Phosphor sustituye a los iconos a medida (ruptura). Escala de rareza. Materia (normal map + derivados CSS). Activos reales normalizados; isotipo embebido. Geist=Vercel confirmado. Hoja de ruta. |
+| 2.0.0 | 2026-08-03 | Reescritura desde el Brand & Culture: paleta canónica, Geist, niveles de lengua, CC0, procedencias. |
+| 1.0.0 | 2026-08-03 | «La Carta». Obsoleta: identidad inventada previa a la lectura del Brand & Culture. |
 
 ---
 
@@ -624,157 +622,78 @@ Un valor fuera de §19.3 NO DEBE inventarse.
   "color": {
     "$type": "color",
     "marca": {
-      "verdemar": { "$value": "#A6DAD5" },
-      "turquesa": { "$value": "#018EA1" },
-      "ambar": { "$value": "#EFA517" },
-      "arena": { "$value": "#F9EBDC" },
-      "coral": { "$value": "#F35059" },
-      "grana": { "$value": "#D33440" }
+      "verdemar": { "$value": "#A6DAD5" }, "turquesa": { "$value": "#018EA1" },
+      "ambar": { "$value": "#EFA517" }, "arena": { "$value": "#F9EBDC" },
+      "coral": { "$value": "#F35059" }, "grana": { "$value": "#D33440" }
     },
     "texto-sobre-claro": {
-      "turquesa": { "$value": "#016E7D" },
-      "grana": { "$value": "#B02330" },
-      "ambar": { "$value": "#7A5100" }
+      "turquesa": { "$value": "#016E7D" }, "grana": { "$value": "#B02330" }, "ambar": { "$value": "#7A5100" }
     },
     "nocturno": {
-      "fondo-base": { "$value": "#14110F" },
-      "fondo-superficie": { "$value": "#1E1A17" },
-      "fondo-elevada": { "$value": "#292420" },
-      "linea-tenue": { "$value": "#241F1B" },
-      "linea-fuerte": { "$value": "#3A332D" },
-      "texto-primario": { "$value": "#F9EBDC" },
-      "texto-secundario": { "$value": "#C4B5A6" },
-      "texto-terciario": { "$value": "#8A7D72" }
+      "fondo-base": { "$value": "#14110F" }, "fondo-superficie": { "$value": "#1E1A17" },
+      "fondo-elevada": { "$value": "#292420" }, "linea-tenue": { "$value": "#241F1B" },
+      "linea-fuerte": { "$value": "#3A332D" }, "texto-primario": { "$value": "#F9EBDC" },
+      "texto-secundario": { "$value": "#C4B5A6" }, "texto-terciario": { "$value": "#8A7D72" }
     },
     "diurno": {
-      "fondo-base": { "$value": "#F9EBDC" },
-      "fondo-superficie": { "$value": "#FDF6EE" },
-      "fondo-tinte": { "$value": "#E4F2F0" },
-      "linea-tenue": { "$value": "#E2D3C2" },
-      "texto-primario": { "$value": "#14110F" },
-      "texto-secundario": { "$value": "#4A423B" },
+      "fondo-base": { "$value": "#F9EBDC" }, "fondo-superficie": { "$value": "#FDF6EE" },
+      "fondo-tinte": { "$value": "#E4F2F0" }, "linea-tenue": { "$value": "#E2D3C2" },
+      "texto-primario": { "$value": "#14110F" }, "texto-secundario": { "$value": "#4A423B" },
       "texto-terciario": { "$value": "#6E6259" }
     },
     "rareza": {
-      "pobre": {
-        "$value": "#F9EBDC",
-        "$extensions": { "numen": { "diurnoTexto": "#6E6259", "alias": "arena" } }
-      },
-      "comun": {
-        "$value": "#8A7D72",
-        "$extensions": { "numen": { "diurnoTexto": "#5A4F45", "alias": "ceniza" } }
-      },
-      "poco-comun": {
-        "$value": "#8FC46B",
-        "$extensions": { "numen": { "diurnoTexto": "#356C19" } }
-      },
-      "raro": { "$value": "#5D9BD6", "$extensions": { "numen": { "diurnoTexto": "#2E6BB0" } } },
-      "epico": { "$value": "#A98BE0", "$extensions": { "numen": { "diurnoTexto": "#6B44B8" } } },
-      "legendario": {
-        "$value": "#EFA517",
-        "$extensions": {
-          "numen": {
-            "diurnoTexto": "#7A5100",
-            "alias": "ambar",
-            "halo": "0 0 12px rgba(239,165,23,.25)"
-          }
-        }
-      }
+      "pobre":      { "$value": "#F9EBDC", "$extensions": { "numen": { "diurnoTexto": "#6E6259", "alias": "arena" } } },
+      "comun":      { "$value": "#8A7D72", "$extensions": { "numen": { "diurnoTexto": "#5A4F45", "alias": "ceniza" } } },
+      "poco-comun": { "$value": "#8FC46B", "$extensions": { "numen": { "diurnoTexto": "#356C19" } } },
+      "raro":       { "$value": "#5D9BD6", "$extensions": { "numen": { "diurnoTexto": "#2E6BB0" } } },
+      "epico":      { "$value": "#A98BE0", "$extensions": { "numen": { "diurnoTexto": "#6B44B8" } } },
+      "legendario": { "$value": "#EFA517", "$extensions": { "numen": { "diurnoTexto": "#7A5100", "alias": "ambar", "halo": "0 0 12px rgba(239,165,23,.25)" } } }
     }
   },
   "fontFamily": {
     "$type": "fontFamily",
     "sans": { "$value": ["Geist", "Inter", "Aptos", "Segoe UI", "Arial", "sans-serif"] },
     "mono": { "$value": ["Geist Mono", "Consolas", "Courier New", "monospace"] },
-    "pixel": {
-      "$value": ["Pixelify Sans", "Geist", "sans-serif"],
-      "$description": "Solo registro píxel: diálogo, display de escena, HUD"
-    }
+    "pixel": { "$value": ["Pixelify Sans", "Geist", "sans-serif"], "$description": "Solo registro píxel: diálogo, display de escena, HUD" }
   },
   "fontSize": {
     "$type": "dimension",
-    "display-xl": { "$value": "4.300rem" },
-    "display-l": { "$value": "3.583rem" },
-    "display-m": { "$value": "2.986rem" },
-    "titulo-l": { "$value": "2.488rem" },
-    "titulo-m": { "$value": "2.074rem" },
-    "titulo-s": { "$value": "1.728rem" },
-    "cuerpo-l": { "$value": "1.440rem" },
-    "cuerpo-m": { "$value": "1rem" },
-    "cuerpo-s": { "$value": "0.875rem" },
-    "etiqueta": { "$value": "0.750rem" }
+    "display-xl": { "$value": "4.300rem" }, "display-l": { "$value": "3.583rem" },
+    "display-m": { "$value": "2.986rem" }, "titulo-l": { "$value": "2.488rem" },
+    "titulo-m": { "$value": "2.074rem" }, "titulo-s": { "$value": "1.728rem" },
+    "cuerpo-l": { "$value": "1.440rem" }, "cuerpo-m": { "$value": "1rem" },
+    "cuerpo-s": { "$value": "0.875rem" }, "etiqueta": { "$value": "0.750rem" }
   },
   "space": {
     "$type": "dimension",
-    "100": { "$value": "4px" },
-    "200": { "$value": "8px" },
-    "300": { "$value": "12px" },
-    "400": { "$value": "16px" },
-    "500": { "$value": "24px" },
-    "600": { "$value": "32px" },
-    "700": { "$value": "48px" },
-    "800": { "$value": "64px" },
-    "900": { "$value": "96px" },
+    "100": { "$value": "4px" }, "200": { "$value": "8px" }, "300": { "$value": "12px" },
+    "400": { "$value": "16px" }, "500": { "$value": "24px" }, "600": { "$value": "32px" },
+    "700": { "$value": "48px" }, "800": { "$value": "64px" }, "900": { "$value": "96px" },
     "1000": { "$value": "128px" }
   },
-  "borderRadius": {
-    "$type": "dimension",
-    "0": { "$value": "0px" },
-    "150": { "$value": "6px" },
-    "completo": { "$value": "9999px" }
-  },
+  "borderRadius": { "$type": "dimension", "0": { "$value": "0px" }, "150": { "$value": "6px" }, "completo": { "$value": "9999px" } },
   "duration": {
     "$type": "duration",
-    "instante": { "$value": "120ms" },
-    "corto": { "$value": "200ms" },
-    "medio": { "$value": "320ms" },
-    "largo": { "$value": "560ms" },
-    "tecleo-caracter": { "$value": "22ms" },
-    "cursor": { "$value": "1000ms" },
-    "puntos-espera": { "$value": "900ms" },
-    "pulso": { "$value": "2400ms" },
-    "fase-lunar": { "$value": "560ms" },
-    "barrido": { "$value": "8000ms" },
+    "instante": { "$value": "120ms" }, "corto": { "$value": "200ms" },
+    "medio": { "$value": "320ms" }, "largo": { "$value": "560ms" },
+    "tecleo-caracter": { "$value": "22ms" }, "cursor": { "$value": "1000ms" },
+    "puntos-espera": { "$value": "900ms" }, "pulso": { "$value": "2400ms" },
+    "fase-lunar": { "$value": "560ms" }, "barrido": { "$value": "8000ms" },
     "escalonado": { "$value": "80ms" }
   },
   "cubicBezier": { "$type": "cubicBezier", "ciclo": { "$value": [0.2, 0, 0, 1] } },
   "asset": {
-    "logo-khepri": { "$value": "Khepri_Logo.svg" },
-    "logo-khepri-ng": { "$value": "Khepri_NG_Logo.svg" },
-    "logo-ng": { "$value": "NG_Logo.svg" },
-    "word-horizontal": { "$value": "Numen_Games_Horizontal_Word.svg" },
-    "word-vertical": { "$value": "Numen_Games_Vertical_Word.svg" },
-    "word-numen": { "$value": "Numen_Word.svg" },
+    "logo-khepri": { "$value": "Khepri_Logo.svg" }, "logo-khepri-ng": { "$value": "Khepri_NG_Logo.svg" },
+    "logo-ng": { "$value": "NG_Logo.svg" }, "word-horizontal": { "$value": "Numen_Games_Horizontal_Word.svg" },
+    "word-vertical": { "$value": "Numen_Games_Vertical_Word.svg" }, "word-numen": { "$value": "Numen_Word.svg" },
     "word-numinia": { "$value": "Numinia_Word.svg" },
-    "fuente-sans": { "$value": "fonts/Geist-Variable.woff2" },
-    "fuente-mono": { "$value": "fonts/GeistMono-Variable.woff2" },
-    "textura-normal-3d": { "$value": "textura-circuito-normal.png" },
-    "textura-css": { "$value": "textura-relieve-nocturno-768.webp" },
-    "textura-hq": { "$value": "textura-relieve-nocturno.png" },
-    "textura-alpha": { "$value": "textura-relieve-alpha.webp" }
+    "fuente-sans": { "$value": "fonts/Geist-Variable.woff2" }, "fuente-mono": { "$value": "fonts/GeistMono-Variable.woff2" },
+    "textura-normal-3d": { "$value": "textura-circuito-normal.png" }, "textura-css": { "$value": "textura-relieve-nocturno-768.webp" },
+    "textura-hq": { "$value": "textura-relieve-nocturno.png" }, "textura-alpha": { "$value": "textura-relieve-alpha.webp" }
   },
   "pixel": {
     "$description": "Registro píxel y guía de producción · §2.4, §3.7, §4.5, §5.1, §9.6, §10.4, §13.1",
-    "paleta-khepri16": {
-      "$value": [
-        "#14110F",
-        "#1E1A17",
-        "#292420",
-        "#3A332D",
-        "#8A7D72",
-        "#C4B5A6",
-        "#F9EBDC",
-        "#A6DAD5",
-        "#018EA1",
-        "#016E7D",
-        "#EFA517",
-        "#7A5100",
-        "#F35059",
-        "#D33440",
-        "#B02330",
-        "#8FC46B"
-      ]
-    },
+    "paleta-khepri16": { "$value": ["#14110F","#1E1A17","#292420","#3A332D","#8A7D72","#C4B5A6","#F9EBDC","#A6DAD5","#018EA1","#016E7D","#EFA517","#7A5100","#F35059","#D33440","#B02330","#8FC46B"] },
     "modo-color": { "$value": "indexed" },
     "dominancia-neutral-min": { "$value": "60%" },
     "dialogo-excluidos": { "$value": ["#D33440"] },
@@ -794,8 +713,7 @@ Un valor fuera de §19.3 NO DEBE inventarse.
     "fuente": { "$value": "fonts/PixelifySans-Variable.woff2" }
   },
   "icon": {
-    "sistema": { "$value": "phosphor" },
-    "defecto": { "$value": "regular" },
+    "sistema": { "$value": "phosphor" }, "defecto": { "$value": "regular" },
     "activo": { "$value": "fill" },
     "pequeno": { "$value": "bold", "$extensions": { "numen": { "umbral": "<16px" } } },
     "display": { "$value": "light", "$extensions": { "numen": { "umbral": ">=48px" } } },
@@ -817,7 +735,7 @@ Un valor fuera de §19.3 NO DEBE inventarse.
 - [ ] Botones: un primario por vista; destructivo con confirmación y lejos del primario; etiquetas = verbos, sin versales.
 - [ ] Contrastes AA; nada solo por color; medida ≤90; secuencias con fases lunares solo si hay secuencia real; cierre con Khepri en pieza mayor; nombre de archivo §11.
 - [ ] Si es registro píxel: solo Khepri-16, neutrales ≥60 %, Grana sin diálogo, rejilla 12/24/48, escalado entero con `pixelated`, contorno Noche, Pixelify a múltiplos, sprite de Khepri el canónico, entrada/salida completa del registro, y nunca en nivel III.
-- [ ] Pixel Art producido a ×1: silueta legible, clústeres continuos, diagonales regulares, sin _pillow shading_, luz arriba-izquierda, máximo 2–4 colores por material, tramado solo entre colores adyacentes, sin píxeles aislados decorativos.
+- [ ] Pixel Art producido a ×1: silueta legible, clústeres continuos, diagonales regulares, sin *pillow shading*, luz arriba-izquierda, máximo 2–4 colores por material, tramado solo entre colores adyacentes, sin píxeles aislados decorativos.
 - [ ] Sprites: celdas y anclajes estables, 2–4 fotogramas, duraciones 120/200/320 ms, sin interpolación ni subpíxel; movimiento reducido muestra la pose más informativa.
 - [ ] Exportación: PNG indexado, transparencia binaria, paleta Khepri-16 verificada, sprite sheet uniforme, prueba ×1 + escala entera + viewport mínimo.
 - [ ] Se ha retirado un elemento antes de entregar.
@@ -872,5 +790,5 @@ sombrear ni deformar; Numinia solo para el mundo. WCAG 2.2 AA. Nada solo por col
 
 ---
 
-_Numen Games · numengames.com · CC0 1.0 Universal (marcas excluidas)_
-_Leave things better than we found them._
+*Numen Games · numengames.com · CC0 1.0 Universal (marcas excluidas)*
+*Leave things better than we found them.*
