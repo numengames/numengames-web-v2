@@ -75,13 +75,13 @@ navegador.
 
 ## 3 · Presupuestos vigentes
 
-| Presupuesto    | Límite          | Hoy           | Guardián             |
-| -------------- | --------------- | ------------- | -------------------- |
-| Peso home      | ≤ 1 MB          | ≈ 250 KB      | Lighthouse CI        |
-| Animaciones    | ≤ 9 keyframes   | 9 (lleno)     | CLAUDE.md + revisión |
-| Deps runtime   | 0               | 0             | política §0 + ADR    |
-| Navegadores    | matriz ADR 0006 | por verificar | e2e tri-motor        |
-| Claves storage | inventariadas   | 4             | `/legal/cookies`     |
+| Presupuesto    | Límite          | Hoy                                     | Guardián             |
+| -------------- | --------------- | --------------------------------------- | -------------------- |
+| Peso home      | ≤ 1 MB          | ≈ 250 KB                                | Lighthouse CI        |
+| Animaciones    | ≤ 9 keyframes   | 9 (lleno)                               | CLAUDE.md + revisión |
+| Deps runtime   | 0               | 0                                       | política §0 + ADR    |
+| Navegadores    | matriz ADR 0006 | chromium+firefox ✓ local · webkit en CI | e2e tri-motor        |
+| Claves storage | inventariadas   | 4                                       | `/legal/cookies`     |
 
 ## 4 · Reglas de evolución (planificación)
 

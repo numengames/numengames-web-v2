@@ -33,14 +33,12 @@ violaciones»): el job de accesibilidad no puede estar verde hoy.
 
 ## P1 — v0.3
 
-- Ver fallar la prueba de paridad del ADR 0006. `tests/a11y.spec.ts` afirma
-  que la panorámica se desplaza en los tres motores, pero nunca se la ha visto
-  fallar por la razón correcta: su primera versión falló por una asunción
-  errónea del autor, lo que prueba que se ejecuta, no que detecte. Test
-  negativo pendiente: desactivar a mano el motor de reserva y confirmar que se
-  pone roja en firefox/webkit y verde en chromium (motor nativo). Mismo
-  principio que `scripts/check-e2e.test.sh`. No es P0 porque nada miente
-  mientras el estado esté registrado como no verificado (`ARCHITECTURE.md`).
+- ~~Ver fallar la prueba de paridad del ADR 0006~~ **Hecho (2026-08-04)**:
+  motor de reserva desactivado por mutación → la prueba se puso roja en
+  Firefox (que no soporta `animation-timeline` y usa la reserva) → motor
+  restaurado → verde. Firefox verificado en local; **webkit queda para CI**
+  (faltan dependencias de sistema en la máquina local). El principio queda
+  como doctrina en `scripts/check-e2e.test.sh`.
 
 - Escribir `docs/narrativa/guion-numinia.md` (ES y EN): el motor de escena
   (ADR 0008) espera con las colecciones vacías y la home intacta; con guion,
