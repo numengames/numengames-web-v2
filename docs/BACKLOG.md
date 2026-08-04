@@ -13,10 +13,11 @@
 | 7   | ~~Contraste AA: 3 fallos `color-contrast` en axe~~ **Resuelto 2026-08-04** vía ADR 0007 (aceptada): token nuevo + 2 usos corregidos + exclusión justificada del flotante transitorio | Ingeniería |
 | 8   | Revisión humana de los sprites IA (ciclo `walk`, poses de Senet) antes de publicar: ritmo a 10 fps, gesto «señala», pérdida del tono medio en marcha                                 | Creativo   |
 
-### P0-7 — Contraste AA (axe, WCAG 1.4.3)
+### P0-7 — Contraste AA (axe, WCAG 1.4.3) — RESUELTO
 
-Detectado 2026-08-04. Incumple la regla 6 de `CLAUDE.md` («axe en CI a cero
-violaciones»): el job de accesibilidad no puede estar verde hoy.
+Detectado y resuelto el 2026-08-04 (ADR 0007 aceptada). Se conserva el
+diagnóstico original como registro; los ratios de la tabla son los de
+ANTES del arreglo.
 
 | Elemento        | Color                      | Sobre                | Ratio       |
 | --------------- | -------------------------- | -------------------- | ----------- |
