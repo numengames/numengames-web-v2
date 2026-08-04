@@ -10,6 +10,7 @@ import {
   type JourneySnapshot,
   type StorageLike,
 } from './journey';
+import { panoramaProgress, threadProgress } from './viewport';
 import { audio } from './audio';
 
 const motionOK = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
@@ -226,9 +227,13 @@ class JourneyProgress extends HTMLElement {
 
       const score = scoreOf(snap);
       const max = maxScoreOf({
+        /* Los eggs alcanzables se derivan del DOM, no se fijan a mano: el
+           del wordmark existe siempre; el del Umbral solo cuenta cuando los
+           enlaces-tesoro se renderizan (esperan P0-1/P0-4 en i18n/ui.ts).
+           Así el «PTS máx» del HUD nunca promete tesoros inalcanzables. */
         phases: phaseIds.length,
         choices: document.querySelectorAll('journey-choice').length,
-        eggs: 1,
+        eggs: 1 + (document.querySelector('[data-tesoro-link]') ? 1 : 0),
       });
       const pad = (n: number) => String(n).padStart(3, '0');
       const sEl = this.querySelector('[data-score]');
@@ -393,6 +398,27 @@ customElements.define('cookie-notice', CookieNotice);
   });
 }
 
+/* --------- Tesoro del Umbral: usar un CTA de conversión es hallazgo --- */
+/* Los enlaces son <a> planos (UmbralTesoros.astro): sin JS navegan igual
+   y simplemente no hay hallazgo — degradación aceptada. Sin preventDefault:
+   unlockEgg persiste en numen.journey.v1 de forma síncrona dentro del click,
+   antes de que el navegador siga la href (el mailto ni abandona la página).
+   Sin animación propia; el flotante de PTS del HUD ya va tras motionOK. */
+{
+  const wrap = document.querySelector<HTMLElement>('[data-umbral-tesoro]');
+  if (wrap) {
+    const found = wrap.dataset.announce ?? '';
+    wrap.querySelectorAll<HTMLAnchorElement>('[data-tesoro-link]').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (journey.hasEgg('tesoro-umbral')) return;
+        journey.unlockEgg('tesoro-umbral');
+        audio.secret();
+        announce(found);
+      });
+    });
+  }
+}
+
 /* --------- «Entrar»: registra el cruce del umbral (fase 0) ------------ */
 /* «Empezar»: el Nómada cruza el portal y después avanzamos. */
 {
@@ -444,13 +470,17 @@ class AudioToggle extends HTMLElement {
 customElements.define('audio-toggle', AudioToggle);
 
 /* --------- Panorámica: anclas por panel y paseo del Nómada ------------ */
+/* horizontalOn() ya no exige el motor nativo: el layout panorámico (ADR
+   0006) es el mismo para los dos motores, solo cambia quién produce el
+   desplazamiento horizontal. */
 const horizontalMQ = window.matchMedia(
   '(prefers-reduced-motion: no-preference) and (min-width: 48rem)',
 );
-const horizontalOn = () => horizontalMQ.matches && CSS.supports('animation-timeline: view()');
+const horizontalOn = () => horizontalMQ.matches;
 
 const journeyWrap = document.querySelector<HTMLElement>('.journey-h');
-const panels = Array.from(document.querySelectorAll<HTMLElement>('.journey-track > .panel'));
+const journeyPanorama = document.querySelector<HTMLElement>('.journey-panorama');
+const panels = Array.from(document.querySelectorAll<HTMLElement>('.journey-panorama > .panel'));
 
 function scrollToPanelIfHorizontal(target: HTMLElement): boolean {
   if (!horizontalOn()) return false;
@@ -501,4 +531,71 @@ if (journeyWrap && panels.length > 0) {
       { passive: true },
     );
   }
+}
+
+/* --------- Motor de reserva (ADR 0006) ---------------------------------
+   Donde el navegador no soporta animation-timeline nativo, calculamos el
+   mismo progreso 0–1 aquí y lo escribimos como variable CSS; viewport.ts
+   hace el cálculo (puro, testeado), esto solo lee el scroll y escribe. */
+const scrollTimelineOn = () => CSS.supports('animation-timeline: scroll()');
+const viewTimelineOn = () => CSS.supports('animation-timeline: view()');
+const threadFallbackNeeded = motionOK && !scrollTimelineOn();
+const panoramaFallbackNeeded =
+  motionOK && !viewTimelineOn() && journeyWrap !== null && journeyPanorama !== null;
+
+if (threadFallbackNeeded || panoramaFallbackNeeded) {
+  let ticking = false;
+
+  /* Geometría del recorrido, cacheada. Leerla dentro del fotograma de
+     scroll —después de haber escrito una variable CSS— fuerza un reflujo
+     síncrono en cada fotograma; solo cambia con el layout, así que se
+     remide al redimensionar, no al desplazarse. */
+  let journeyTop = 0;
+  let journeyHeight = 0;
+
+  function measureJourney() {
+    if (!journeyWrap) return;
+    journeyTop = journeyWrap.offsetTop;
+    journeyHeight = journeyWrap.offsetHeight;
+  }
+
+  function writeProgressVars() {
+    ticking = false;
+    /* Fase de lectura: toda la geometría antes de tocar un solo estilo. */
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const docHeight = threadFallbackNeeded ? document.documentElement.scrollHeight : 0;
+    const panoramaOn = panoramaFallbackNeeded && journeyPanorama !== null && horizontalOn();
+
+    /* Fase de escritura. */
+    if (threadFallbackNeeded) {
+      const p = threadProgress(scrollY, docHeight, viewportHeight);
+      document.documentElement.style.setProperty('--thread-p', String(p));
+    }
+    if (panoramaOn && journeyPanorama) {
+      const p = panoramaProgress(scrollY, journeyTop, journeyHeight, viewportHeight);
+      journeyPanorama.style.setProperty('--pan-p', String(p));
+    }
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(writeProgressVars);
+  }
+
+  /* Al redimensionar cambian `100vw`, la altura del recorrido y el umbral
+     de 48rem: sin esto las variables quedan obsoletas —y la panorámica
+     desalineada— hasta el siguiente scroll. */
+  function onResize() {
+    measureJourney();
+    onScroll();
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize, { passive: true });
+  window.addEventListener('orientationchange', onResize, { passive: true });
+
+  measureJourney();
+  writeProgressVars();
 }

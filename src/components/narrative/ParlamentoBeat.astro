@@ -1,0 +1,83 @@
+---
+/**
+ * Un beat del guion (ADR 0008): o un parlamento con firma de personaje,
+ * o una acotación de la voz del sistema.
+ *
+ * - El texto SIEMPRE está en el DOM real (sin JS se lee entero, en orden).
+ * - La firma (sprite + nombre) sale de la ficha del personaje, nunca de
+ *   textos hardcodeados; el sprite es decorativo (aria-hidden) porque el
+ *   nombre ya lo identifica en texto.
+ * - `colorHablante` es un NOMBRE de token del canon (validado por Zod
+ *   contra tokens.css), así que `var(--nombre)` jamás inventa un valor.
+ * - `accion` es dirección escénica (entra/sale/pose…), no contenido: se
+ *   serializa en `data-accion` para el futuro motor de escena y no se
+ *   pinta. La escena estática queda digna por sí sola.
+ */
+import type { CollectionEntry } from 'astro:content';
+
+type Beat = CollectionEntry<'escenas'>['data']['beats'][number];
+type FichaPersonaje = CollectionEntry<'personajes'>['data'];
+
+interface Props {
+  beat: Beat;
+  /** Ficha del hablante; `undefined` = voz del sistema (acotación). */
+  personaje?: FichaPersonaje | undefined;
+}
+const { beat, personaje } = Astro.props;
+
+/**
+ * Sprites del kit, resueltos en build. `personaje.sprite` es una ruta
+ * relativa a src/assets/pixel/ (el esquema Zod ya la restringe a .svg),
+ * y el glob la convierte en SVG inline tematizable via currentColor.
+ */
+const sprites = import.meta.glob('../../assets/pixel/**/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
+
+let firma: { personaje: FichaPersonaje; spriteSvg: string } | undefined;
+if (personaje) {
+  const spriteSvg = sprites[`../../assets/pixel/${personaje.sprite}`];
+  if (spriteSvg === undefined) {
+    throw new Error(
+      `[motor de escena] El sprite '${personaje.sprite}' del personaje '${personaje.id}' ` +
+        `no existe en src/assets/pixel/. Sprites disponibles: ${Object.keys(sprites)
+          .map((ruta) => ruta.replace('../../assets/pixel/', ''))
+          .join(', ')}`,
+    );
+  }
+  firma = { personaje, spriteSvg };
+}
+
+/** Dirección escénica para el futuro motor; nunca contenido visible. */
+const accionAttr = beat.accion ? JSON.stringify(beat.accion) : undefined;
+---
+
+{
+  firma ? (
+    <div
+      class="beat-turno"
+      style={`--hablante: var(--${firma.personaje.colorHablante})`}
+      data-hablante={firma.personaje.id}
+      data-accion={accionAttr}
+    >
+      <p class="speaker beat-firma">
+        <span class="speaker-portrait" aria-hidden="true" set:html={firma.spriteSvg} />
+        <span>{firma.personaje.nombre}</span>
+      </p>
+      <p class="beat-parlamento">{beat.parlamento}</p>
+    </div>
+  ) : (
+    <p class="beat-acotacion" data-accion={accionAttr}>
+      {beat.parlamento}
+    </p>
+  )
+}
+
+<!--
+  Sin <style> propio a propósito: Astro elevaría estas reglas al <head>
+  de la home por el mero import, rompiendo la guarda de vacío byte a
+  byte. Las reglas de .beat-* viven en el <style is:inline> de
+  EscenaPanel.astro, que solo se emite cuando hay escenas que pintar.
+-->

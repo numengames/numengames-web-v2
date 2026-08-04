@@ -6,9 +6,11 @@ import PhaseSection from '../../components/narrative/PhaseSection.astro';
 import CaminoSection from '../../components/narrative/CaminoSection.astro';
 import PortalCard from '../../components/narrative/PortalCard.astro';
 import UmbralCtas from '../../components/narrative/UmbralCtas.astro';
+import UmbralTesoros from '../../components/narrative/UmbralTesoros.astro';
 import JourneyMeter from '../../components/narrative/JourneyMeter.astro';
 import PixelArt from '../../components/narrative/PixelArt.astro';
 import Recap from '../../components/narrative/Recap.astro';
+import { validateEscenas } from '../../scripts/escenas-validate';
 import { useTranslations, type Lang } from '../../i18n/ui';
 
 const lang: Lang = 'en';
@@ -40,14 +42,74 @@ const sections = flow.map((entry) => {
 const firstFase = sections.find((s) => s.entry.data.kind === 'fase');
 const enterHref = `#${firstFase?.slug ?? 'acto-2'}`;
 
-/* Paneles de la panorámica: héroe + fases + caminos. */
-const panelCount = 1 + sections.length;
+/* ------------------------------------------------------------------
+   Motor de escena (ADR 0008) — GUARDA DE VACÍO: mientras el guion no
+   exista, las colecciones llegan vacías, `escenas` queda [] y nada de
+   esto emite un solo byte de HTML. validateEscenas pasa con listas
+   vacías y tumba el build con mensaje claro si el guion viola reglas.
+   ------------------------------------------------------------------ */
+const [todosPersonajes, todosEscenarios, todasEscenas] = await Promise.all([
+  getCollection('personajes'),
+  getCollection('escenarios'),
+  getCollection('escenas'),
+]);
+
+/* Puente de ids: el validador es puro y razona con ids LÓGICOS (los del
+   frontmatter, comparables entre idiomas); Astro entrega ids de ENTRADA
+   con prefijo de carpeta ('es/senet'). Traducimos referencia → ficha. */
+const idPersonaje = new Map(todosPersonajes.map((p) => [p.id, p.data.id]));
+const idEscenario = new Map(todosEscenarios.map((s) => [s.id, s.data.id]));
+const idLogicoEscena = (id: string, l: string) =>
+  id.startsWith(`${l}/`) ? id.slice(l.length + 1) : id;
+
+const veredicto = validateEscenas(
+  todasEscenas.map((e) => ({
+    id: idLogicoEscena(e.id, e.data.lang),
+    orden: e.data.orden,
+    lang: e.data.lang,
+    acto: e.data.acto,
+    fase: e.data.fase,
+    funnel: e.data.funnel,
+    escenario: idEscenario.get(e.data.escenario.id) ?? e.data.escenario.id,
+    beats: e.data.beats.map((b) => ({
+      hablante:
+        typeof b.hablante === 'string'
+          ? b.hablante
+          : (idPersonaje.get(b.hablante.id) ?? b.hablante.id),
+      parlamento: b.parlamento,
+      ...(b.accion ? { accion: b.accion } : {}),
+    })),
+  })),
+  todosPersonajes.map((p) => p.data),
+  todosEscenarios.map((s) => s.data),
+);
+if (!veredicto.valido) {
+  throw new Error(
+    `[motor de escena] El guion viola las reglas del ADR 0008:\n - ${veredicto.errores.join('\n - ')}`,
+  );
+}
+
+const escenas = todasEscenas
+  .filter((e) => e.data.lang === lang)
+  .sort((a, b) => a.data.orden - b.data.orden);
+const fichasPersonaje = new Map(todosPersonajes.map((p) => [p.id, p.data]));
+const fichasEscenario = new Map(todosEscenarios.map((s) => [s.id, s.data]));
+
+/* Import DINÁMICO tras la guarda: con el guion vacío, el componente (y su
+   CSS scoped) ni siquiera entra en la página — el HTML de hoy no cambia. */
+const EscenaPanel =
+  escenas.length > 0
+    ? (await import('../../components/narrative/EscenaPanel.astro')).default
+    : null;
+
+/* Paneles de la panorámica: héroe + fases + caminos (+ escenas si hay guion). */
+const panelCount = 1 + sections.length + escenas.length;
 ---
 
 <BaseLayout {lang} pageKey="home">
   <div class="journey-h" style={`--panels: ${panelCount}`}>
     <div class="journey-sticky">
-      <div class="journey-track">
+      <div class="journey-panorama">
         <HeroFiltro {lang} {enterHref} actLabel={actLabel(1)} />
 
         {
@@ -78,11 +140,31 @@ const panelCount = 1 + sections.length;
                   <>
                     <Recap {lang} />
                     <UmbralCtas {lang} />
+                    {/* Tesoros de conversión: no emiten nada hasta que
+                        Producto (P0-4) y Legal (P0-1) rellenen sus destinos
+                        en i18n/ui.ts. Montados ya para que activarse sea
+                        editar dos constantes, no código. */}
+                    <UmbralTesoros {lang} />
                   </>
                 )}
               </PhaseSection>
             ),
           )
+        }{
+          /* Motor de escena tras la guarda de vacío. Va yuxtapuesto (`}{`)
+             a la expresión anterior a propósito: así no se añade ningún
+             nodo de texto y, sin guion, el HTML es byte a byte el de hoy. */
+          EscenaPanel &&
+            escenas.map((escena, i) => (
+              <EscenaPanel
+                {lang}
+                {escena}
+                personajes={fichasPersonaje}
+                escenarios={fichasEscenario}
+                actLabel={actLabel(escena.data.acto)}
+                conEstilos={i === 0}
+              />
+            ))
         }
       </div>
       <div class="nomada-walker" aria-hidden="true"><PixelArt name="nomada" /></div>

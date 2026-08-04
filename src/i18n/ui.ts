@@ -39,6 +39,24 @@ export function getLangFromUrl(url: URL): Lang {
   return defaultLang;
 }
 
+/* ----------------------------------------------------------------------
+ * CTAs-tesoro del Umbral — hrefs bloqueadas por P0 (docs/BACKLOG.md).
+ * Mientras una constante esté vacía, UmbralTesoros.astro NO renderiza ese
+ * enlace (nunca un href="#"). No inventar proveedor, URL ni dirección.
+ * -------------------------------------------------------------------- */
+
+/**
+ * [POR DEFINIR — P0-4] URL del proveedor de reserva de calendario.
+ * Decisión de Producto pendiente (correo real / formulario / agenda).
+ */
+export const UMBRAL_CALENDAR_URL = '';
+
+/**
+ * [POR DEFINIR — P0-1] Buzón real de contacto (Legal aún no ha creado
+ * `hola@`/`security@`). Solo la dirección; el componente antepone `mailto:`.
+ */
+export const UMBRAL_CONTACT_EMAIL = '';
+
 export const ui = {
   es: {
     'site.name': 'Numen Games',
@@ -75,6 +93,9 @@ export const ui = {
     'umbral.cta.evento': 'Entrar con tu evento',
     'umbral.cta.oraculo': 'Hablar con un Oráculo',
     'umbral.cta.explorar': 'Explorar la experiencia',
+    'umbral.tesoro.reservar': 'Reservar conversación',
+    'umbral.tesoro.escribir': 'Escribir al Oráculo',
+    'umbral.tesoro.hallado': 'Encuentras el Tesoro del Umbral',
 
     'footer.motto': 'Leave things better than we found them.',
     'footer.legal': 'Legal',
@@ -148,6 +169,9 @@ export const ui = {
     'umbral.cta.evento': 'Enter with your event',
     'umbral.cta.oraculo': 'Talk to an Oracle',
     'umbral.cta.explorar': 'Explore the experience',
+    'umbral.tesoro.reservar': 'Book a conversation',
+    'umbral.tesoro.escribir': 'Write to the Oracle',
+    'umbral.tesoro.hallado': 'You find the Threshold Treasure',
 
     'footer.motto': 'Leave things better than we found them.',
     'footer.legal': 'Legal',

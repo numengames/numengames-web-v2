@@ -2,17 +2,53 @@
 
 ## P0 — Bloqueantes de publicación (v0.2)
 
-| #   | Ítem                                                                  | Dueño      |
-| --- | --------------------------------------------------------------------- | ---------- |
-| 1   | Datos legales reales (LSSI + RGPD) y buzones `hola@`/`security@`      | Legal      |
-| 2   | Logo/wordmark oficial SVG + favicon + og.png definitivos              | Creativo   |
-| 3   | Copy literal «No somos / Sí somos» y equipo (nombres, roles, correos) | Creativo   |
-| 4   | CTA de conversión definitivo (correo real / formulario / agenda)      | Producto   |
-| 5   | Revisión nativa del inglés                                            | Creativo   |
-| 6   | Auditoría manual de accesibilidad (teclado + lector de pantalla)      | Ingeniería |
+| #   | Ítem                                                                                                                                                 | Dueño      |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| 1   | Datos legales reales (LSSI + RGPD) y buzones `hola@`/`security@`                                                                                     | Legal      |
+| 2   | Logo/wordmark oficial SVG + favicon + og.png definitivos                                                                                             | Creativo   |
+| 3   | Copy literal «No somos / Sí somos» y equipo (nombres, roles, correos)                                                                                | Creativo   |
+| 4   | CTA de conversión definitivo (correo real / formulario / agenda)                                                                                     | Producto   |
+| 5   | Revisión nativa del inglés                                                                                                                           | Creativo   |
+| 6   | Auditoría manual de accesibilidad (teclado + lector de pantalla)                                                                                     | Ingeniería |
+| 7   | Contraste AA: 3 fallos `color-contrast` en axe (detalle abajo)                                                                                       | Ingeniería |
+| 8   | Revisión humana de los sprites IA (ciclo `walk`, poses de Senet) antes de publicar: ritmo a 10 fps, gesto «señala», pérdida del tono medio en marcha | Creativo   |
+
+### P0-7 — Contraste AA (axe, WCAG 1.4.3)
+
+Detectado 2026-08-04. Incumple la regla 6 de `CLAUDE.md` («axe en CI a cero
+violaciones»): el job de accesibilidad no puede estar verde hoy.
+
+| Elemento        | Color                      | Sobre                | Ratio       |
+| --------------- | -------------------------- | -------------------- | ----------- |
+| botón del aviso | `--interactive` (turquesa) | `--surface-raised`   | 4.43        |
+| `.slot-n` (×2)  | `--ink-faint` `#8a7d72`    | `--surface-elevated` | 3.84        |
+| `.bin-sep`      | `--line-strong` (trazo)    | superficie           | 1.51 / 1.54 |
+
+- El botón es un **control interactivo**: sin exención posible. Su causa es
+  un hueco del canon → propuesta en `docs/adr/0007-turquesa-texto-tema-oscuro.md`
+  (pendiente del visto bueno de diseño; no aplicar antes).
+- Los otros dos son decorativos con `aria-hidden` y podrían acogerse a la
+  excepción de «texto incidental», pero axe no infiere esa intención. Decidir
+  explícitamente: corregir el uso, corregir el token, o documentar la excepción.
 
 ## P1 — v0.3
 
+- Ver fallar la prueba de paridad del ADR 0006. `tests/a11y.spec.ts` afirma
+  que la panorámica se desplaza en los tres motores, pero nunca se la ha visto
+  fallar por la razón correcta: su primera versión falló por una asunción
+  errónea del autor, lo que prueba que se ejecuta, no que detecte. Test
+  negativo pendiente: desactivar a mano el motor de reserva y confirmar que se
+  pone roja en firefox/webkit y verde en chromium (motor nativo). Mismo
+  principio que `scripts/check-e2e.test.sh`. No es P0 porque nada miente
+  mientras el estado esté registrado como no verificado (`ARCHITECTURE.md`).
+
+- Escribir `docs/narrativa/guion-numinia.md` (ES y EN): el motor de escena
+  (ADR 0008) espera con las colecciones vacías y la home intacta; con guion,
+  las escenas aparecen sin tocar código. Bloquea también la migración con
+  diff cero y las fichas/escenario fundacionales.
+- Rellenar `UMBRAL_CALENDAR_URL` (P0-4) y `UMBRAL_CONTACT_EMAIL` (P0-1) en
+  `src/i18n/ui.ts`: activan los enlaces-tesoro del Umbral y su hallazgo
+  épico `tesoro-umbral` (ya implementados, no renderizan hasta entonces).
 - Material audiovisual del camino de Inmersión (grabaciones reales).
 - CTA del Umbral sensible a la elección de Transformación (la única mecánica
   propuesta aún no implementada tras el canon).

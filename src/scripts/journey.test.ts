@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createJourney, maxScoreOf, scoreOf, type StorageLike } from './journey';
+import { createJourney, maxScoreOf, scoreOf, SCORING, type StorageLike } from './journey';
 
 function memoryStorage(): StorageLike {
   const map = new Map<string, string>();
@@ -48,6 +48,22 @@ describe('journey (motor Nivel B)', () => {
     expect(j.progress()).toBe(0);
     expect(j.getChoice('c')).toBeUndefined();
     expect(storage.getItem('numen.journey.v1')).toBeNull();
+  });
+
+  it('el Tesoro del Umbral es un hallazgo único que vale un egg de SCORING', () => {
+    const storage = memoryStorage();
+    const j = createJourney(storage, PHASES);
+    const before = scoreOf(j.snapshot());
+    // Dos CTAs (calendario y mailto) pueden disparar el mismo egg: un solo hallazgo.
+    j.unlockEgg('tesoro-umbral');
+    j.unlockEgg('tesoro-umbral');
+    expect(j.snapshot().eggs).toEqual(['tesoro-umbral']);
+    expect(scoreOf(j.snapshot()) - before).toBe(SCORING.egg);
+    // Persiste dentro de numen.journey.v1, clave ya inventariada en /legal/cookies:
+    // no se introduce clave de almacenamiento nueva.
+    const raw = storage.getItem('numen.journey.v1');
+    expect(raw).not.toBeNull();
+    expect(JSON.parse(raw as string)).toMatchObject({ eggs: ['tesoro-umbral'] });
   });
 
   it('sobrevive a datos corruptos en storage', () => {
